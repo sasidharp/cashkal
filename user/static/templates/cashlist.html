@@ -1,0 +1,86 @@
+                    <!DOCTYPE html>
+                    <html>
+                    <head lang="en">
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <!-- Bootstrap -->
+                        <!-- Latest compiled and minified CSS -->
+                        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+                    <!-- Optional theme -->
+                        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+                    <!-- Latest compiled and minified JavaScript -->
+                        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+                        <title></title>
+                    </head>
+                    <script type ="text/javascript">
+                     var test = 0;
+					 $document.background(height)
+                    
+                    </script>
+                    
+                    <body>
+                    <div class="navbar navbar-inverse navbar-fixed-top">
+                      <div class="container">
+                        <div class="navbar-header">
+                          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                          </button>
+                        </div>
+                        <div class="collapse navbar-collapse">
+                          <ul class="nav navbar-nav">
+                            <li> <a href="#">Home</a></li>
+                            <li class="active"><a href="#">Launch Pad</a></li>
+                            <li><a href="#subscription">Subscription</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                          </ul>
+                        </div><!--/.nav-collapse -->
+                      </div>
+                    </div>
+                    <div class="container">
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    </div>
+                    <div class="container">	
+                     	<div class="container">
+	<div class="table">
+	  <form method="POST" action="" >{% csrf_token %}
+		  <table class="table table-striped .table-bordered" >
+					<thead>
+						{% for form in formset %}
+							{% if forloop.first %}
+								{% for field in form %}
+									<th>{{ field.label_tag }}</th>
+								{% endfor %}
+							{% endif %}
+					</thead>
+					<tbody>
+							<tr>
+								{% for field in form %}
+									<td>{{ field }}</td>
+								{% endfor %}
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+            <button type="submit" class="btn btn-primary">Save Record</button>
+            <button class="btn">Reset</button>
+        </form>
+		{{Errors}}
+	  </div>
+	  </div>
+                 </div>
+
+                    <div class="footer">
+        <p>&copy; Company 2014</p>
+      </div>
+                    </body>
+                    </html>
