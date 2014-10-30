@@ -1,38 +1,20 @@
-from weakref import finalize
-from django.shortcuts import render,render_to_response , RequestContext, _get_queryset
-from pip._vendor.distlib._backport.tarfile import calc_chksums
-from .forms import MyModelForm,NewCashForm ,NewExpenseCategoryForm
-from .forms import NewActualForm,PieSelection
-from .models import cashflow_actuals
-from django.http import HttpResponseRedirect
+from django.shortcuts import render,render_to_response , RequestContext
+from .forms import *
 from django.http import HttpResponse
-from django.forms import forms
 from .models import expense_categories
 from .models import MYCASHFLOW,cashflow_actuals
-from crispy_forms.templatetags import crispy_forms_tags
-from django.forms.models import modelformset_factory
-from django.core import serializers
-from http.client import HTTPResponse
 import jsonpickle
-from jsonpickle import pickler
 from django.forms import model_to_dict
-from user.BusinessLogic import jdata, get_occurances, jevent
-from user.forms import ReportSelection, NewUserReg , ActualForm , NewUser
 import datetime
 from datetime import date
-from django import forms
-from django.contrib import admin
-from django.contrib.auth.models import Group
-from django.contrib.auth.admin import UserAdmin
-from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.auth import *
 from django.http.response import HttpResponseRedirect
 import random
-from .admin import UserCreationForm,UserChangeForm
+from .admin import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.contrib.auth import login
-import calendar
+from .BusinessLogic import jdata ,get_occurances
 #**********************************************************************************************#
 #                               Create your views here.                                        #
 #**********************************************************************************************#
