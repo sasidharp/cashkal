@@ -11,7 +11,8 @@
     <script src="http://www.trirand.com/blog/jqgrid/js/i18n/grid.locale-en.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
     <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:700,400' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="http://res.cloudinary.com/dplpgfwpy/raw/upload/v1413397740/paycal_zmrty0.css">
+             <link rel="stylesheet" href="http://127.0.0.1:8000/static/paycal.css">
+
 
 
     <title></title>
@@ -19,6 +20,19 @@
 </head>
 
 <body id="body">
+<style>
+       .subtotal {
+                        background-color:#3b5998;
+                        border-color: #080808;
+                        color:white;
+    }
+           .line {
+                        background-color:white;
+                        border-color: #3b5998;
+                        color:black;
+    }
+</style>
+
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -30,14 +44,14 @@
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="/launcher/"><h31>Home</h31></a></li>
-                    <li><a href="/actual/"><h31>Add Actual</h31></a></li>
-                    <li><a href="/cash/"> <h31>Add Cashflow</h31></a></li>
-                    <li><a href="/calen/"><h31>Calendar</h31></a></li>
-                    <li><a href="/categ/"><h31>Corrections</h31></a></li>
-                    <li class="active"><a href="/report/"><h31>Reports</h31></a></li>
-                    <li><a href="/pie/"><h31>Charts</h31></a></li>
-                    <li><a href="/contact/"><h31>Contact us</h31></a></li>
+                    <li><a href="/launcher/"><h31N>Home</h31N></a></li>
+                    <li><a href="/actuals/"><h31N>Add Actual</h31N></a></li>
+                    <li class="active"><a href="/cash/"> <h31N>Add Cashflow</h31N></a></li>
+                    <li><a href="/calen/"><h31N>Calendar</h31N></a></li>
+                    <li><a href="/categ/"><h31N>Corrections</h31N></a></li>
+                    <li><a href="/report/"><h31N>Reports</h31N></a></li>
+                    <li><a href="/pie/"><h31N>Charts</h31N></a></li>
+                    <li><a href="/contact/"><h31N>Contact us</h31N></a></li>
 
 
                 </ul>
@@ -66,19 +80,24 @@
              <table class="table table-bordered ">
                  {% for items in dailyitems %}
                  {% if forloop.first %}
-                 <td class="subtotal">ID</td>
-                 <td class="subtotal">CATEGORY</td>
-                 <td class="subtotal">DATE</td>
-                 <td class="subtotal">AMOUNT</td>
-                 <td class="subtotal">ACTUAL AMOUNT</td>
+                 <td class="subtotal">Id</td>
+                 <td class="subtotal">Expense type</td>
+                 <td class="subtotal">Date</td>
+                 <td class="subtotal">Planned Amount</td>
+                 <td class="subtotal">Planned Cumulative</td>
+                 <td class="subtotal">Actual Amount</td>
+                 <td class="subtotal">Actual Cumulative</td>
+                 <td class="subtotal">Difference</td>
                  {% endif %}
                  <tr>
-                     <td class={{items.class}}> {{items.id}}</td>
-                     <td class={{items.class}}> {{items.category_id}}</td>
-                     <td class={{items.class}}> {{items.date}}</td>
-                     <td class={{items.class}}> {{items.amount}} </td>
-                     <td class={{items.class}}> {{items.actualamount}} </td>
-
+                     <td class="line"> {{items.id}}</td>
+                     <td class="line"> {{items.category_id}}</td>
+                     <td class="line"> {{items.adate}}</td>
+                     <td class="line"> {{items.amount}} </td>
+                     <td class="line"> {{items.plan}} </td>
+                     <td class="line"> {{items.actualamount}} </td>
+                     <td class="line"> {{items.act}} </td>
+                     <td class="line"> {{items.diff}} </td>
                  </tr>
                  {% endfor %}
 

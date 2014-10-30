@@ -5,7 +5,7 @@
                             <title></title>
                             <link rel="stylesheet" href="http://trirand.com/blog/jqgrid/themes/ui.jqgrid.css">
                             <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/base/jquery-ui.css">
-                            <link rel="stylesheet" href="http://res.cloudinary.com/dplpgfwpy/raw/upload/v1413397740/paycal_zmrty0.css">
+                            <!--<link rel="stylesheet" href="http://res.cloudinary.com/dplpgfwpy/raw/upload/v1413397740/paycal_zmrty0.css">-->
                             <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
                             <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
                             <script src="http://trirand.com/blog/jqgrid/js/jquery.jqGrid.min.js"></script>
@@ -13,10 +13,11 @@
                             <script src="http://www.trirand.com/blog/jqgrid/js/i18n/grid.locale-en.js"></script>
                             <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:700,400' rel='stylesheet' type='text/css'>
                             <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+                                     <link rel="stylesheet" href="http://127.0.0.1:8000/static/paycal.css">
 
                             <script>
                                 $(function () {
-                                    $("#id_fdate").datepicker();
+                                     $("#id_fdate").datepicker();
                                     $("#id_fdate").datepicker("option", "dateFormat", "yy-mm-dd");
 
                                     $(":input").change(function(){
@@ -50,8 +51,7 @@
                                         <li><a href="/report/"><h31N>Reports</h31N></a></li>
                                         <li><a href="/pie/"><h31N>Charts</h31N></a></li>
                                         <li><a href="/contact/"><h31N>Contact us</h31N></a></li>
-
-
+                                        <li><a href="/logout/"><h31N>logout</h31N></a></li>
                                     </ul>
                                 </div><!--/.nav-collapse -->
                             </div>3

@@ -10,23 +10,23 @@
                             <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
                             <script src="http://www.trirand.com/blog/jqgrid/js/i18n/grid.locale-en.js"></script>
                             <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:700,400' rel='stylesheet' type='text/css'>
-                            <link rel="stylesheet" href="http://res.cloudinary.com/dplpgfwpy/raw/upload/v1413397740/paycal_zmrty0.css">
+                            <!--<link rel="stylesheet" href="http://res.cloudinary.com/dplpgfwpy/raw/upload/v1413397740/paycal_zmrty0.css">-->
+                            <link rel="stylesheet" href="http://127.0.0.1:8000/static/paycal.css">
 
                      </head>
                     <script>
                         $(document).ready(function () {
                             var DataGrid = jQuery("#list4");
-
                             //Table Object
                             jQuery("#list4").jqGrid({
-                                url: 'http://127.0.0.1:8000/list/',
+                                url: '/list/',
                                 datatype: "json",
-                                colNames: ['Identifier', 'Forecasted Date', 'Type', 'Amount', 'Currency', 'Recipient/Payer', 'Telephone', 'email', 'city'],
+                                colNames: ['Identifier', 'Forecasted Date', 'Type', 'amount', 'Currency', 'Recipient/Payer', 'Telephone', 'email', 'city'],
                                 colModel: [
                                     { name: 'id', index: 'id', width: 20, align: "center" },
                                     { name: 'fdate', index: 'fdate', width: 30, align: "center" },
                                     { name: 'direction', index: 'direction', width: 20, align: "center" },
-                                    { name: '', index: 'amount', width: 30 ,align: "right" },
+                                    { name: 'amount', width: 30 ,align: "right" },
                                     { name: 'currency', index: 'currency', width: 15, align: "center" },
                                     { name: 'recipient', index: 'recipient', width: 75, align: "right" },
                                     { name: 'telephone', index: 'telephone', width: 30, align: "right" },
@@ -39,22 +39,17 @@
                                 sortname: 'fdate',
                                 viewrecords: true,
                                 sortorder: "direction",
-                                caption: "Outstanding items",
+                                caption: "Convert to Actual ? click on required row",
                                 onSelectRow: function (rowId) {
-                                    var rowData = DataGrid.jqGrid('getRowData', rowId);
-                                    var redirect_link = "http://127.0.0.1:8000/actuals/"
-                                    redirect_link = redirect_link + "?id=" + rowData.id +"&" +"Callback=L";
-                                    window.location.href = redirect_link;
+                  //                  var rowData = DataGrid.jqGrid('getRowData', rowId);
+                  //                  var redirect_link = "http://127.0.0.1:8000/actuals/"
+                  //                  redirect_link = redirect_link + "?id=" + rowData.id +"&" +"Callback=L";
+                  //                  window.location.href = redirect_link;
                                 }
-
-
-
-
                             });
-
                             DataGrid.jqGrid('setGridWidth', '1124');
                             DataGrid.jqGrid('setGridHeight', '350');
-                            //     DataGrid.jqGrid('navGrid', "#pager", { edit: true, del: true }, { url: 'http://127.0.0.1:8000/cash/' }, { url: 'http://127.0.0.1:8000/cash/' });
+                            //     DataGrid.jqGrid('navGrid', "#pager", { edit: true, del: true }, { url: '/cash/' }, { url: '/cash/' });
 
                             $("#btncalen").click(
                                          function () {
@@ -62,11 +57,12 @@
                                             }
                                           );
 
-                            $("#corr").click(
+
+                             $("#categ").click(
                                          function () {
-                                             window.location.href = "/categ/";
+                                        window.location.href = "/categ/";
                                             }
-                                          );
+                                          )
 
                         });
 
@@ -97,11 +93,11 @@
                                 </div>
                                 <div class="collapse navbar-collapse">
                                     <ul class="nav navbar-nav">
-                                        <li class="active"><a href="/launcher/"><h31>Home</h31></a></li>
-                                        <li><a href="/actuals/"><h31>Add Actual</h31></a></li>
-                                        <li><a href="/report/"><h31>Reports</h31></a></li>
-                                        <li><a href="/pie/"><h31>Charts</h31></a></li>
-                                        <li><a href="/contact/"><h31>Contact us</h31></a></li>
+                                        <li class="active"><a href="/launcher/"><h31N>Home</h31N></a></li>
+                                        <li><a href="/actuals/"><h31N>Add Actual</h31N></a></li>
+                                        <li><a href="/report/"><h31N>Reports</h31N></a></li>
+                                        <li><a href="/pie/"><h31N>Charts</h31N></a></li>
+                                        <li><a href="/contact/"><h31N>Contact us</h31N></a></li>
 
                                     
                                     </ul>
@@ -128,7 +124,7 @@
                                         <button class="btn btn-lg btn-success btn-block" id="btncalen"><h31N>Payment Calendar</h31N></button>
                                     </div>
                                     <div class="col-md-4">
-                                        <button class="btn btn-lg btn-success btn-block" id="corr"><h31N> corrections ?</h31N></button>
+                                        <button class="btn btn-lg btn-success btn-block" id="categ"><h31N>corrections?</h31N></button>
                                     </div>
 
                             </div>
@@ -139,7 +135,7 @@
                             <br />
                             <br />
                             <br />
-                            <h31>Please click on the table below to review the line item</h31>
+                            <h31>Outstanding items as of {{date}}</h31>
                             <br />
                             <br />
                             <br />
@@ -147,7 +143,7 @@
                         
                         
                         <div class="container">
-                           <h31><table id="list4"></table></h31>
+                            <table id="list4"></table>
                             <div id="pager"></div>
                         </div>
 

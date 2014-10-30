@@ -12,11 +12,135 @@
                         <script src="http://www.trirand.com/blog/jqgrid/js/i18n/grid.locale-en.js"></script>
                         <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:700,400' rel='stylesheet' type='text/css'>
                         <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
-                        <link rel="stylesheet" href="http://res.cloudinary.com/dplpgfwpy/raw/upload/v1413397740/paycal_zmrty0.css">
+                        <!--<link rel="stylesheet" href="http://res.cloudinary.com/dplpgfwpy/raw/upload/v1413397740/paycal_zmrty0.css">-->
+                             <link rel="stylesheet" href="http://127.0.0.1:8000/static/paycal.css">
                         <title></title>
-        			</head>
+
+                                                <script>
+                                $(function () {
+
+                                    $("#id_fdate").datepicker();
+                                    $("#id_fdate").datepicker("option", "dateFormat", "yy-mm-dd");
+
+                                    $(":input").change(function(){
+                                                $("#msg").text("");
+                                                });
+                                    $("#addcateg").click(function () {
+                                        document.location.href = "/addcateg/";
+                                    });
+                                });
+                            </script>
+                    </head>
 
                     <body id="body">
+					<style>
+                             <style > h1 {
+                                 font-family: 'Roboto Condensed', sans-serif;
+                                 color: white;
+                             }
+
+                             h2 {
+                                 font-family: 'Roboto Condensed', sans-serif;
+                                 color: white;
+                                 font-size: 20px;
+                             }
+
+                             h3 {
+                                 font-family: 'Roboto Condensed', sans-serif;
+                                 color: white;
+                                 font-size: 20px;
+                             }
+
+                             h31 {
+                                 font-family: 'Roboto Condensed', sans-serif;
+                                 color: teal;
+                                 font-size: 20px;
+                             }
+
+                                 h31N {
+                                 font-family: 'Roboto Condensed', sans-serif;
+                                 color: white;
+                                 font-size: 20px;
+                                 }
+                                 h32N {
+                                 font-family: 'Roboto Condensed', sans-serif;
+                                 color: black;
+                                 font-size: 20px;
+                                 }
+                             .btn-success {
+                                 color: #dfe3ee;
+                                 background-color: #3b5998;
+                                 border-color: #080808;
+                                 font-weight: bold;
+                             }
+
+                             #body {
+                                 background-color: #dfe3ee;
+                             }
+                            
+                             .subtotal {
+                                background-color:#3b5998;
+                                border-color: #080808;
+                             }
+
+                           .navbar-inverse {
+                                background-color:#3b5998;
+                                border-color: #080808;
+                            }
+                            }
+                             .ui-jqgrid .ui-jqgrid-titlebar {
+                                 padding: 0.3em 0.2em 0.2em 0.3em;
+                                 position: relative;
+                                 font-size: 25px;
+                                 border-left: 0px none;
+                                 border-right: 0px none;
+                                 border-top: 0px none;
+                             }
+
+                             .ui-jqgrid .ui-jqgrid-view {
+                                 font-size: 15px;
+                                   }
+
+                             .ui-widget-header {
+                                 border: 1px solid #080808;
+                                 background-color: #3b5998;
+                                 background: #3b5998;
+                                 color: white;
+                                 font-size: 15px;
+                                 font-weight: normal;
+
+                             }
+
+                                 ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+                                     border: 1px solid #D3D3D3;
+                                     background: #3b5998;
+                                     color: white;
+                                      font-size: 15px;
+                                 }
+                            .fc-event-container{
+                                 font-family: 'Roboto Condensed', sans-serif;
+                                 color: white;
+                                 font-weight: bold;
+                                 font-size:20px;
+                            }
+                            .fc-day-header{
+                                 font-family: 'Roboto Condensed', sans-serif;
+                                 color: black;
+                                 font-weight: bold;
+                                 font-size:20px;
+                            }
+                            .fc-day-number{
+                                 font-family: 'Roboto Condensed', sans-serif;
+                                 color: black;
+                                 font-weight: bold;
+                                 font-size:30px;
+                                 }
+                             #calendar{
+                             background-color:#f7f7f7;
+                             }
+                        </style>
+
+					
                         <div class="navbar navbar-inverse navbar-fixed-top">
                             <div class="container">
                                 <div class="navbar-header">
@@ -28,14 +152,15 @@
                                 </div>
                                 <div class="collapse navbar-collapse">
                                     <ul class="nav navbar-nav">
-                                        <li><a href="/launcher/"><h31>Home</h31></a></li>
-                                        <li class="active"><a href="/actual/"><h31>Add Actual</h31></a></li>
-                                        <li><a href="/cash/"> <h31>Add Cashflow</h31></a></li>
-                                        <li><a href="/calen/"><h31>Calendar</h31></a></li>
-                                        <li><a href="/categ/"><h31>Corrections</h31></a></li>
-                                        <li><a href="/report/"><h31>Reports</h31></a></li>
-                                        <li><a href="/pie/"><h31>Charts</h31></a></li>
-                                        <li><a href="/contact/"><h31>Contact us</h31></a></li>
+                                        <li><a href="/launcher/"><h31N>Home</h31N></a></li>
+                                        <li class="active"><a href="/actuals/"><h31N>Add Actual</h31N></a></li>
+                                        <li><a href="/cash/"> <h31N>Add Cashflow</h31N></a></li>
+                                        <li><a href="/calen/"><h31N>Calendar</h31N></a></li>
+                                        <li><a href="/categ/"><h31N>Corrections</h31N></a></li>
+                                        <li><a href="/report/"><h31N>Reports</h31N></a></li>
+                                        <li><a href="/pie/"><h31N>Charts</h31N></a></li>
+                                        <li><a href="/contact/"><h31N>Contact us</h31N></a></li>
+
 
 
 
