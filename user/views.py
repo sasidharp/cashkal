@@ -59,7 +59,7 @@ def cashlist(request):
 #   create an array to hold the table data  
     rows=[]
 #   get the records from the MYCASHFLOW table
-    today_date = date.isoformat(datetime.date.today());
+    today_date = date.isoformat(datetime.date.today())
     raw_sql="SELECT * FROM user_mycashflow where fdate <= '{today_date}' and notes1 = '' and user = '{username}'".format(today_date=today_date , username=request.user)
     row_list = MYCASHFLOW.items.raw(raw_sql)
 #   append them into row
@@ -76,10 +76,9 @@ def cashlist(request):
 
         total=total+1
         rows.append(row_dict)   
-        pages=1
+    pages=1
     records=total
-   
-    json_data = jdata(total, pages, records, rows) 
+    json_data = jdata(total, pages, records, rows)
     
     data = jsonpickle.encode(json_data, unpicklable=False, make_refs=False, keys=False)
     return HttpResponse(data, content_type='application/json')
