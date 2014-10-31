@@ -105,6 +105,12 @@ class MyUser(AbstractBaseUser):
         # The user is identified by their email address
         return self.currency
 
+    def get_corpid(self):
+        # The user is identified by their email address
+        if self.TypeofOrg == 1:
+            return 'INDIVIDUAL'
+        else:
+            return self.corpid
 
     def has_perm(self, perm, obj=None):
         "Does the user have a specific permission?"

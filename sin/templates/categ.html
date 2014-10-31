@@ -1,0 +1,202 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="http://trirand.com/blog/jqgrid/themes/ui.jqgrid.css">
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://trirand.com/blog/jqgrid/js/jquery.jqGrid.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="http://www.trirand.com/blog/jqgrid/js/i18n/grid.locale-en.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:700,400' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="http://127.0.0.1:8000/static/paycal.css">
+</head>
+<script>
+    var header_message;
+    $(document).ready(function () {
+        var DataGrid = jQuery("#list4");
+
+        //Table Object
+        jQuery("#list4").jqGrid({
+            url: 'http://127.0.0.1:8000/list/',
+            datatype: "json",
+            colNames: ['Identifier', 'Forecasted Date', 'Type', 'Amount', 'Currency', 'Recipient/Payer', 'Telephone', 'email', 'city'],
+            colModel: [
+                { name: 'id', index: 'id', width: 20 },
+                { name: 'fdate', index: 'fdate', width: 20 },
+                { name: 'direction', index: 'direction', width: 10 },
+                { name: '', index: 'amount', width: 30 },
+                { name: 'currency', index: 'currency', width: 10 },
+                { name: 'recipient', index: 'recipient', width: 75, align: "right" },
+                { name: 'telephone', index: 'telephone', width: 20, align: "right" },
+                { name: 'email', index: 'email', width: 75, align: "right" },
+                { name: 'city', index: 'city', width: 75, sortable: false }
+            ],
+            rowNum: 10,
+            rowList: [10, 20, 30],
+            pager: '#pager',
+            sortname: 'fdate',
+            viewrecords: true,
+            sortorder: "direction",
+            caption: "... ",
+        });
+
+        DataGrid.jqGrid('setGridWidth', '1124');
+        DataGrid.jqGrid('setGridHeight', '350');
+
+        jQuery("#copy").hide();
+        jQuery("#modify").hide();
+        jQuery("#delete").hide();
+        jQuery("#copy_actual").hide();
+        jQuery("#modify_actual").hide();
+        jQuery("#delete_actual").hide();
+
+        //     DataGrid.jqGrid('navGrid', "#pager", { edit: true, del: true }, { url: 'http://127.0.0.1:8000/cash/' }, { url: 'http://127.0.0.1:8000/cash/' });
+
+        $("#btncalen").click(
+                     function () {
+                         window.location.href = "http://127.0.0.1:8000/calen/";
+                     }
+                      );
+
+
+        
+        $("#copy").click(function (rowID) {
+            var id = jQuery("#list4").jqGrid('getGridParam', 'selrow');
+            window.location.href = "http://127.0.0.1:8000/cash?N=" + id;
+            });
+
+        $("#modify").click(function (rowID) {
+            var id = jQuery("#list4").jqGrid('getGridParam', 'selrow');
+            window.location.href = "http://127.0.0.1:8000/cash?modify=" + id;
+        });
+
+    
+        $("#delete").click(function (rowID) {
+            var id = jQuery("#list4").jqGrid('getGridParam', 'selrow');
+            window.location.href = "http://127.0.0.1:8000/cash?delete=" + id;
+        });
+
+
+        $("#copy_actual").click(function (rowID) {
+            var id = jQuery("#list4").jqGrid('getGridParam', 'selrow');
+            window.location.href = "http://127.0.0.1:8000/actual?N=" + id;
+        });
+
+        $("#modify_actual").click(function (rowID) {
+            var id = jQuery("#list4").jqGrid('getGridParam', 'selrow');
+            window.location.href = "http://127.0.0.1:8000/actual?modify=" + id;
+        });
+
+
+        $("#delete_actual").click(function (rowID) {
+            var id = jQuery("#list4").jqGrid('getGridParam', 'selrow');
+            window.location.href = "http://127.0.0.1:8000/actual?delete=" + id;
+        });
+
+         $("#planned").click(function () {
+            jQuery("#list4").jqGrid('setGridParam', { 'url': "http://127.0.0.1:8000/list" });
+            jQuery("#list4").jqGrid('setCaption', 'Editing Planned entries..');
+            DataGrid.trigger("reloadGrid");
+
+            jQuery("#copy").show();
+            jQuery("#modify").show();
+            jQuery("#delete").show();
+
+            jQuery("#copy_actual").hide();
+            jQuery("#modify_actual").hide();
+            jQuery("#delete_actual").hide();
+
+        });
+        $("#actuals").click(function () {
+            jQuery("#list4").jqGrid('setGridParam', { 'url': "http://127.0.0.1:8000/alist" });
+            jQuery("#list4").jqGrid('setCaption', 'Editing Actual entries..');
+            DataGrid.trigger("reloadGrid");
+
+            jQuery("#copy").hide();
+            jQuery("#modify").hide();
+            jQuery("#delete").hide();
+
+            jQuery("#copy_actual").show();
+            jQuery("#modify_actual").show();
+            jQuery("#delete_actual").show();
+        });
+    });
+
+
+
+    function goto(location) {
+       
+    }
+
+</script>
+
+<body id="body">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/launcher/"><h31N>Home</h31N></a></li>
+                    <li><a href="/actuals/"><h31N>Add Actual</h31N></a></li>
+                    <li><a href="/cash/"> <h31N>Add Cashflow</h31N></a></li>
+                    <li><a href="/calen/"><h31N>Calendar</h31N></a></li>
+                    <li class="active"><a href="/categ/"><h31N>Corrections</h31N></a></li>
+                    <li><a href="/report/"><h31N>Reports</h31N></a></li>
+                    <li><a href="/pie/"><h31N>Charts</h31N></a></li>
+                 <li><a href="/contact/"><h31N>Contact us</h31N></a></li>
+                    <li><a href="/logout/"><h31N>logout</h31N></a></li>
+
+
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>3
+    </div>
+    <div class="container">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+    <div class="container">
+        <p class="text-center">
+            <button type="button" class="btn btn-default btn-lg" id="planned">   <h34>EDIT PLANNED CASHFLOW</h34></button>
+            <button type="button" class="btn btn-default btn-lg" id="actuals"> <h34>CORRECT ACTUALS      </h34></button>
+        </p>
+        
+    </div>
+    <div class="container">
+        <table id="list4"></table>
+        <div id="pager"></div>
+    </div>
+    <br />
+    <br />
+    <div class="container">
+ 
+         <p class="text-center" >
+            <button type="button" class="btn btn-success" id="copy">   <h31>COPY</h31></button>
+            <button type="button" class="btn btn-warning" id="modify"> <h31>MODIFY</h31></button>
+            <button type="button" class="btn btn-danger" id="delete"> <h31>DELETE</h31></button>
+        </p>
+
+        <p class="text-center">
+            <button type="button" class="btn btn-success" id="copy_actual">   <h31>COPY</h31></button>
+            <button type="button" class="btn btn-warning" id="modify_actual"> <h31>MODIFY</h31></button>
+            <button type="button" class="btn btn-danger" id="delete_actual"> <h31>DELETE</h31></button>
+        </p>
+
+    </div>
+</body>
+</html>

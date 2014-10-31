@@ -129,8 +129,8 @@ def cashactuals(request):
         
             default_items                   = model_to_dict(actual_item)
             
-            default_items['user']          = request.user
-            default_items['corpid']        = '123' 
+            default_items['user']           = request.user
+            default_items['corpid']         = request.user.get_corpid()
             default_items['cashflow_id']    = request.GET['id']
             default_items['actualamount']   = request.POST['actualamount']
             default_items['acurrency']      = request.user.get_currency()
@@ -142,12 +142,11 @@ def cashactuals(request):
         else:
             
             default_items = request.POST.copy()
-            default_items['user']        = request.user
-            default_items['corpid']      = '123' 
-        
+            default_items['user']               = request.user
+            default_items['corpid']             = request.user.get_corpid()
             default_items['amount']             = "0.01"
             default_items['currency']           = request.user.get_currency()
-            default_items['acurrency']      = request.user.get_currency()
+            default_items['acurrency']          = request.user.get_currency()
             default_items['frequency']          = "W"
             default_items['fdate']              = datetime.date.today()
             default_items['cashflow_id']        = random.randint(90000, 99999)
@@ -163,7 +162,7 @@ def cashactuals(request):
             if 'L' in request.GET:
                 return HttpResponseRedirect("/launcher/")
             else:
-                msg='Entry recoreded'    
+                msg='Entry Saved'
                 return render_to_response('actual.html',({'form': form,'msg':msg}),context_instance=RequestContext(request))
         else:
             msg=form.errors    
@@ -178,12 +177,12 @@ def cashactuals(request):
             
             initial_values                  =model_to_dict(formdata)
             initial_values['actualamount']  =initial_values['amount']
-            initial_values['acurrency']     =initial_values['currency']
+            initial_values['acurrency']     =request.user.get_currency()
             initial_values['notes1']        =id_to_display
-            
-            form = ActualForm(initial_values,initial=({'user':request.user,'currency':initial_values['currency']}))
+
+            form = ActualForm(initial_values,initial=({'user':request.user,'corpid':request.user.get_corpid(),'currency':initial_values['currency']}))
         else:
-            form = ActualForm(initial=({'user':request.user,'currency':request.user.get_currency()}))
+            form = ActualForm(initial=({'user':request.user,'corpid':request.user.get_corpid(),'currency':request.user.get_currency()}))
             
         return render_to_response('actual.html', {'form': form},context_instance=RequestContext(request))
 #**********************************************************************************************#
@@ -239,7 +238,7 @@ def cash(request):
             form            =   NewCashForm(intial_values)
             return render_to_response('cash.html', {'form': form},context_instance=RequestContext(request))
         
-        msg='Please fill in the details of planned expense'
+        msg=''
         return render_to_response('cash.html', ({'form': form,'errors':errors,'msg':msg}),context_instance=RequestContext(request))
 #**********************************************************************************************#
 #                               Create your views here.                                        #
@@ -252,10 +251,10 @@ def events(request):
         url='/report'+'?'+'today'+'='+item.fdate.isoformat()
         if item.direction == 'I':
             
-            dict = { 'title' : 'Inflow   ' + str(item.value) + ' USD' , 'start':item.fdate.isoformat(), 'color':'#228B22' , 'url':url}
+            dict = { 'title' : 'Inflow   ' + str(item.value) + request.user.get_currency() , 'start':item.fdate.isoformat(), 'color':'#228B22' , 'url':url}
             event_list.append(dict)
         else:
-            dict = { 'title' : 'Outflow   ' + str(item.value) + ' USD' , 'start':item.fdate.isoformat(), 'color':'#CD5C5C' , 'url':url}
+            dict = { 'title' : 'Outflow   ' + str(item.value) + request.user.get_currency() , 'start':item.fdate.isoformat(), 'color':'#CD5C5C' , 'url':url}
             event_list.append(dict)
     
     json_data=jsonpickle.encode(event_list, unpicklable=False, make_refs=False)
@@ -301,17 +300,17 @@ def addcateg(request):
     if request.method == 'POST':
         default_values = request.POST.copy()
         default_values['user']=request.user
-        default_values['corpid']='corpi'
+        default_values['corpid']= request.user.get_corpid()
         form=NewExpenseCategoryForm(default_values)
         if form.is_valid():
             newcateg = form.save()
-            msg="Database Updated"
+            form = NewCashForm()
+            return render_to_response('cash.html', {'form':form},context_instance=RequestContext(request))
         else:
-            msg=form.errors
-        return render_to_response('cash.html',({'form': form,'errors':errors,'msg':msg}),context_instance=RequestContext(request))
+            msg='Entry already exists'
+        return render_to_response('addcateg.html',({'form': form,'msg':msg}),context_instance=RequestContext(request))
     else:
         form=NewExpenseCategoryForm( )
-#       return render_to_response('categ.html', {'form':form},context_instance=RequestContext(request))
         return render_to_response('addcateg.html', {'form':form},context_instance=RequestContext(request))
 #**********************************************************************************************#
 #                               Create your views here.                                        #
@@ -339,7 +338,6 @@ def pie(request):
 #**********************************************************************************************#
 #                               Create your views here.                                        #
 #**********************************************************************************************#
-@login_required(login_url='/home/')
 def register(request):
     if request.method=='POST':
         default_values=request.POST.copy()
@@ -377,7 +375,6 @@ class report_item:
 
 @login_required(login_url='/home/')
 def report(request):
-
     sum=cnt=0
     diff=0
     running_plan=0

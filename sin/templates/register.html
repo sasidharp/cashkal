@@ -1,0 +1,90 @@
+﻿                    {% load crispy_forms_tags %}
+					<!DOCTYPE html>
+                    <html>
+                    <head lang="en">
+                        <head>
+                            <title></title>
+                            <link rel="stylesheet" href="http://trirand.com/blog/jqgrid/themes/ui.jqgrid.css">
+                            <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/base/jquery-ui.css">
+                            <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+                            <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                            <script src="http://trirand.com/blog/jqgrid/js/jquery.jqGrid.min.js"></script>
+                            <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+                            <script src="http://www.trirand.com/blog/jqgrid/js/i18n/grid.locale-en.js"></script>
+                            <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:700,400' rel='stylesheet' type='text/css'>
+                          <link rel="stylesheet" href="http://127.0.0.1:8000/static/paycal.css">
+
+                    </head>
+                    </head>
+                    
+                       <script>
+                        $(document).ready(function(){
+                           $( "#id_TypeofOrg" ).change(function () {
+                                if ($( "#id_TypeofOrg" ).val() == 1) {
+                                    $("#id_name1").prop('disabled',true);
+                                    $("#id_name2").prop('disabled',true);
+                                    $("#id_name3").prop('disabled',true)
+
+                                    $("#id_first_name").prop('disabled',false);
+                                    $("#id_last_name").prop('disabled',false);
+                                    $("#id_middle_name").prop('disabled',false);
+
+                                } 
+                                
+                                else if ($("#id_TypeofOrg").val() == 2)
+                                {
+                                    $( "#id_first_name" ).prop('disabled',true);
+                                    $( "#id_last_name" ).prop('disabled',true);
+                                    $( "#id_middle_name" ).prop('disabled',true);
+
+                                    $("#id_name1").prop('disabled',false);
+                                    $("#id_name2").show();
+                                    $("#id_name3").show();
+
+                                }
+                            });
+                        });
+
+					</script>
+                    <body id="body">
+                           <div class="navbar navbar-inverse navbar-fixed-top">
+                            <div class="container">
+                                <div class="navbar-header">
+                                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                    </button>
+                                </div>
+                                <div class="collapse navbar-collapse">
+                                    <ul class="nav navbar-nav">
+                                    <li><h31N>Welcome to paycal. Register Free</h31N> </li>
+                                     </ul>
+                                </div><!--/.nav-collapse -->
+                            </div>3
+                        </div>
+                    <div class="container">
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    </div>	
+                    <div class="container">	
+                      <h31>{{ msg }}</h31>
+						<div class="table">
+                            <h31>  <!--{{form}} -->{% crispy form %} </h31>
+						  </div>
+				  </div>
+							 </div>
+
+                    <div class="footer">
+        <p>&copy; Company 2014</p>
+      </div>
+                    
+					</body>
+                    </html>

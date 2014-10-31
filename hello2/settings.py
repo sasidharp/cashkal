@@ -61,19 +61,28 @@ import dj_database_url
 DATABASES = {
     "default": dj_database_url.config(default='postgres://localhost'),
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
 # Static asset configuration
-STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
 TEMPLATE_DIRS=(
-    os.path.join(os.path.dirname(BASE_DIR),"static","templates"),
+    os.path.join(os.path.dirname(BASE_DIR),"sin","templates"),
 )
 
 
-
+if DEBUG:
+    # STATIC_ROOT=os.path.join(os.path.dirname(BASE_DIR),"static","static-only")
+    # STATICFILES_DIRS=(
+    #                   os.path.join(os.path.dirname(BASE_DIR),"static","static"),
+    #                   )
+    STATIC_ROOT='C:\\Users\\sapurana.FAREAST\\work\\arcanecove1279\\arcane-cove-1279\\sin'
+    STATICFILES_DIRS= ( 'C:\\Users\\sapurana.FAREAST\\work\\arcanecove1279\\arcane-cove-1279\\sin\\css',)
