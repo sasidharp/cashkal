@@ -59,8 +59,7 @@ def cashlist(request):
 #   create an array to hold the table data  
     rows=[]
 #   get the records from the MYCASHFLOW table
-    today_date = date.isoformat(datetime.date.today())
-    raw_sql="SELECT * FROM user_mycashflow where fdate <= '{today_date}' and notes1 = '' and user = '{username}'".format(today_date=today_date , username=request.user)
+    raw_sql="""SELECT * FROM user_mycashflow where fdate <= '{today_date}' and "user" = '{username}'""".format(today_date=datetime.date.today(),username=request.user)
     row_list = MYCASHFLOW.items.raw(raw_sql)
 #   append them into row
     total=1
@@ -87,29 +86,32 @@ def cashlist(request):
 #**********************************************************************************************#
 @login_required(login_url='/home/')
 def actuallist(request):
-#   create an array to hold the table data  
+#   create an array to hold the table data
     rows=[]
 #   get the records from the MYCASHFLOW table
-    row_list = cashflow_actuals.items.all()
+    raw_sql="""SELECT * FROM user_cashflow_actuals where "user" = '{username}'""".format(username=request.user)
+    row_list = cashflow_actuals.items.raw(raw_sql)
 #   append them into row
     total=1
     for row_item in row_list:
         row_dict = model_to_dict(row_item, (), ())
 #   Append to the row list
+        if row_dict['direction'] == 'I':
+            row_dict['direction'] = 'Inflow'
+        elif row_dict['direction'] == 'O':
+            row_dict['direction'] = 'Outflow'
+
+        row_dict['amount'] = row_dict['actualamount']
+        row_dict['amount'] = row_dict['amount'].__str__()
+
         total=total+1
-        rows.append(row_dict)   
-        pages=1
+        rows.append(row_dict)
+    pages=1
     records=total
-   
-    json_data = jdata(total, pages, records, rows) 
-    
+    json_data = jdata(total, pages, records, rows)
+
     data = jsonpickle.encode(json_data, unpicklable=False, make_refs=False, keys=False)
     return HttpResponse(data, content_type='application/json')
-#     cash_formset = modelformset_factory(MYCASHFLOW,can_order=True,can_delete=True)
-#     formset = cash_formset(queryset=MYCASHFLOW.items.all())
-#     return render_to_response('cashlist.html', {'formset': formset})
-#     return render_to_response('list.html',{'json':data})
-#     return  HttpResponse(data,content_type='application/json')
 #**********************************************************************************************#
 #                               Create your views here.                                        #
 #**********************************************************************************************#
@@ -180,6 +182,17 @@ def cashactuals(request):
             initial_values['notes1']        =id_to_display
 
             form = ActualForm(initial_values,initial=({'user':request.user,'corpid':request.user.get_corpid(),'currency':initial_values['currency']}))
+
+        elif 'delete' in request.GET:
+            form=cashflow_actuals.items.get(id=request.GET['delete'])
+            form.delete()
+            return HttpResponseRedirect("/categ/")
+        elif 'modify' in request.GET:
+            instance=cashflow_actuals.items.get(id=request.GET['modify'])
+            intial_values   =   model_to_dict(instance)
+            form=ActualForm(initial=intial_values)
+            return render_to_response('actual.html',({'form': form,'msg':msg}),context_instance=RequestContext(request))
+
         else:
             form = ActualForm(initial=({'user':request.user,'corpid':request.user.get_corpid(),'currency':request.user.get_currency()}))
             
@@ -195,7 +208,7 @@ def cash(request):
     if request.method=='POST':
         default_values                = request.POST.copy()
         default_values['user']        = request.user
-        default_values['corpid']      = '123'
+        default_values['corpid']      = request.user.get_corpid()
         default_values['parent']      ='P'
         default_values['currency']    = request.user.get_currency()
        
@@ -245,7 +258,7 @@ def cash(request):
 @login_required(login_url='/home/')
 def events(request):
     event_list=[]
-    calendar_items = MYCASHFLOW.items.raw("SELECT  SUM(id) , direction , fdate ,  SUM(amount) as value FROM user_mycashflow GROUP BY fdate,direction ORDER by fdate")
+    calendar_items = MYCASHFLOW.items.raw("SELECT  id , direction , fdate ,  SUM(amount) as value FROM user_mycashflow GROUP BY fdate,direction,id ORDER by fdate")
     for item in calendar_items:
         url='/report'+'?'+'today'+'='+item.fdate.isoformat()
         if item.direction == 'I':
@@ -303,10 +316,9 @@ def addcateg(request):
         form=NewExpenseCategoryForm(default_values)
         if form.is_valid():
             newcateg = form.save()
-            form = NewCashForm()
-            return render_to_response('cash.html', {'form':form},context_instance=RequestContext(request))
+            return HttpResponseRedirect("/cash/")
         else:
-            msg='Entry already exists'
+            msg='Invalid categ'
         return render_to_response('addcateg.html',({'form': form,'msg':msg}),context_instance=RequestContext(request))
     else:
         form=NewExpenseCategoryForm( )
@@ -456,7 +468,9 @@ def report(request):
 def overallchartdata(request):
     chart_data={}
     json_data= "none"
-    row_data = MYCASHFLOW.items.raw("SELECT  id , category_id ,   SUM(amount) as value FROM user_mycashflow GROUP BY category_id ORDER by fdate")
+    raw_stmt="""SELECT  DISTINCT ON (category_id) category_id  , id  , (select SUM(amount) from user_mycashflow where category_id = a.category_id and "user" = '{user}') as value from user_mycashflow
+                    as a where "user" = '{user}' group by  category_id , id order by category_id""".format(user=request.user)
+    row_data = MYCASHFLOW.items.raw(raw_stmt)
     final_chart_data=[]
     chart_rows_data=[]
     chart_cols_data=[]
@@ -466,7 +480,7 @@ def overallchartdata(request):
     for row in row_data:
         cell_data=[]
         cell_data.append({'v':expense_categories.items.get(id=row.category_id).__unicode__()})
-        cell_data.append({'v':row.value})
+        cell_data.append({'v':int(row.value)})
         chart_rows_data.append({'c':cell_data})
         
     final_chart_data.append(chart_cols_data)
@@ -480,7 +494,9 @@ def overallchartdata(request):
 def overallchartactual(request):
     chart_data={}
     json_data= "none"
-    row_data = cashflow_actuals.items.raw("SELECT  id , category_id ,   SUM(amount) as value FROM user_cashflow_actuals GROUP BY category_id ORDER by fdate")
+    raw_stmt="""SELECT  DISTINCT ON (category_id) category_id  , id  , (select SUM(actualamount) from user_cashflow_actuals where category_id = a.category_id and "user" = '{user}') as value from user_cashflow_actuals
+                    as a where "user" = '{user}' group by  category_id , id order by category_id""".format(user=request.user)
+    row_data = cashflow_actuals.items.raw(raw_stmt)
     final_chart_data=[]
     chart_rows_data=[]
     chart_cols_data=[]
@@ -490,7 +506,7 @@ def overallchartactual(request):
     for row in row_data:
         cell_data=[]
         cell_data.append({'v':expense_categories.items.get(id=row.category_id).__unicode__()})
-        cell_data.append({'v':row.value})
+        cell_data.append({'v':int(row.value)})
         chart_rows_data.append({'c':cell_data})
 
     final_chart_data.append(chart_cols_data)
@@ -505,7 +521,9 @@ def overallchartactual(request):
 def chartbydirection(request):
     chart_data={}
     json_data= "none"
-    row_data = MYCASHFLOW.items.raw("SELECT  id , direction ,   SUM(amount) as value FROM user_mycashflow GROUP BY direction ORDER by fdate")
+    raw_stmt="""SELECT  DISTINCT ON (direction) direction  , id  , (select SUM(amount) from user_mycashflow where direction = a.direction and "user" = '{user}') as value from user_mycashflow
+                    as a where "user" = '{user}' group by  direction , id order by direction""".format(user=request.user)
+    row_data = MYCASHFLOW.items.raw(raw_stmt)
     final_chart_data=[]
     chart_rows_data=[]
     chart_cols_data=[]
@@ -519,7 +537,7 @@ def chartbydirection(request):
         else:
             row.direction = 'Expenses'
         cell_data.append({'v':row.direction})
-        cell_data.append({'v':row.value})
+        cell_data.append({'v':str(row.value)})
         chart_rows_data.append({'c':cell_data})
         
     final_chart_data.append(chart_cols_data)
@@ -532,10 +550,13 @@ def chartbydirection(request):
 #                               Create your views here.                                        #
 #**********************************************************************************************#
 def trend(request):
+    from django.db import connection
     import calendar
     chart_data={}
     json_data= "none"
-    row_data = MYCASHFLOW.items.raw("select  id  , sum(amount) as monthval , strftime('%m',fdate) as month from user_mycashflow group by strftime('%m',fdate)")
+    cursor = connection.cursor()
+    cursor.execute("""select extract(month from fdate) as month,extract(year from fdate) as yyyy,sum(amount) as monthval from user_mycashflow group by 1,2""")
+    row_data = cursor.fetchall()
     final_chart_data=[]
     chart_rows_data=[]
     chart_cols_data=[]
@@ -543,11 +564,10 @@ def trend(request):
     chart_cols_data.append(({'type':'number','label':'Actual'}))
     chart_cols_data.append(({'type':'number','label':'Planned'}))
     for row in row_data:
-        month = row.month
-        month.strip('0')
+        month = row[0]
         cell_data=[]
         cell_data.append({'v':calendar.month_name[int(month)]})
-        cell_data.append({'v':row.monthval})
+        cell_data.append({'v':int(row[2])})
         cell_data.append({'v':'5000'})
         chart_rows_data.append({'c':cell_data})
     final_chart_data.append(chart_cols_data)

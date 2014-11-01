@@ -19,14 +19,14 @@
 
         //Table Object
         jQuery("#list4").jqGrid({
-            url: 'http://127.0.0.1:8000/list/',
+            url: '/list/',
             datatype: "json",
             colNames: ['Identifier', 'Forecasted Date', 'Type', 'Amount', 'Currency', 'Recipient/Payer', 'Telephone', 'email', 'city'],
             colModel: [
                 { name: 'id', index: 'id', width: 20 },
                 { name: 'fdate', index: 'fdate', width: 20 },
                 { name: 'direction', index: 'direction', width: 10 },
-                { name: '', index: 'amount', width: 30 },
+                { name: 'amount', index: 'amount', width: 30 },
                 { name: 'currency', index: 'currency', width: 10 },
                 { name: 'recipient', index: 'recipient', width: 75, align: "right" },
                 { name: 'telephone', index: 'telephone', width: 20, align: "right" },
@@ -52,11 +52,11 @@
         jQuery("#modify_actual").hide();
         jQuery("#delete_actual").hide();
 
-        //     DataGrid.jqGrid('navGrid', "#pager", { edit: true, del: true }, { url: 'http://127.0.0.1:8000/cash/' }, { url: 'http://127.0.0.1:8000/cash/' });
+        //     DataGrid.jqGrid('navGrid', "#pager", { edit: true, del: true }, { url: '/cash/' }, { url: '/cash/' });
 
         $("#btncalen").click(
                      function () {
-                         window.location.href = "http://127.0.0.1:8000/calen/";
+                         window.location.href = "/calen/";
                      }
                       );
 
@@ -64,39 +64,39 @@
         
         $("#copy").click(function (rowID) {
             var id = jQuery("#list4").jqGrid('getGridParam', 'selrow');
-            window.location.href = "http://127.0.0.1:8000/cash?N=" + id;
+            window.location.href = "/cash?N=" + id;
             });
 
         $("#modify").click(function (rowID) {
             var id = jQuery("#list4").jqGrid('getGridParam', 'selrow');
-            window.location.href = "http://127.0.0.1:8000/cash?modify=" + id;
+            window.location.href = "/cash?modify=" + id;
         });
 
     
         $("#delete").click(function (rowID) {
             var id = jQuery("#list4").jqGrid('getGridParam', 'selrow');
-            window.location.href = "http://127.0.0.1:8000/cash?delete=" + id;
+            window.location.href = "/cash?delete=" + id;
         });
 
 
         $("#copy_actual").click(function (rowID) {
             var id = jQuery("#list4").jqGrid('getGridParam', 'selrow');
-            window.location.href = "http://127.0.0.1:8000/actual?N=" + id;
+            window.location.href = "/actuals?N=" + id;
         });
 
         $("#modify_actual").click(function (rowID) {
             var id = jQuery("#list4").jqGrid('getGridParam', 'selrow');
-            window.location.href = "http://127.0.0.1:8000/actual?modify=" + id;
+            window.location.href = "/actuals?modify=" + id;
         });
 
 
         $("#delete_actual").click(function (rowID) {
             var id = jQuery("#list4").jqGrid('getGridParam', 'selrow');
-            window.location.href = "http://127.0.0.1:8000/actual?delete=" + id;
+            window.location.href = "/actuals?delete=" + id;
         });
 
          $("#planned").click(function () {
-            jQuery("#list4").jqGrid('setGridParam', { 'url': "http://127.0.0.1:8000/list" });
+            jQuery("#list4").jqGrid('setGridParam', { 'url': "/list" });
             jQuery("#list4").jqGrid('setCaption', 'Editing Planned entries..');
             DataGrid.trigger("reloadGrid");
 
@@ -110,7 +110,7 @@
 
         });
         $("#actuals").click(function () {
-            jQuery("#list4").jqGrid('setGridParam', { 'url': "http://127.0.0.1:8000/alist" });
+            jQuery("#list4").jqGrid('setGridParam', { 'url': "/alist" });
             jQuery("#list4").jqGrid('setCaption', 'Editing Actual entries..');
             DataGrid.trigger("reloadGrid");
 
@@ -118,7 +118,6 @@
             jQuery("#modify").hide();
             jQuery("#delete").hide();
 
-            jQuery("#copy_actual").show();
             jQuery("#modify_actual").show();
             jQuery("#delete_actual").show();
         });

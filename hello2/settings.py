@@ -61,7 +61,16 @@ import dj_database_url
 DATABASES = {
     "default": dj_database_url.config(default='postgres://localhost'),
 }
-
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'django',
+#         'USER': 'postgres',
+#         'PASSWORD': 'sasidhar',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
