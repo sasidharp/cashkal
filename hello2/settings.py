@@ -87,6 +87,7 @@ TEMPLATE_DIRS=(
     os.path.join(os.path.dirname(BASE_DIR),"sin","templates"),
 )
 
+STATIC_ROOT = os.path.join(BASE_DIR,'sin')
 
 if DEBUG:
     # STATIC_ROOT=os.path.join(os.path.dirname(BASE_DIR),"static","static-only")
