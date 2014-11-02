@@ -82,13 +82,19 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 ALLOWED_HOSTS = ['*']
 # Static asset configuration
 STATIC_URL = '/static/'
+
+# TEMPLATE_DIRS=(
+#     os.path.join(os.path.dirname(BASE_DIR),"sin","templates"),
+# )
+
+# To be deleted
 TEMPLATE_DIRS=(
-    os.path.join(os.path.dirname(BASE_DIR),"sin","templates"),
+    os.path.join(os.path.dirname(BASE_DIR),"staticfiles","templates"),
 )
 
-STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR),'sin')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
-STATICFILES_DIRS= ( os.path.join(BASE_DIR,'sin','css'), )
+STATICFILES_DIRS= ( os.path.join(BASE_DIR,'staticfiles','css'), )
 # if DEBUG:
 #     # STATIC_ROOT=os.path.join(os.path.dirname(BASE_DIR),"static","static-only")
 #     # STATICFILES_DIRS=(
