@@ -16,7 +16,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 SECRET_KEY = '^pof(fakcox5^bb5d1x^wuh@xk+0#o(a&yrz*_+of4pn50rl%+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 TEMPLATE_CONTEXT_PROCESSORS = ('django.core.context_processors.request',
                                'django.contrib.auth.context_processors.auth')
 TEMPLATE_DEBUG = True
@@ -56,20 +56,20 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 # Parse database configuration from $DATABASE_URL
-import dj_database_url
-DATABASES = {
-    "default": dj_database_url.config(default='postgres://localhost'),
-}
+# import dj_database_url
 # DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'django',
-#         'USER': 'postgres',
-#         'PASSWORD': 'sasidhar',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#     }
+#     "default": dj_database_url.config(default='postgres://localhost'),
 # }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'django',
+        'USER': 'postgres',
+        'PASSWORD': 'sasidhar',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
@@ -87,11 +87,12 @@ TEMPLATE_DIRS=(
 )
 
 STATIC_ROOT = os.path.join(BASE_DIR,'sin')
-
-if DEBUG:
-    # STATIC_ROOT=os.path.join(os.path.dirname(BASE_DIR),"static","static-only")
-    # STATICFILES_DIRS=(
-    #                   os.path.join(os.path.dirname(BASE_DIR),"static","static"),
-    #                   )
-    STATIC_ROOT='C:\\Users\\sapurana.FAREAST\\work\\arcanecove1279\\arcane-cove-1279\\sin'
-    STATICFILES_DIRS= ( 'C:\\Users\\sapurana.FAREAST\\work\\arcanecove1279\\arcane-cove-1279\\sin\\css',)
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+STATICFILES_DIRS= ( os.path.join(BASE_DIR,'sin','css'), )
+# if DEBUG:
+#     # STATIC_ROOT=os.path.join(os.path.dirname(BASE_DIR),"static","static-only")
+#     # STATICFILES_DIRS=(
+#     #                   os.path.join(os.path.dirname(BASE_DIR),"static","static"),
+#     #                   )
+#     STATIC_ROOT='C:\\Users\\sapurana.FAREAST\\work\\arcanecove1279\\arcane-cove-1279\\sin'
+#     STATICFILES_DIRS= ( 'C:\\Users\\sapurana.FAREAST\\work\\arcanecove1279\\arcane-cove-1279\\sin\\css',)
