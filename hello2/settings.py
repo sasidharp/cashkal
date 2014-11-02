@@ -86,7 +86,7 @@ TEMPLATE_DIRS=(
     os.path.join(os.path.dirname(BASE_DIR),"sin","templates"),
 )
 
-STATIC_ROOT = os.path.join(BASE_DIR,'sin')
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR),'sin')
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 STATICFILES_DIRS= ( os.path.join(BASE_DIR,'sin','css'), )
 # if DEBUG:
