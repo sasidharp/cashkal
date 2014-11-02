@@ -1,5 +1,4 @@
-﻿                {% load static from staticfiles %}
-                <!DOCTYPE html>
+﻿                <!DOCTYPE html>
                     <html>
                      <head>
                             <title></title>
@@ -12,7 +11,8 @@
                             <script src="http://www.trirand.com/blog/jqgrid/js/i18n/grid.locale-en.js"></script>
                             <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:700,400' rel='stylesheet' type='text/css'>
                             <!--<link rel="stylesheet" href="http://res.cloudinary.com/dplpgfwpy/raw/upload/v1413397740/paycal_zmrty0.css">-->
-                            <link rel="stylesheet" href="{% static "paycal.css" %}">
+                            {% load static from staticfiles %}
+                            <link rel="stylesheet" href="{% static "css/paycal.css" %}" >
 
 
                      </head>
