@@ -89,7 +89,7 @@ STATIC_URL = '/static/'
 
 # To be deleted
 TEMPLATE_DIRS=(
-    os.path.join(os.path.dirname(BASE_DIR),"staticfiles","templates"),
+    os.path.join(os.path.dirname(BASE_DIR),"sin","templates"),
 )
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
