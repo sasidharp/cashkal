@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>test</title>
+    <title>Payment Calendar</title>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <link rel="stylesheet" href="http://trirand.com/blog/jqgrid/themes/ui.jqgrid.css">
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/base/jquery-ui.css">
@@ -15,7 +15,9 @@
     <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.1.1/fullcalendar.css' />
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.3/moment.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.1.1/fullcalendar.js"></script>
-    <link rel="stylesheet" href="http://127.0.0.1:8000/static/paycal.css">
+    {% load static from staticfiles %}
+    <link rel="stylesheet" href="{% static "css/paycal.css" %}">
+
 </head>
 <body id="body">
     <script>
