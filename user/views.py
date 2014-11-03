@@ -258,7 +258,7 @@ def cash(request):
 @login_required(login_url='/home/')
 def events(request):
     event_list=[]
-    rawstmt="""SELECT  id , direction , fdate ,  SUM(amount) as value FROM user_mycashflow WHERE "user" = '{user_name}' GROUP BY fdate,direction,id ORDER by fdate".format(user_name=request.name)"""
+    rawstmt="""SELECT  id , direction , fdate ,  SUM(amount) as value FROM user_mycashflow WHERE "user" = '{user_name}' GROUP BY fdate,direction,id ORDER by fdate""".format(user_name=request.name)
     calendar_items = MYCASHFLOW.items.raw(rawstmt)
     for item in calendar_items:
         url='/report'+'?'+'today'+'='+item.fdate.isoformat()
