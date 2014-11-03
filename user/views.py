@@ -258,7 +258,8 @@ def cash(request):
 @login_required(login_url='/home/')
 def events(request):
     event_list=[]
-    calendar_items = MYCASHFLOW.items.raw("SELECT  id , direction , fdate ,  SUM(amount) as value FROM user_mycashflow GROUP BY fdate,direction,id ORDER by fdate")
+    rawstmt="SELECT  id , direction , fdate ,  SUM(amount) as value FROM user_mycashflow WHERE user = '{user_name}' GROUP BY fdate,direction,id ORDER by fdate".format(user_name=request.name)
+    calendar_items = MYCASHFLOW.items.raw(rawstmt)
     for item in calendar_items:
         url='/report'+'?'+'today'+'='+item.fdate.isoformat()
         if item.direction == 'I':
@@ -397,10 +398,12 @@ def report(request):
         if ( request.POST['category_id'] != ""):
             row_data = MYCASHFLOW.items.filter(category_id=request.POST['category_id'],
                                                fdate__gte=request.POST['start_date'],
-                                               fdate__lte=request.POST['end_date'])
+                                               fdate__lte=request.POST['end_date'],
+                                               user=request.user)
         else:
             row_data = MYCASHFLOW.items.filter(fdate__gte=request.POST['start_date'],
-                                               fdate__lte=request.POST['end_date'])
+                                               fdate__lte=request.POST['end_date'],
+                                               user=request.user)
             
         for rows in row_data:
             if rows.direction == 'I':
