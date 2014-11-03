@@ -460,9 +460,10 @@ def report(request):
             form = ReportSelection( )
             return render_to_response("dailyreport.html",{'forms':form },context_instance=RequestContext(request))
         else:
-            items=MYCASHFLOW.items.filter(fdate=request.GET['today'])
+            items=MYCASHFLOW.items.filter(fdate=request.GET['today'],
+                                          user=request.user)
             for item in items:
-                row={'id':item.id,'date':item.fdate,'category_id':item.category_id,'amount':item.amount,'class':'line'}
+                row={'id':item.id,'date':item.fdate,'category_id':expense_categories.items.get(id=item.category_id),'amount':item.amount,'class':'line'}
                 dailyitems.append(row)
             return render_to_response("dailyreport.html",{'dailyitems':dailyitems},context_instance=RequestContext(request))
 #**********************************************************************************************#
