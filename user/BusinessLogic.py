@@ -51,7 +51,6 @@ def get_occurances(frequency, start_date, timelimit=730):
         elif frequency == 'Y':
             next_date = next_date + timedelta(days=365)
             newdate = next_date
-
         diff = newdate - start_date
         dates.append(newdate)
     return dates

@@ -35,7 +35,7 @@ def home(request):
                 login(request, user)
                 return HttpResponseRedirect("/launcher/")
             else:
-                return render_to_response('signup.html',({'form': form,'msg':msg}),context_instance=RequestContext(request))
+                return render_to_response('signup.html',locals(),context_instance=RequestContext(request))
     return render_to_response("signup.html",locals(),context_instance=RequestContext(request))
 #**********************************************************************************************#
 #                               Create your views here.                                        #
@@ -222,9 +222,10 @@ def cash(request):
         if form.is_valid():
                 id=form.save()
                 msg='Entry Saved'
-                create_forecasted_entries(form,id,request)
+                if form.cleaned_data['frequency'] != 'S':
+                    create_forecasted_entries(form,id,request)
                 form = NewCashForm()
-        else:   
+        else:
             msg=form.errors
             errors = form.errors
         
@@ -262,17 +263,21 @@ def cash(request):
 #**********************************************************************************************#
 @login_required(login_url='/home/')
 def events(request):
+    from django.db import connection
+    calendar_final=[]
     event_list=[]
-    rawstmt="""SELECT  id , direction , fdate ,  SUM(amount) as value FROM user_mycashflow WHERE "user" = '{user_name}' GROUP BY fdate,direction,id ORDER by fdate""".format(user_name=request.user)
-    calendar_items = MYCASHFLOW.items.raw(rawstmt)
+    raw_stmt ="""select fdate  ,  direction , sum(amount) as value  from user_mycashflow where "user" = '{user_name}'  group by fdate ,direction order by fdate , direction""".format(user_name=request.user)
+    cursor = connection.cursor()
+    cursor.execute(raw_stmt)
+    calendar_items = cursor.fetchall()
     for item in calendar_items:
-        url='/report'+'?'+'today'+'='+item.fdate.isoformat()
-        if item.direction == 'I':
+        url='/report'+'?'+'today'+'='+item[0].isoformat()
+        if item[1] == 'I':
             
-            dict = { 'title' : 'Inflow   ' + str(item.value) + request.user.get_currency() , 'start':item.fdate.isoformat(), 'color':'#228B22' , 'url':url}
+            dict = { 'title' : 'Inflow   ' + str(item[2]) + request.user.get_currency() , 'start':item[0].isoformat(), 'color':'#228B22' , 'url':url}
             event_list.append(dict)
         else:
-            dict = { 'title' : 'Outflow   ' + str(item.value) + request.user.get_currency() , 'start':item.fdate.isoformat(), 'color':'#CD5C5C' , 'url':url}
+            dict = { 'title' : 'Outflow   ' + str(item[2]) + request.user.get_currency() , 'start':item[0].isoformat(), 'color':'#CD5C5C' , 'url':url}
             event_list.append(dict)
     
     json_data=jsonpickle.encode(event_list, unpicklable=False, make_refs=False)
