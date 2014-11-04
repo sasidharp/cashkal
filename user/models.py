@@ -150,7 +150,8 @@ class MYCASHFLOW(models.Model):
                          ('B','Bi Weekly'),
                          ('Q','Quarterly'),
                          ('H','Half Yearly'),
-                         ('Y','Yearly'))
+                         ('Y','Yearly'),
+                         ('S','Custom'))
     
     frequency=models.CharField(max_length=1,null=False,blank=False,verbose_name='FREQUENCY',choices=accepted_frequency,default='C')
     fdate=models.DateField(default=datetime.date.today(), verbose_name='DATE')
@@ -237,7 +238,8 @@ class cashflow_actuals(models.Model):
                          ('B','Bi Weekly'),
                          ('Q','Quarterly'),
                          ('H','Half Yearly'),
-                         ('Y','Yearly'))
+                         ('Y','Yearly'),
+                         ('C','Custom'))
     
     frequency=models.CharField(max_length=1,null=False,blank=False,verbose_name='FREQUENCY',choices=accepted_frequency,default='C')
     fdate=models.DateField(default=datetime.date.today(), verbose_name='DATE')

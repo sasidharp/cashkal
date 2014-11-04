@@ -8,6 +8,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.6/ref/settings/
 """
 import os
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
@@ -22,7 +23,7 @@ TEMPLATE_CONTEXT_PROCESSORS = ('django.core.context_processors.request',
 TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
-AUTH_USER_MODEL='user.MyUser'
+AUTH_USER_MODEL = 'user.MyUser'
 # Application definition
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -57,11 +58,13 @@ USE_L10N = True
 USE_TZ = True
 # Parse database configuration from $DATABASE_URL
 import dj_database_url
+
 DATABASES = {
     "default": dj_database_url.config(default='postgres://localhost'),
 }
+
 # DATABASES = {
-#     'default': {
+# 'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
 #         'NAME': 'django',
 #         'USER': 'postgres',
@@ -88,13 +91,13 @@ STATIC_URL = '/static/'
 # )
 
 # To be deleted
-TEMPLATE_DIRS=(
-    os.path.join(os.path.dirname(BASE_DIR),"sin","templates"),
+TEMPLATE_DIRS = (
+    os.path.join(os.path.dirname(BASE_DIR), "sin", "templates"),
 )
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
-STATICFILES_DIRS= ( os.path.join(BASE_DIR,'staticfiles','css'), )
+STATICFILES_DIRS = ( os.path.join(BASE_DIR, 'staticfiles', 'css'), )
 # if DEBUG:
 #     # STATIC_ROOT=os.path.join(os.path.dirname(BASE_DIR),"static","static-only")
 #     # STATICFILES_DIRS=(

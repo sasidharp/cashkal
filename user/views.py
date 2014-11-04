@@ -20,7 +20,7 @@ from .BusinessLogic import jdata ,get_occurances
 #**********************************************************************************************#
 def logout1(request):
     logout(request)
-    return render_to_response("signup.html",locals(),context_instance=RequestContext(request))
+    return render_to_response("thankyou.html",locals(),context_instance=RequestContext(request))
 #**********************************************************************************************#
 #                               Create your views here.                                        #
 #**********************************************************************************************#
@@ -35,7 +35,7 @@ def home(request):
                 login(request, user)
                 return HttpResponseRedirect("/launcher/")
             else:
-                return HttpResponseRedirect("/register/")
+                return render_to_response('signup.html',({'form': form,'msg':msg}),context_instance=RequestContext(request))
     return render_to_response("signup.html",locals(),context_instance=RequestContext(request))
 #**********************************************************************************************#
 #                               Create your views here.                                        #
@@ -58,8 +58,13 @@ def home(request):
 def cashlist(request):
 #   create an array to hold the table data  
     rows=[]
+
 #   get the records from the MYCASHFLOW table
-    raw_sql="""SELECT * FROM user_mycashflow where fdate <= '{today_date}' and "user" = '{username}'""".format(today_date=datetime.date.today(),username=request.user)
+    if 'L' in request.GET :
+        raw_sql="""SELECT * FROM user_mycashflow where fdate <= '{today_date}' and "user" = '{username}'""".format(today_date=datetime.date.today(),username=request.user)
+    else:
+        raw_sql="""SELECT * FROM user_mycashflow where "user" = '{username}'""".format(today_date=datetime.date.today(),username=request.user)
+
     row_list = MYCASHFLOW.items.raw(raw_sql)
 #   append them into row
     total=1
@@ -431,13 +436,13 @@ def report(request):
 
         actuals_noref=cashflow_actuals.items.filter(cashflow_id__gte=90000)
         for noref_row in actuals_noref:
-                    if rows.direction == 'I':
+                    if noref_row.direction == 'I':
                         noref_row.amount = 1 * noref_row.amount    
                     else:
                         noref_row.amount = -1 * noref_row.amount    
                     item['id']=noref_row.cashflow_id
                     item['adate']=noref_row.fdate
-                    item['category_id']=expense_categories.items.get(id=rows.category_id)
+                    item['category_id']=expense_categories.items.get(id=noref_row.category_id)
                     item['actualamount']=noref_row.actualamount
                     xitem = report_item(item['adate'],item.copy())
                     dailyitems.append(xitem)
