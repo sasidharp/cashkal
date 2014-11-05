@@ -55,8 +55,8 @@ def home(request):
             else:
                 HttpResponse('our fault..will fix')
         else:
-            return render_to_response('signup.html',({'form':form},{'msg': form.errors }),context_instance=RequestContext(request))
-
+                HttpResponse(form.errors)
+      
     return render_to_response("signup.html",{'form':form},context_instance=RequestContext(request))
 #**********************************************************************************************#
 #                               Create your views here.                                        #
