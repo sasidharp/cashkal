@@ -26,6 +26,7 @@ def logout1(request):
 #**********************************************************************************************#
 # Redirects the page to main login window...singup.html page
 def home(request):
+    form=UserCreationForm()
     if request.method=='GET':
         if 'username' in request.GET:
             username = request.GET['username']
@@ -36,7 +37,27 @@ def home(request):
                 return HttpResponseRedirect("/launcher/")
             else:
                 return render_to_response('signup.html',locals(),context_instance=RequestContext(request))
-    return render_to_response("signup.html",locals(),context_instance=RequestContext(request))
+    else:
+        default_values = request.POST.copy()
+
+        default_values['last_login']   = datetime.datetime.today()
+        default_values['search1_tag']  = 'Initial'
+        default_values['search2_tag']  = 'Initial'
+
+        form=UserCreationForm(default_values)
+        if form.is_valid():
+            form.save()
+            # return render_to_response('signup.html',({'form':form},{'msg':'Registered'}),context_instance=RequestContext(request))
+            user = authenticate(username=form.cleaned_data['email'],password=form.cleaned_data['password1'])
+            if user:
+                login(request, user)
+                return HttpResponseRedirect("/launcher/")
+            else:
+                HttpResponse('our fault..will fix')
+        else:
+            return render_to_response('signup.html',({'form':form},{'msg': form.errors }),context_instance=RequestContext(request))
+
+    return render_to_response("signup.html",{'form':form},context_instance=RequestContext(request))
 #**********************************************************************************************#
 #                               Create your views here.                                        #
 #**********************************************************************************************#

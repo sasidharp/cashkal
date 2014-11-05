@@ -1,4 +1,4 @@
-﻿
+﻿  {% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,43 +18,31 @@
 
 
 </head>
-<body id="body">
+<body id="body1">
     <div class="container">
-        <h1>POWER YOUR STARTUP....                    </h1>
+        <h31N>POWER YOUR STARTUP....                    </h31N>
     </div>
-
-
     <br />
     <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8">
-                <div class="jumbotronx">
-                    <h1>Hello, welcome to paycal.com</h1>
-                    <h31>
-                        <p>
-                            simple , effient sfjjspofspofsopsufposuposupofuspufsiuoisuifuspoufdous
-                            fsiousoiusdfiufd lifjiusid fiousdoiusdsd  dsfifsdoiusdfoi  fsoiuoifsu fdiufdioufd
-                            ifoufioufd dioufdoiud iduifdu dfiufdioudg fudiudiougdidugdugd d
-                        </p>
-                    </h31>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-primary btn-lg" id="learnmore"><h3>LEARN MORE</h3></button>
-                    </div>
-                </div>
-                </div>
-
-
-                    <div class="col-md-4">
+    <div class="container-fluid">
+         <div class="jumbotron">
+         <div class="row">
+            <!--<div class="col-md-8">-->
+                <!--<div class="jumbotronx">-->
+                    <!--&lt;!&ndash;<h1>Hello, welcome to paycal.com</h1>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<h31>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<p>&ndash;&gt;-->
+                            <!--&lt;!&ndash;simple , effient sfjjspofspofsopsufposuposupofuspufsiuoisuifuspoufdous&ndash;&gt;-->
+                            <!--&lt;!&ndash;fsiousoiusdfiufd lifjiusid fiousdoiusdsd  dsfifsdoiusdfoi  fsoiuoifsu fdiufdioufd&ndash;&gt;-->
+                            <!--&lt;!&ndash;ifoufioufd dioufdoiud iduifdu dfiufdioudg fudiudiougdidugdugd d&ndash;&gt;-->
+                        <!--&lt;!&ndash;</p>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</h31>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<div class="btn-group">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<button type="button" class="btn btn-primary btn-lg" id="learnmore"><h3>LEARN MORE</h3></button>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                <!--</div>-->
+                <div class="col-md-4">
                         <div class="well">
                             <form class="form-signin">
                                 <h31 class="form-signin-heading">Sign in</h31>
@@ -62,25 +50,36 @@
                                 <input type="password" class="form-control" name="password" placeholder="Password" required="" />
                                 <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
                                 <div class="container">
-                                            <a href="/register/">register</a>
-                                            <a href="/help/">need help ?</a>
+                                    <a href="/help/">Need help ?</a>
                                     </div>
-                                </div>
+                              -  </div>
                             </form>
                         </div>
-                    </div>
+             <div class="col-md-2">
+                </div>
 
-     </div>
-        <div class="footer">
-            <div class="container">
-             </div>
-        </div>
-</div>
+             <div class="col-md-6">
+                <h31>{{ msg }}</h31>
+			        <div class="table">
+                            <h31>  <!--{{form}} -->{% crispy form %} </h31>
+					</div>
+                </div>
+ </div>
+    </div>
+ </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+<footer>Site Designed by Sasidhar Puranam</footer>
  <script>
     $("#register").click(function(){window.location.href="/register/";});
     $("#learnmore").click(function(){window.location.href="/contact/";});
 
 </script>
-
 </body>
 </html>
