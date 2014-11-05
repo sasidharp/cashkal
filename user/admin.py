@@ -55,17 +55,17 @@ class UserCreationForm(forms.ModelForm):
               
         self.helper.layout = Layout(
                                         TabHolder(
-                                                Tab('BASIC',
+                                                Tab('TRY FREE!',
                                                      Field('email',autofocus=True),
                                                      Field('password1',placeholder='password',required=True),
                                                      Field('password2',placeholder='Retype password',required=True),
                                                      FieldWithButtons('TypeofOrg'),
-                                                     Field('name1',placeholder='name1',required=True,css_class='form-horizontal'),
-                                                     Field('name2',placeholder='name2',required=True),
-                                                     # Field('name3',placeholder='name3',required=True),
-                                                     Field('first_name',placeholder='first name',required=True),
-                                                     Field('last_name',placeholder='last_name',required=True),
-                                                     # Field('middle_name',placeholder='middle_name',required=True),
+                                                     # Field('name1',placeholder='name1',required=True,css_class='form-horizontal'),
+                                                     # Field('name2',placeholder='name2',required=True),
+                                                     # # Field('name3',placeholder='name3',required=True),
+                                                     # Field('first_name',placeholder='first name',required=True),
+                                                     # Field('last_name',placeholder='last_name',required=True),
+                                                     # # Field('middle_name',placeholder='middle_name',required=True),
                                                      Field('currency',placeholder='USD',required=True), 
                                                      Field('corpid',placeholder='six character code',required=True),
                                                      # Field('title',placeholder='Mr',required=True),
@@ -76,7 +76,7 @@ class UserCreationForm(forms.ModelForm):
                                                      # Field('mobile',placeholder='mobile',required=True),
                                                      # Field('landline',placeholder='landline',required=True),
                                                      # Field('fax',placeholder='fax',required=True),
-                                                     Submit( name='SAVE', value='SAVE',type='Submit',css_class='btn btn-success'),
+                                                     Submit( name='REGISTER', value='REGISTER',type='Submit',css_class='btn btn-success'),
                                                      Reset( name='RESET', value='RESET',type='Submit',css_class='btn btn-danger')
                                                 
                                                 )
