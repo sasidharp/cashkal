@@ -43,7 +43,7 @@
                                 caption: "Convert to Actual ? click on required row",
                                 onSelectRow: function (rowId) {
                                       var rowData = DataGrid.jqGrid('getRowData', rowId);
-                                      var redirect_link = "http://127.0.0.1:8000/actuals/"
+                                      var redirect_link = "/actuals/"
                                       redirect_link = redirect_link + "?id=" + rowData.id +"&" +"Callback=L";
                                       window.location.href = redirect_link;
                                 }
