@@ -42,13 +42,13 @@ class MyUserManager(BaseUserManager):
 # *************************************************************************************
 class MyUser(AbstractBaseUser):
     email = models.EmailField(
-        verbose_name='email address',
+        verbose_name='Email',
         max_length=255,
         unique=True,
     )
     orghelps = (('1','Individual'),('2','Organization'))
     
-    TypeofOrg=models.CharField(max_length=1,blank=False,choices=orghelps,verbose_name='TYPE OF BUSINESS')
+    TypeofOrg=models.CharField(max_length=1,blank=False,choices=orghelps,verbose_name='Type of Org')
     
     name1=models.CharField(max_length=120,null=True,blank=True,verbose_name='NAME')
     name2=models.CharField(max_length=120,null=True,blank=True,verbose_name='NAME2')
@@ -61,8 +61,8 @@ class MyUser(AbstractBaseUser):
     search1_tag=models.CharField(max_length=20,verbose_name='SEARCH TERM1')
     search2_tag=models.CharField(max_length=20,verbose_name='SEARCH TERM2')
     
-    currency=models.CharField(max_length=4,verbose_name='DEFAULT CURRENCY')
-    corpid=models.CharField(max_length=20,verbose_name='CORPORATE ID')
+    currency=models.CharField(max_length=4,verbose_name='Currency')
+    corpid=models.CharField(max_length=20,verbose_name='Corp.Id')
     
     title=models.CharField(max_length=2,null=True,blank=True,verbose_name='TITLE')
     addr1=models.CharField(max_length=60,null=True,blank=True,verbose_name='ADDRESS LINE1')

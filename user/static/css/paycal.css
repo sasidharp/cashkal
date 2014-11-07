@@ -1,5 +1,16 @@
 <style>
-                             <style > h1 {
+                             <style > 
+
+			
+			html {
+				background: url(/static/css/bg.jpg) no-repeat center center fixed; 
+				-webkit-background-size: cover;
+				-moz-background-size: cover;
+				-o-background-size: cover;
+				background-size: cover;
+				}
+   
+			h1 {
                                  font-family: 'Roboto Condensed', sans-serif;
                                  color: white;
                              }
@@ -43,9 +54,14 @@
                                  background-color: #dfe3ee;
                              }
                             
-			    #body1 {
+			                #body1 {
                                  background-color:#3b5998;
                              }
+
+                            #banner {
+                                 background-color:#080808;
+                             }
+
                              .subtotal {
                                 background-color:#3b5998;
                                 border-color: #080808;
@@ -109,4 +125,5 @@
                              #calendar{
                              background-color:#f7f7f7;
                              }
+
                         </style>

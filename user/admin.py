@@ -19,7 +19,7 @@ class UserCreationForm(forms.ModelForm):
     """A form for creating new users. Includes all the required
     fields, plus a repeated password."""
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
+    password2 = forms.CharField(label='ReEnter',  widget=forms.PasswordInput)
 
     class Meta:
         model = MyUser
@@ -31,7 +31,7 @@ class UserCreationForm(forms.ModelForm):
         password1 = self.cleaned_data.get("password1")
         password2 = self.cleaned_data.get("password2")
         if password1 and password2 and password1 != password2:
-            raise forms.ValidationError("ding dong match")
+            raise forms.ValidationError("Passwords do not match, please check")
         return password2
 
     def save(self, commit=True):
@@ -52,10 +52,13 @@ class UserCreationForm(forms.ModelForm):
         self.helper.form_class='form-horizontal'
         self.helper.label_class = 'col-lg-2'
         self.helper.field_class = 'col-lg-8'
-              
+
+        corp_text  =  'Please explain the usage - this should be entered if' + 'mutiple users from your organization would be' + 'tasked with recording these entries. Also, that this' + 'ID would used to accumulate all records entred by'
+        corp_text  =  corp_text  + 'all individuals entering under the same corporate' +  'ID. The ID shouild be minimum 6 characters,' + 'alphanumeric, case sensitive and will be masked' + 'while entry'
+
         self.helper.layout = Layout(
-                                        TabHolder(
-                                                Tab('TRY FREE!',
+                                        # TabHolder(
+                                        #             Tab('',
                                                      Field('email',autofocus=True),
                                                      Field('password1',placeholder='password',required=True),
                                                      Field('password2',placeholder='Retype password',required=True),
@@ -66,8 +69,8 @@ class UserCreationForm(forms.ModelForm):
                                                      # Field('first_name',placeholder='first name',required=True),
                                                      # Field('last_name',placeholder='last_name',required=True),
                                                      # # Field('middle_name',placeholder='middle_name',required=True),
-                                                     Field('currency',placeholder='USD',required=True), 
-                                                     Field('corpid',placeholder='six character code',required=True),
+                                                     Field('currency',placeholder='USD',required=True,title='This is defaulted for all transactions, unless changed otherwise during entry'),
+                                                     Field('corpid',placeholder='six character code',required=True,title=corp_text),
                                                      # Field('title',placeholder='Mr',required=True),
                                                      # Field('fiscal_year',placeholder='year',required=True),
                                                      # Field('city',placeholder='city',required=True),
@@ -78,9 +81,12 @@ class UserCreationForm(forms.ModelForm):
                                                      # Field('fax',placeholder='fax',required=True),
                                                      Submit( name='REGISTER', value='REGISTER',type='Submit',css_class='btn btn-success'),
                                                      Reset( name='RESET', value='RESET',type='Submit',css_class='btn btn-danger')
-                                                
-                                                )
-                                 )
+
+                                                # )
+
+
+
+                                 # )
 )
 
 class UserChangeForm(forms.ModelForm):
