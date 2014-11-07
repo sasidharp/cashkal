@@ -36,7 +36,7 @@ def home(request):
                 login(request, user)
                 return HttpResponseRedirect("/launcher/")
             else:
-                return render_to_response('signlup.html',locals(),context_instance=RequestContext(request))
+                return render_to_response('signup.html',locals(),context_instance=RequestContext(request))
     else:
         default_values = request.POST.copy()
 
