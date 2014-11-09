@@ -8,7 +8,7 @@ from crispy_forms.bootstrap import StrictButton, PrependedAppendedText , FormAct
 from crispy_forms.layout import Div 
 from crispy_forms.bootstrap import Tab , TabHolder
 from crispy_forms.bootstrap import AppendedText,AppendedPrependedText,InlineField
-from .models import MyUser, MYCASHFLOW, expense_categories,cashflow_actuals,MyUser 
+from .models import MyUser, MYCASHFLOW, expense_categories,cashflow_actuals,MyUser,contact
 from django.forms.formsets import formset_factory
 import datetime
 from django.forms.widgets import Widget
@@ -20,9 +20,9 @@ class MyModelForm(forms.ModelForm):
         model = MyUser
 
 
-class MyOrgUser(MyUser):
-    pass1=models.CharField(max_length=120,null=True,blank=True,verbose_name='password1')
-    pass2=models.CharField(max_length=120,null=True,blank=True,verbose_name='password2')
+# class MyOrgUser(MyUser):
+#     pass1=models.CharField(max_length=120,null=True,blank=True,verbose_name='password1')
+#     pass2=models.CharField(max_length=120,null=True,blank=True,verbose_name='password2')
 
 
 class NewUser(forms.ModelForm):
@@ -267,4 +267,24 @@ class PieSelection(forms.Form):
                                     Reset(name='RESET', value='RESET',type='Submit',css_class='btn btn-danger')
                                
     )    
-    
+
+class NewContactForm(forms.ModelForm):
+    class Meta:
+        model = contact
+        exclude=['id, user, corpid']
+
+    def __init__(self, *args, **kwargs):
+
+        super(NewContactForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.form_id = 'contact'
+        self.helper.form_method = 'post'
+        self.helper.form_tag = True
+        self.helper.layout = Layout(
+                                    Field('email',required=True),
+                                    Field('compliant_categ',required=True),
+                                    Field('telephone',required=True),
+                                    Field('complaint_text',required=True),
+                                    Submit(name='SAVE', value='GET',type='Submit',css_class='btn btn-success'),
+                                    Reset(name='RESET', value='RESET',type='Submit',css_class='btn btn-danger'))
+

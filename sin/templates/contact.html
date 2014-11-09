@@ -27,6 +27,11 @@
 					</script>
 </head>
 <body id="body">
+<style>
+#first_row{
+padding-top: 15%;
+}
+</style>
 <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
@@ -50,43 +55,24 @@
                     <li><a href="/logout/"><h31N>logout</h31N></a></li>
 
             </ul>
+         </ul>
         </div><!--/.nav-collapse -->
     </div>
 </div>
-<div class="container">
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-</div>
-<div class="container">
-<div class="row">
-<div class="col-lg-3">
-<p><h32N>khkjfhkjdhkjdhskjhhhhhh
-dkhdkjhdkjhkdjhdkjdhkdhkjdshkjdh
-jhdkjhdkjhds;
-djdkhkdjshdkjhkjdhkdjhfkjhfkj</H32N></p>
-</div>
-<div class="col-lg-3">
-<p><h32N>khkjfhkjdhkjdhskjhhhhhh
-dkhdkjhdkjhkdjhdkjdhkdhkjdshkjdh
-jhdkjhdkjhds;
-djdkhkdjshdkjhkjdhkdjhfkjhfkj</H32N></p>
 
-</div>
-<div class="col-lg-3">
-<p><h32N>khkjfhkjdhkjdhskjhhhhhh
-dkhdkjhdkjhkdjhdkjdhkdhkjdshkjdh
-jhdkjhdkjhds;
-djdkhkdjshdkjhkjdhkdjhfkjhfkj</H32N></p>
-</div>
+<div class="container-fluid">
+    <div class="row" id="first_row">
 
-</div>
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        	<div class="table">
+            <h31> {% crispy form %} </h31>
+    </div>
+
+
+    </div>
+    <div class="col-md-3"></div>
+    </div>
 </div>
 
 <div class="footer">

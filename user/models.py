@@ -273,3 +273,29 @@ class cashflow_actuals(models.Model):
 
     items=models.Manager()
     
+# *************************************************************************************
+# contact us                                                                          *
+# *************************************************************************************
+class contact(models.Model):
+
+    id=models.AutoField(max_length=20,null=False,blank=False,primary_key=True,auto_created=True )
+    user=models.CharField(max_length=75,null=False,blank=False)
+    corpid=models.CharField(max_length=5,null=False,blank=False)
+
+    email=models.EmailField(verbose_name='Email',max_length=255,unique=False )
+
+    accepted_comp =      (('N','New User Registration'),
+                         ( 'G','General Query'),
+                         ( 'U','Issue with Login'),
+                         ( 'R','Issue with Registration'),
+                         ( 'X','Forgot Password'),
+                         ( 'Y','Issue with transaction'),
+                         ( 'Y','Feedback'),
+                         ( 'S','Interested'))
+
+    complaint_categ=models.CharField(max_length=75,null=False,blank=False,verbose_name='Category',choices=accepted_comp,default='S')
+    telephone=models.CharField(max_length=12,null=True,blank=True,verbose_name='TEL:')
+
+    complaint_text=models.CharField(max_length=75,null=False,blank=False,verbose_name='DESCRIPTION')
+
+    items=models.Manager()

@@ -57,20 +57,20 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 # Parse database configuration from $DATABASE_URL
-import dj_database_url
-DATABASES = {
-    "default": dj_database_url.config(default='postgres://localhost'),
-}
-#DATABASES = {
-#'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'django',
-#         'USER': 'postgres',
-#         'PASSWORD': 'sasidhar',
-#         'HOST': 'localhost',
-#         'PORT': '5433',
-#     }
+# import dj_database_url
+# DATABASES = {
+#     "default": dj_database_url.config(default='postgres://localhost'),
 # }
+DATABASES = {
+'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'django',
+        'USER': 'postgres',
+        'PASSWORD': 'sasidhar',
+        'HOST': 'localhost',
+        'PORT': '5433',
+    }
+}
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',

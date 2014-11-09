@@ -13,29 +13,19 @@
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="http://www.trirand.com/blog/jqgrid/js/i18n/grid.locale-en.js"></script>
     <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:700,400' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
     <!--<body background="http://res.cloudinary.com/dplpgfwpy/image/upload/v1412278972/bg_dvp3sc.jpg">-->
     <!--<link rel="stylesheet" href="http://res.cloudinary.com/dplpgfwpy/raw/upload/v1413397740/paycal_zmrty0.css">-->
     {% load static from staticfiles %}
     <link rel="stylesheet" href="{% static "css/paycal.css" %}">
 
-
 </head>
 <!--<body id="body1">-->
 <body >
-<script>
-$(document).ready(function(){
-    $( "#id_currency" ).tooltip();
-    $( "#id_corpid" ).tooltip();
-    $( "#tabs" ).tabs();
- });
- </script>
-
 <style>
 #main{
-padding-top: 10%;
+padding-top: 15%;
 }
-
-
 #tabs{
 background-color:white;
 -webkit-box-shadow: 10px 10px 5px 0px rgba(50, 50, 50, 0.75);
@@ -51,14 +41,13 @@ box-shadow:         10px 10px 5px 0px rgba(50, 50, 50, 0.75);
 }
 body{
 	background-image:url("static/css/bg.jpg");	
-	background-position: top;
+	background-position: center;
 	background-size: 100% auto;
-	background-repeat: no-repeat;
+	<!--background-repeat: no-repeat;-->
 }
 #shadow{
 }
 </style>
-
 <div class="container-fluid">
 <div class="navbar navbar-inverse navbar-fixed-top" id="nav">
     <div class="container">
@@ -70,10 +59,11 @@ body{
             </button>
         </div>
         <div class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-                <ul class="nav navbar-nav">
-                       <h31N>POWER YOUR STARTUP....                    </h31N>
-            </ul>
+            <ul class="nav navbar-nav ">
+                 <h31N>POWER YOUR STARTUP....</h31N>
+                <ul class="nav navbar-nav ">
+                  <li><a href="/contact/"><h31N>Contact us</h31N></a></li>
+                </ul>
         </div><!--/.nav-collapse -->
     </div>
 </div>
@@ -81,7 +71,6 @@ body{
 <br>
 <br>
 <br>
-
 
 <div class="container-fluid" id="main" >
 <div class="row" >
@@ -95,7 +84,7 @@ body{
                     </li>
                     </ul>
                     <div id="tabs-1">
-                                        <form class="form-signin" method="get" >
+                                           <form class="form-signin" method="get" >
                                             <input type="text" class="form-control" name="username" placeholder="Email Address" required="" autofocus="" />
                                             <br>
                                             <input type="password" class="form-control" name="password" placeholder="Password" required="" />
@@ -131,6 +120,8 @@ body{
  <script>
     $("#register").click(function(){window.location.href="/register/";});
     $("#learnmore").click(function(){window.location.href="/contact/";});
+    $('#id_currency' ).tooltip();
+    $('#id_corpid' ).tooltip();
 
 </script>
 <script>

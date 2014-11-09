@@ -2,7 +2,7 @@ from django.shortcuts import render,render_to_response , RequestContext
 from .forms import *
 from django.http import HttpResponse
 from .models import expense_categories
-from .models import MYCASHFLOW,cashflow_actuals
+from .models import MYCASHFLOW,cashflow_actuals,contact
 import jsonpickle
 from django.forms import model_to_dict
 import datetime
@@ -378,6 +378,20 @@ def pie(request):
         return render_to_response("pie.html",context_instance=RequestContext(request))
     else:
         return render_to_response("pie.html",{'forms':form},context_instance=RequestContext(request))
+
+#**********************************************************************************************#
+#                               Create your views here.                                        #
+#**********************************************************************************************#
+def contact(request):
+    form = NewContactForm()
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+        else:
+            return render_to_response("contact.html",{'form':form},context_instance=RequestContext(request))
+    else:
+        return render_to_response("contact.html",{'form':form},context_instance=RequestContext(request))
+
 #**********************************************************************************************#
 #                               Create your views here.                                        #
 #**********************************************************************************************#
