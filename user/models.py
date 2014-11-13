@@ -88,7 +88,7 @@ class MyUser(AbstractBaseUser):
 
 
     objects = MyUserManager()
-
+    items=models.Manager()
 
     def __unicode__(self):
         return (self.email)
@@ -104,6 +104,10 @@ class MyUser(AbstractBaseUser):
     def get_currency(self):
         # The user is identified by their email address
         return self.currency
+
+    def get_calop(self):
+        # The user is identified by their email address
+        return self.search1_tag
 
     def get_corpid(self):
         # The user is identified by their email address

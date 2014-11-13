@@ -26,7 +26,7 @@
 }
 
 .selector .selector-available h2 {
-    background: white url("../img/nav-bg.dc7bc05b7ef1.gif") bottom left repeat-x;
+    background: white url("../img/nav-bg.5dadb8cd9865.gif") bottom left repeat-x;
     color: #666;
 }
 
@@ -306,7 +306,7 @@ span.clearable-file-input label {
     color: #666;
     padding: 2px 3px;
     text-align: center;
-    background: #e1e1e1 url("../img/nav-bg.dc7bc05b7ef1.gif") 0 50% repeat-x;
+    background: #e1e1e1 url("../img/nav-bg.5dadb8cd9865.gif") 0 50% repeat-x;
     border-bottom: 1px solid #ddd;
 }
 
@@ -374,7 +374,7 @@ span.clearable-file-input label {
     position: absolute;
     font-weight: bold;
     font-size: 12px;
-    background: #C9DBED url("../img/default-bg.e61a71c9e730.gif") bottom left repeat-x;
+    background: #C9DBED url("../img/default-bg.af816e70c828.gif") bottom left repeat-x;
     padding: 1px 4px 2px 4px;
     color: white;
 }
@@ -397,12 +397,12 @@ span.clearable-file-input label {
     margin: 0 !important;
     padding: 0 !important;
     font-size: 10px;
-    background: #e1e1e1 url("../img/nav-bg.dc7bc05b7ef1.gif") 0 50% repeat-x;
+    background: #e1e1e1 url("../img/nav-bg.5dadb8cd9865.gif") 0 50% repeat-x;
     border-top: 1px solid #ddd;
 }
 
 .calendar-cancel:hover {
-    background: #e1e1e1 url("../img/nav-bg-reverse.aa82f23e9f20.gif") 0 50% repeat-x;
+    background: #e1e1e1 url("../img/nav-bg-reverse.bd4701ff1aeb.gif") 0 50% repeat-x;
 }
 
 .calendar-cancel a {
@@ -478,7 +478,7 @@ ul.orderer li.deleted a:link, ul.orderer li.deleted a:visited {
 }
 
 ul.orderer li.deleted .inline-deletelink {
-    background-image: url("../img/inline-restore.8c51d7ca1a0b.png");
+    background-image: url("../img/inline-restore.a14579a2580f.png");
 }
 
 ul.orderer li.deleted:hover, ul.orderer li.deleted a.selector:hover {
@@ -490,7 +490,7 @@ ul.orderer li.deleted:hover, ul.orderer li.deleted a.selector:hover {
 .inline-deletelink {
     float: right;
     text-indent: -9999px;
-    background: transparent url("../img/inline-delete.2fbde56e39ec.png") no-repeat;
+    background: transparent url("../img/inline-delete.4df86317f5c4.png") no-repeat;
     width: 15px;
     height: 15px;
     border: 0px none;
@@ -533,7 +533,7 @@ ul.orderer li.deleted:hover, ul.orderer li.deleted a.selector:hover {
 }
 
 .editinline tr.deleted .inline-deletelink {
-    background-image: url("../img/inline-restore.8c51d7ca1a0b.png");
+    background-image: url("../img/inline-restore.a14579a2580f.png");
 }
 
 .editinline tr.deleted td:hover {
@@ -564,13 +564,13 @@ ul.orderer li.deleted:hover, ul.orderer li.deleted a.selector:hover {
 .editinline-stacked .inline-splitter {
     float: left;
     width: 9px;
-    background: #f8f8f8 url("../img/inline-splitter-bg.40be0ed80875.gif") 50% 50% no-repeat;
+    background: #f8f8f8 url("../img/inline-splitter-bg.3d67b08b4771.gif") 50% 50% no-repeat;
     border-right: 1px solid #ccc;
 }
 
 .editinline-stacked .controls {
     clear: both;
-    background: #e1e1e1 url("../img/nav-bg.dc7bc05b7ef1.gif") top left repeat-x;
+    background: #e1e1e1 url("../img/nav-bg.5dadb8cd9865.gif") top left repeat-x;
     padding: 3px 4px;
     font-size: 11px;
     border-top: 1px solid #ddd;

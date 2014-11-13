@@ -41,6 +41,16 @@
                  }
                  }
         });
+
+
+        //Save the user option for the calendar.
+         $('#save').click(function(){$.ajax({   url:'/calop/',
+                                                data:'calop=4',
+                                                success:function(data){
+                                                                    $('#message').html('Your Preference has been updated');
+                                                                  }
+                                            });
+                                    });
         });
     </script>
 
@@ -79,10 +89,38 @@
         <br/>
         <br/>
 
+<div class="container">
+    <div class="row">
+
+     <div class ='col-lg-4'>
+            <label for="calop"><h31>Default calendar : </h31></label>
+             <select name="calop" id="calop">
+                <option value="D"><h31>Daily</h31></option>
+                <option value="W"><h31>Monthly</h31></option>
+                <option value="M"><h31>Weekly</h31></option>
+             </select>
+     </div>
+
+      <div class ='col-lg-2'>
+            <button type="button" class="btn btn-default" id="save">
+                    <span class="glyphicon glyphicon-question-sign"></span> save </button>
+     </div>
+
+     <div class ='col-lg-3'>
+         <br>
+         <text id="message" ></text>
+     </div>
+    </div>
+   </div>
+
+
+        <br/>
+        <br/>
+
         <div id='calendar'>
     </div>
     </div>
-    <</body>
+    </body>
 </html>
 
 

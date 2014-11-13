@@ -306,6 +306,15 @@ def events(request):
 #**********************************************************************************************#
 #                               Create your views here.                                        #
 #**********************************************************************************************#
+def calenoption(request):
+    if 'calop' in request.GET:
+         return HttpResponse('saved')
+    else:
+        calop=request.user.get_calop()
+        return HttpResponse(calop)
+#**********************************************************************************************#
+#                               Create your views here.                                        #
+#**********************************************************************************************#
 @login_required(login_url='/home/')
 def calendar(request):
     return render_to_response('calendar.html',context_instance=RequestContext(request))

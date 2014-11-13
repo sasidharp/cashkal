@@ -1,16 +1,16 @@
 <style>
-                             <style >
+                             <style > 
 
-                             		html {
-				background: url(/static/css/bg.jpg) no-repeat center center fixed;
+			
+			html {
+				background: url(/static/css/bg.jpg) no-repeat center center fixed; 
 				-webkit-background-size: cover;
 				-moz-background-size: cover;
 				-o-background-size: cover;
 				background-size: cover;
 				}
-
-
-                             h1 {
+   
+			h1 {
                                  font-family: 'Roboto Condensed', sans-serif;
                                  color: white;
                              }
@@ -126,4 +126,4 @@
                              background-color:#f7f7f7;
                              }
 
-	                   </style>
+                        </style>

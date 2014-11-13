@@ -15,6 +15,31 @@
                             {% load static from staticfiles %}
                             <link rel="stylesheet" href="{% static "css/paycal.css" %}">
                         </head>
+                    <style>
+
+                    #myModal {
+                      top: 30%;
+                      }
+                    .ui-jqgrid tr.ui-row-ltr td {
+                        text-align: left;
+                        border-right-width: 1px;
+                        border-right-color: inherit;
+                        border-right-style: solid;
+                     }
+                    .ui-jqgrid tr.jqgrow td {
+                        font-weight: bold;
+                        overflow: hidden;
+                        white-space: pre;
+                        height: 40px;
+                        color:black;
+                        background-color:white;
+                        padding: 0 2px 0 2px;
+                        border-bottom-width: 1px;
+                        border-bottom-color: inherit;
+                        border-bottom-style: solid;
+                     }
+
+                    </style>
                     <script>
                         $(document).ready(function () {
                             var DataGrid = jQuery("#list4");
@@ -22,7 +47,7 @@
                             jQuery("#list4").jqGrid({
                                 url: '/list/?L=X',
                                 datatype: "json",
-                                colNames: ['Identifier', 'Forecasted Date', 'Type', 'amount', 'Currency', 'Recipient/Payer', 'Telephone', 'email', 'city'],
+                                colNames: ['Identifier', 'Forecasted Date', 'Type', 'amount', 'Currency', 'Recipient/Payer', 'Telephone','Action'],
                                 colModel: [
                                     { name: 'id', index: 'id', width: 20, align: "center" },
                                     { name: 'fdate', index: 'fdate', width: 30, align: "center" },
@@ -31,9 +56,8 @@
                                     { name: 'currency', index: 'currency', width: 15, align: "center" },
                                     { name: 'recipient', index: 'recipient', width: 75, align: "right" },
                                     { name: 'telephone', index: 'telephone', width: 30, align: "right" },
-                                    { name: 'email', index: 'email', width: 75, align: "right" },
-                                    { name: 'city', index: 'city', width: 75, sortable: false }
-                                ],
+                                    { name: 'act', index: 'act',width: 30, align: "left" }
+                                 ],
                                 rowNum: 10,
                                 rowList: [10, 20, 30],
                                 pager: '#pager',
@@ -42,14 +66,28 @@
                                 sortorder: "direction",
                                 caption: "Convert to Actual ? click on required row",
                                 onSelectRow: function (rowId) {
-                                      var rowData = DataGrid.jqGrid('getRowData', rowId);
-                                      var redirect_link = "/actuals/"
-                                      redirect_link = redirect_link + "?id=" + rowData.id +"&" +"Callback=L";
-                                      window.location.href = redirect_link;
+//                                      var rowData = DataGrid.jqGrid('getRowData', rowId);
+//                                      var redirect_link = "/actuals/"
+//                                      redirect_link = redirect_link + "?id=" + rowData.id +"&" +"Callback=L";
+//                                      window.location.href = redirect_link;
+                                },
+                            	gridComplete: function(){
+                                    var ids = jQuery("#list4").jqGrid('getDataIDs');
+                                    for(var i=0;i < ids.length;i++){
+                                        var cl = ids[i];
+                                       //se = "<input  type='button' value='CONVERT TO ACTUAL' onclick=\"jQuery('#rowed2').saveRow('"+cl+"');\"  />";
+                                        se = "<input  type='button' value='CONVERT TO ACTUAL' onclick= test(c1);  />";
+                                        be = "<input  type='checkbox' value='OK'   />";
+                                        //jQuery("#list4").jqGrid('setRowData',ids[i],{act:be+se});
+                                        jQuery("#list4").jqGrid('setRowData',ids[i],{ok:be});
+                                        jQuery("#list4").jqGrid('setRowData',ids[i],{act:se});
+
+                                    }
                                 }
+
                             });
                             DataGrid.jqGrid('setGridWidth', '1124');
-                            DataGrid.jqGrid('setGridHeight', '350');
+                            DataGrid.jqGrid('setGridHeight', '600');
                             //     DataGrid.jqGrid('navGrid', "#pager", { edit: true, del: true }, { url: '/cash/' }, { url: '/cash/' });
 
                             $("#btncalen").click(
@@ -78,8 +116,12 @@
 
 
                         }
-
-                    </script>
+//Only one of the checked boxes need to be clicked. If more than one is clicked
+//issue an error.
+        function test(){
+                       $('#myModal').modal('show');
+                       }
+          </script>
 
                     <body id="body">
                         </style>
@@ -106,32 +148,6 @@
                                 </div><!--/.nav-collapse -->
                             </div>3
                         </div>
-                            <div class="container">
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            </div>
-                        <div class="container">
-                                <div class="row">
-                                    <div class=" col-md-4">
-                                        <button class="btn btn-lg btn-success btn-block" onclick="goto('a')"><h3>New Cash Flow</h3></button>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <button class="btn btn-lg btn-success btn-block" id="btncalen"><h3>Payment Calendar</h3></button>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <button class="btn btn-lg btn-success btn-block" id="categ"><h3>corrections?</h3></button>
-                                    </div>
-
-                            </div>
-                        </div>
-                        
                         <div class="container">
                             <br />
                             <br />
@@ -144,9 +160,52 @@
                         </div>
                         
                         
-                        <div class="container">
-                            <table id="list4"></table>
-                            <div id="pager"></div>
+
+                        <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-lg-2">
+
+                                    </div>
+                                    <div class="col-lg-8">
+                                       <table id="list4"></table>
+                                        <div id="pager"></div>
+                                    </div>
+                                    <div class="col-lg-2">
+
+                                    </div>
+                                </div>
+
+
+
+
                         </div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Convert to Actual ?</h4>
+      </div>
+      <div class="modal-body" >
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <label for="Actual">Actual</label>
+                    </div>
+                    <div class="col-xs-6">
+                        <input type="number" id="actual" name="Actual Amount"   size="16" />
+                    </div>
+              </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
                             </body>
 </html>
