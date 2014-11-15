@@ -314,7 +314,7 @@ def calenoption(request):
 #**********************************************************************************************#
 @login_required(login_url='/home/')
 def calendar(request):
-    return render_to_response('calendar.html',context_instance=RequestContext(request))
+    return render_to_response('calendar.html',{'user_option':'W'},context_instance=RequestContext(request))
 #**********************************************************************************************#
 #                               Create your views here.                                        #
 #**********************************************************************************************#

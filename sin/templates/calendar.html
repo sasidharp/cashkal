@@ -22,6 +22,7 @@
 <body id="body">
     <script>
         $(document).ready(function () {
+
             // page is now ready, initialize the calendar...
             $('#calendar').fullCalendar({
                 header: {
@@ -69,6 +70,7 @@
 
         });
 
+         set_calendar();
 
         //Save the user option for the calendar.
          $('#save').click(function(){$.ajax({   url:'/calop/',
@@ -79,6 +81,23 @@
                                             });
                                     });
 
+
+
+         //Set the calenar based on the user option
+          function set_calendar(){
+                switch('{{user_option}}'){
+                case 'D':
+                    $('#calendar').fullCalendar('changeView' , 'basicDay');
+                    break;
+                case 'W':
+                    $('#calendar').fullCalendar('changeView' , 'basicWeek');
+                    $('#calendar').fullCalendar('option', 'aspectRatio', 2.5);
+                    break;
+                case 'M':
+                    $('#calendar').fullCalendar('changeView' , 'month');
+                    break;
+                }
+          }
 
 
         });
@@ -123,7 +142,7 @@
 <div class="container">
     <div class="row">
 
-     <div class ='col-lg-4'>
+     <div class ='col-lg-4 col-xs-8' >
             <label for="calop"><h31>Default calendar : </h31></label>
              <select name="calop" id="calop">
                 <option value="D"><h31>Daily</h31></option>
@@ -131,8 +150,7 @@
                 <option value="M"><h31>Weekly</h31></option>
              </select>
      </div>
-
-      <div class ='col-lg-2'>
+      <div class ='col-lg-2 col-xs-4'>
             <button type="button" class="btn btn-default" id="save">
                     <span class="glyphicon glyphicon-question-sign"></span> save </button>
      </div>
