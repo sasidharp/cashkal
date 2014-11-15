@@ -3,7 +3,7 @@
 
 			
 			html {
-				background: url(/static/css/bg.jpg) no-repeat center center fixed; 
+				background: url("/static/css/bg.0fd937fc46ae.0fd937fc46ae.jpg") no-repeat center center fixed; 
 				-webkit-background-size: cover;
 				-moz-background-size: cover;
 				-o-background-size: cover;
@@ -51,11 +51,11 @@
                              }
 
                              #body {
-                                 background-color: #593C1F;
+                                 background-color: #dfe3ee;
                              }
                             
 			                #body1 {
-                                 background-color:#593C1F;
+                                 background-color:#3b5998;
                              }
 
                             #banner {
@@ -63,12 +63,12 @@
                              }
 
                              .subtotal {
-                                background-color:#593C1F;
+                                background-color:#3b5998;
                                 border-color: #080808;
                              }
 
                            .navbar-inverse {
-                                background-color:#593C1F;
+                                background-color:#3b5998;
                                 border-color: #080808;
                             }
                             }
@@ -90,8 +90,8 @@
 
                              .ui-widget-header {
                                  border: 1px solid #080808;
-                                 background-color: #593C1F;
-                                 background: #593C1F;
+                                 background-color: #3b5998;
+                                 background: #3b5998;
                                  color: white;
                                  font-size: 15px;
                                  font-weight: normal;
@@ -100,7 +100,7 @@
 
                                  ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
                                      border: 1px solid #D3D3D3;
-                                     background:#593C1F;
+                                     background: #3b5998;
                                      color: white;
                                       font-size: 15px;
                                  }

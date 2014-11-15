@@ -39,7 +39,34 @@
                     window.open(event.url);
                     return false;
                  }
-                 }
+                 },
+            //Get the day
+              dayClick: function(date, jsEvent, view) {
+
+            //if there are no events for that day , open the new cashflow
+              var today = moment();
+              var filter = moment().isSame(date.format(),'day');
+              var array = $('#calendar').fullCalendar('clientEvents' , function(event){
+                                                                                 filter = moment(date).isSame(event.start,'day');
+                                                                                 if (filter){
+                                                                                    return true;
+                                                                                 }
+                                                                            });
+              if ( array.length > 0 )
+                            {
+                                open_url = '/launcher/';
+                            }
+                            else
+                            {
+                                open_url = '/cash/?'+'D'+'='+ date.format( );
+
+                            }
+              window.location.href = open_url;
+    }
+
+
+
+
         });
 
 
@@ -51,7 +78,11 @@
                                                                   }
                                             });
                                     });
+
+
+
         });
+
     </script>
 
     <div class="navbar navbar-inverse navbar-fixed-top">

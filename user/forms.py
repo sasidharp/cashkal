@@ -93,16 +93,16 @@ class NewCashForm(forms.ModelForm):
         user_curr='NONE'
         if 'initial' in kwargs:
             user_curr = self.initial['currency']
-            
+
         self.helper.layout = Layout(
                 TabHolder(
                    Tab( 'DATA ENTRY',
                          Field('direction',autofocus=True),
                          FieldWithButtons('category', StrictButton("Add New!",id='addcateg')),
                          Div(Div('frequency',css_class='col-md-6'),Div('fdate',css_class='col-md-6'),css_class='row'),
-#                          InlineField('frequency','fdate'),
-# #                         'frequency',
-#                         'fdate',
+#                        InlineField('frequency','fdate'),
+# #                      'frequency',
+#                        'fdate',
                          AppendedText('amount',user_curr,placeholder='Planned amount',required=True,min="0",max="10000", step="1"),
 #                        Field('currency',placeholder='USD',required=True),
                          Field('recipient',placeholder='Payment Recipient / debtor',required=True),

@@ -51,12 +51,9 @@
                              }
 
                              #body {
-                                 background-color: #dfe3ee;
+                                 background-color:#dfe3ee;
                              }
                             
-			                #body1 {
-                                 background-color:#3b5998;
-                             }
 
                             #banner {
                                  background-color:#080808;
@@ -100,7 +97,7 @@
 
                                  ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
                                      border: 1px solid #D3D3D3;
-                                     background: #3b5998;
+                                     background:#3b5998;
                                      color: white;
                                       font-size: 15px;
                                  }

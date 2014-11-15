@@ -34,7 +34,7 @@ def home(request):
             user = authenticate(username=username,password=password)
             if user:
                 login(request, user)
-                return HttpResponseRedirect("/launcher/")
+                return HttpResponseRedirect("/calen/")
             else:
                 return render_to_response('signup.html',locals(),context_instance=RequestContext(request))
     else:
@@ -228,9 +228,7 @@ def cashactuals(request):
 #**********************************************************************************************#
 @login_required(login_url='/home/')
 def cash(request):
-    msg=''
     form = NewCashForm(initial=({'user':request.user,'currency':request.user.get_currency()}))
-    errors={}
     if request.method=='POST':
         default_values                = request.POST.copy()
         default_values['user']        = request.user
@@ -276,9 +274,8 @@ def cash(request):
             intial_values   =   model_to_dict(instance)
             form            =   NewCashForm(intial_values)
             return render_to_response('cash.html', {'form': form},context_instance=RequestContext(request))
-        
-        msg=''
-        return render_to_response('cash.html', ({'form': form,'errors':errors,'msg':msg}),context_instance=RequestContext(request))
+
+    return render_to_response('cash.html', ({'form': form}),context_instance=RequestContext(request))
 #**********************************************************************************************#
 #                               Create your views here.                                        #
 #**********************************************************************************************#
@@ -295,10 +292,10 @@ def events(request):
         url='/report'+'?'+'today'+'='+item[0].isoformat()
         if item[1] == 'I':
             
-            dict = { 'title' : 'Inflow   ' + str(item[2]) + request.user.get_currency() , 'start':item[0].isoformat(), 'color':'#228B22' , 'url':url}
+            dict = { 'title' : 'Rcvd         ' + str(item[2]) + request.user.get_currency() , 'start':item[0].isoformat(), 'color':'#228B22' , 'url':url}
             event_list.append(dict)
         else:
-            dict = { 'title' : 'Outflow   ' + str(item[2]) + request.user.get_currency() , 'start':item[0].isoformat(), 'color':'#CD5C5C' , 'url':url}
+            dict = { 'title' : 'Not Rcvd   ' + str(item[2]) + request.user.get_currency() , 'start':item[0].isoformat(), 'color':'#CD5C5C' , 'url':url}
             event_list.append(dict)
     
     json_data=jsonpickle.encode(event_list, unpicklable=False, make_refs=False)

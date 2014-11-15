@@ -52,7 +52,7 @@
                              }
 
                            .navbar-inverse {
-                                background-color:#3b5998;
+                                background-color:#593C1F;
                                 border-color: #080808;
                             }
                             }
@@ -74,8 +74,8 @@
 
                              .ui-widget-header {
                                  border: 1px solid #080808;
-                                 background-color: #3b5998;
-                                 background: #3b5998;
+                                 background-color: #593C1F;
+                                 background: #593C1F;
                                  color: white;
                                  font-size: 15px;
                                  font-weight: normal;
@@ -84,7 +84,7 @@
 
                                  ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
                                      border: 1px solid #D3D3D3;
-                                     background: #3b5998;
+                                     background: #593C1F;
                                      color: white;
                                       font-size: 15px;
                                  }
