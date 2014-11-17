@@ -34,6 +34,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'crispy_forms',
     'user',
+    'django_extensions',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -68,7 +69,7 @@ DATABASES = {
        'USER': 'postgres',
        'PASSWORD': 'sasidhar',
        'HOST': 'localhost',
-       'PORT': '5432',
+       'PORT': '5433',
    }
 }
 # DATABASES = {
