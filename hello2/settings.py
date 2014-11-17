@@ -59,7 +59,7 @@ USE_L10N = True
 USE_TZ = True
 # Parse database configuration from $DATABASE_URL
 import dj_database_url
- DATABASES = {
+DATABASES = {
      "default": dj_database_url.config(default='postgres://localhost'),
 }
 #DATABASES = {
