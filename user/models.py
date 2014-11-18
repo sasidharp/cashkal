@@ -61,7 +61,7 @@ class MyUser(AbstractBaseUser):
    
     currency=models.CharField(max_length=4,verbose_name='Currency')
     corpid=models.CharField(max_length=20,verbose_name='Corp.Id')
-    calpro=models.CharField(max_length=1,null=True,blank=True,verbose_name='Calendar Profile')
+#   calpro=models.CharField(max_length=1,null=True,blank=True,verbose_name='Calendar Profile')
 
 	
     title=models.CharField(max_length=2,null=True,blank=True,verbose_name='TITLE')
@@ -75,7 +75,7 @@ class MyUser(AbstractBaseUser):
     country=models.CharField(max_length=2,null=True,blank=True,verbose_name='COUNTRY')
     mobile=models.CharField(max_length=20,null=True,blank=True,verbose_name='MOBILE')
     landline=models.CharField(max_length=20,null=True,blank=True,verbose_name='LAND PHONE')
-#   fax=models.CharField(max_length=20,null=True,blank=True,verbose_name='FAX')
+    fax=models.CharField(max_length=20,null=True,blank=True,verbose_name='FAX')
 
     timestamp=models.DateTimeField(auto_now_add=True,auto_now=False)
     updatestamp=models.DateTimeField(auto_now_add=False,auto_now=True)
