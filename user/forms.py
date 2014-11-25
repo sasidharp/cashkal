@@ -210,7 +210,40 @@ class ActualForm(forms.ModelForm):
                         Field('notes3',placeholder='Any other information'))
                    )
                 )
-          
+
+
+class ModalActualForm(forms.ModelForm):
+
+    class Meta:
+        model = cashflow_actuals
+
+    def __init__(self, *args, **kwargs):
+        super(ModalActualForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.form_id = 'cashentry'
+        #self.helper.form_method = 'post'
+        self.helper.form_tag = True
+
+#       get the yser details
+        user_curr='NONE'
+        if 'initial' in kwargs:
+            user_curr = self.initial['currency']
+        self.helper.layout = Layout(
+                TabHolder(
+                   Tab( 'DATA ENTRY',
+                          AppendedText('actualamount',user_curr,placeholder='Actual amount',required=True,min="0",max="10000", step="1"),
+                          Field('recipient',placeholder='Payment Recipient / debtor',required=True),
+                         'paymethod'),
+                   #        Submit( name='SAVE', value='SAVE',type='Submit',css_class='btn btn-success'),
+                   #        Reset( name='RESET', value='RESET',type='Submit',css_class='btn btn-danger')),
+                    Tab('NOTES',
+                        Field('notes1',placeholder='Reminder1'),
+                        Field('notes2',placeholder='Collect in cash etc'),
+                        Field('notes3',placeholder='Any other information'))
+                   )
+                )
+
+
 class NewExpenseCategoryForm(forms.ModelForm):
     class Meta:
         model = expense_categories
@@ -224,7 +257,7 @@ class NewExpenseCategoryForm(forms.ModelForm):
         
         self.helper.layout = Layout(
                          Row(Field('category',autofocus=True),'description'),
-                         Submit(name='SAVE', value='SAVE',type='Submit',css_class='btn btn-success'),
+                         Button(name='SAVE', value='SAVE',type='Submit',css_class='btn btn-success'),
                          Reset(name='RESET', value='RESET',type='Submit',css_class='btn btn-danger'))
   
 class ReportSelection(forms.Form):

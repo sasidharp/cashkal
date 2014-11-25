@@ -1,4 +1,5 @@
-﻿                <!DOCTYPE html>
+﻿           {% load crispy_forms_tags %}
+                <!DOCTYPE html>
                     <html>
                      <head>
                             <title></title>
@@ -42,6 +43,29 @@
                     </style>
                     <script>
                         $(document).ready(function () {
+
+                            $('#savebtn').click(function( ) {
+
+                            $.ajaxSetup({
+                                        beforeSend: function(xhr, settings) {
+                                        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                                            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                                            }
+                                        }
+                                     });
+
+                            $.ajax({url:"/convert/",
+                                       type: "POST",
+                                       data: { id : '4' },
+                                       success:function(result){
+                                       $("#m").html(result);
+                                    }});
+                                $('#myModal').modal('toggle');
+                                $('#myModal1').modal('show');
+                            });
+
+
+
                             var DataGrid = jQuery("#list4");
                             //Table Object
                             jQuery("#list4").jqGrid({
@@ -75,11 +99,7 @@
                                     var ids = jQuery("#list4").jqGrid('getDataIDs');
                                     for(var i=0;i < ids.length;i++){
                                         var cl = ids[i];
-                                       //se = "<input  type='button' value='CONVERT TO ACTUAL' onclick=\"jQuery('#rowed2').saveRow('"+cl+"');\"  />";
-                                        se = "<input  type='button' value='CONVERT TO ACTUAL' onclick= test(c1);  />";
-                                        be = "<input  type='checkbox' value='OK'   />";
-                                        //jQuery("#list4").jqGrid('setRowData',ids[i],{act:be+se});
-                                        jQuery("#list4").jqGrid('setRowData',ids[i],{ok:be});
+                                        se = "<input  type='button' value='CONVERT TO ACTUAL' onclick=\"test( );\" />";
                                         jQuery("#list4").jqGrid('setRowData',ids[i],{act:se});
 
                                     }
@@ -119,8 +139,34 @@
 //Only one of the checked boxes need to be clicked. If more than one is clicked
 //issue an error.
         function test(){
+                       $('#id_actualamount').val('100.00');
+                       $('#id_recipient').val('Vendor');
                        $('#myModal').modal('show');
                        }
+
+
+// using jQuery
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+var csrftoken = getCookie('csrftoken');
+
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
           </script>
 
                     <body id="body">
@@ -137,18 +183,15 @@
                                 <div class="collapse navbar-collapse">
                                     <ul class="nav navbar-nav">
                                         <li class="active"><a href="/launcher/"><h31N>Home</h31N></a></li>
-                                        <li><a href="/actuals/"><h31N>Add Actual</h31N></a></li>
                                         <li><a href="/report/"><h31N>Reports</h31N></a></li>
                                         <li><a href="/pie/"><h31N>Charts</h31N></a></li>
                                         <li><a href="/contact/"><h31N>Contact us</h31N></a></li>
-                                                  <li><a href="/logout/"><h31N>logout</h31N></a></li>
-
-                                    
+                                        <li><a href="/logout/"><h31N>logout</h31N></a></li>
                                     </ul>
                                 </div><!--/.nav-collapse -->
                             </div>3
                         </div>
-                        <div class="container">
+                        <div class="container-fluid" id="result">
                             <br />
                             <br />
                             <br />
@@ -158,9 +201,6 @@
                             <br />
                             <br />
                         </div>
-                        
-                        
-
                         <div class="container-fluid">
                                 <div class="row">
                                     <div class="col-lg-2">
@@ -174,12 +214,7 @@
 
                                     </div>
                                 </div>
-
-
-
-
                         </div>
-
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -189,23 +224,39 @@
         <h4 class="modal-title" id="myModalLabel">Convert to Actual ?</h4>
       </div>
       <div class="modal-body" >
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-xs-6">
-                        <label for="Actual">Actual</label>
-                    </div>
-                    <div class="col-xs-6">
-                        <input type="number" id="actual" name="Actual Amount"   size="16" />
-                    </div>
-              </div>
+            <div class="container-fluid" id="modal_body">
+                    {% crispy form %}
+            </div>
           </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" id="savebtn" class="btn btn-primary" onclick="alert">Save changes</button>
+            <div style="display:none">
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+            </div>
       </div>
-    </div>
   </div>
 </div>
-                            </body>
+
+ <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel1">Convert to Actual ?</h4>
+      </div>
+      <div class="modal-body" >
+            <div class="container-fluid" id="message">
+                    <h>HE HA</h>
+            </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+      </div>
+  </div>
+</div>
+
+
+ </body>
 </html>

@@ -15,6 +15,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.contrib.auth import login
 from .BusinessLogic import jdata ,get_occurances
+from django.views.decorators.csrf import csrf_protect
+from django.shortcuts import render
 #**********************************************************************************************#
 #                               Create your views here.                                        #
 #**********************************************************************************************#
@@ -51,7 +53,7 @@ def home(request):
             user = authenticate(username=form.cleaned_data['email'],password=form.cleaned_data['password1'])
             if user:
                 login(request, user)
-                return HttpResponseRedirect("/launcher/")
+                return HttpResponseRedirect("/calen/")
             else:
                 HttpResponse('our fault..will fix')
         else:
@@ -208,6 +210,7 @@ def cashactuals(request):
             initial_values['notes1']        =id_to_display
 
             form = ActualForm(initial_values,initial=({'user':request.user,'corpid':request.user.get_corpid(),'currency':initial_values['currency']}))
+            return form
 
         elif 'delete' in request.GET:
             form=cashflow_actuals.items.get(id=request.GET['delete'])
@@ -248,7 +251,7 @@ def cash(request):
             msg=form.errors
             errors = form.errors
         
-        return render_to_response('cash.html',({'form': form,'errors':errors,'msg':msg}),context_instance=RequestContext(request))
+        return render_to_response('cash.html',({'form': form,'msg':msg}),context_instance=RequestContext(request))
     
     else:
         if 'N' in request.GET:
@@ -303,8 +306,34 @@ def events(request):
 #**********************************************************************************************#
 #                               Create your views here.                                        #
 #**********************************************************************************************#
+@login_required(login_url='/home/')
+def convertactual(request):
+    result={}
+    try:
+        cashflow_item = MYCASHFLOW.items.get(id=request.POST['id'])
+    except(RuntimeError):
+        result['error'] = 'Data inconistency-check with admin'
+
+    if cashflow_item is None:
+        result['error'] = 'cashflow does not exist'
+    else:
+        form = ModalActualForm(request.POST)
+        if form.is_valid():
+            form.save()
+            result['success'] = 'X'
+        else:
+            result['error'] = form.errors
+    json_data=jsonpickle.encode(result, unpicklable=False, make_refs=False)
+    return HttpResponse(json_data, content_type='application/json')
+#**********************************************************************************************#
+#                               Create your views here.                                        #
+#**********************************************************************************************#
+@login_required(login_url='/home/')
 def calenoption(request):
     if 'calop' in request.GET:
+         myuser = request.user
+         myuser.search1_tag=request.GET['calop']
+         myuser.save()
          return HttpResponse('saved')
     else:
         calop=request.user.get_calop()
@@ -366,7 +395,9 @@ def addcateg(request):
 #**********************************************************************************************#
 @login_required(login_url='/home/')
 def launcher(request):
-    return render_to_response("launcher.html", {'date':datetime.date.today()},context_instance=RequestContext(request))
+    form = ModalActualForm()
+    return render_to_response("launcher.html", {'date':datetime.date.today(),'form':form},context_instance=RequestContext(request))
+
 #**********************************************************************************************#
 #                               Create your views here.                                        #
 #**********************************************************************************************#

@@ -141,7 +141,7 @@ class MYCASHFLOW(models.Model):
     parent=models.CharField(max_length=20)
 
     user=models.CharField(max_length=75,null=False,blank=False)
-    corpid=models.CharField(max_length=5,null=False,blank=False)
+    corpid=models.CharField(max_length=20,null=False,blank=False)
 
     accepted_direction =(('I','Incoming'),
                          ('O','Expense'))
@@ -226,7 +226,7 @@ class cashflow_actuals(models.Model):
     id=models.AutoField(max_length=20,null=False,blank=False,primary_key=True,auto_created=True )
 
     user=models.CharField(max_length=75,null=False,blank=False)
-    corpid=models.CharField(max_length=5,null=False,blank=False)
+    corpid=models.CharField(max_length=20,null=False,blank=False)
 
 
     cashflow_id=models.CharField(max_length=5,null=False,blank=False)
