@@ -55,11 +55,11 @@
                                                                             });
               if ( array.length > 0 )
                             {
-                                open_url = '/launcher/';
+                                open_url = '/launcher/?D='+ date.utc().format('YYYY-MM-DD');
                             }
                             else
                             {
-                                open_url = '/cash/?'+'D'+'='+ date.format( );
+                                open_url = '/cash/';
 
                             }
               window.location.href = open_url;
@@ -73,8 +73,11 @@
          set_calendar();
 
         //Save the user option for the calendar.
+         $('#calop').change(function(){
+            value = 'calop='+ $('#calop').val();
+         });
          $('#save').click(function(){$.ajax({   url:'/calop/',
-                                                data:'calop=4',
+                                                data:value,
                                                 success:function(data){
                                                                     $('#message').html('Your Preference has been updated');
                                                                   }
@@ -145,8 +148,8 @@
             <label for="calop"><h31>Default calendar : </h31></label>
              <select name="calop" id="calop">
                 <option value="D"><h31>Daily</h31></option>
-                <option value="W"><h31>Monthly</h31></option>
-                <option value="M"><h31>Weekly</h31></option>
+                <option value="W"><h31>Weekly</h31></option>
+                <option value="M"><h31>Monthly</h31></option>
              </select>
      </div>
       <div class ='col-lg-2 col-xs-4'>

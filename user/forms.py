@@ -256,9 +256,10 @@ class NewExpenseCategoryForm(forms.ModelForm):
         self.helper.form_tag = True
         
         self.helper.layout = Layout(
-                         Row(Field('category',autofocus=True),'description'),
-                         Button(name='SAVE', value='SAVE',type='Submit',css_class='btn btn-success'),
-                         Reset(name='RESET', value='RESET',type='Submit',css_class='btn btn-danger'))
+                         Field('description', required=True),
+                         Submit(name='SAVE', value='SAVE',type='Submit',css_class='btn btn-success'),
+                         Reset(name='RESET', value='RESET',type='Submit',css_class='btn btn-danger')
+                                    )
   
 class ReportSelection(forms.Form):
 

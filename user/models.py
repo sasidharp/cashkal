@@ -108,7 +108,7 @@ class MyUser(AbstractBaseUser):
 
     def get_calop(self):
         # The user is identified by their email address
-        return self.search1_tag
+        return self.fiscal_year
 
     def get_corpid(self):
         # The user is identified by their email address
@@ -185,6 +185,8 @@ class MYCASHFLOW(models.Model):
     notes2=models.CharField(max_length=75,null=True,blank=True,verbose_name='NOTES2')
     notes3=models.CharField(max_length=75,null=True,blank=True,verbose_name='NOTES3')
 
+    converted=models.CharField(max_length=1,null=True,blank=True,verbose_name='CONVERTED')
+
 
 
     items=models.Manager()
@@ -195,13 +197,16 @@ class MYCASHFLOW(models.Model):
 class expense_categories(models.Model):
 
     id=models.AutoField(max_length=20,null=False,blank=False,primary_key=True,auto_created=True )
-    category=models.CharField(max_length=3,null=False,blank=False,verbose_name='CATEGORY')
     user=models.CharField(max_length=75,null=False,blank=False)
     corpid=models.CharField(max_length=5,null=False,blank=False)
     description=models.CharField(max_length=75,null=False,blank=False,verbose_name='DESCRIPTION')
 
     def __unicode__(self):
         return self.description
+
+    def __str__(self):
+        return self.description
+
 
     items=models.Manager()
 
@@ -229,7 +234,7 @@ class cashflow_actuals(models.Model):
     corpid=models.CharField(max_length=20,null=False,blank=False)
 
 
-    cashflow_id=models.CharField(max_length=5,null=False,blank=False)
+    cashflow_id=models.IntegerField(max_length=20,null=False,blank=False,default=0)
 
     accepted_direction =(('I','Incoming'),
                          ('O','Expense'))

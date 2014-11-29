@@ -84,9 +84,10 @@ def cashlist(request):
 
 #   get the records from the MYCASHFLOW table
     if 'L' in request.GET :
-        raw_sql="""SELECT * FROM user_mycashflow where fdate <= '{today_date}' and "user" = '{username}'""".format(today_date=datetime.date.today(),username=request.user)
+        # raw_sql="""SELECT a.direction , a.fdate , a.recipient , a.amount , b.actualamount  FROM user_mycashflow a LEFT JOIN user_cashflow_actuals b ON  a.id = b.cashflow_id  where a.fdate <= '{today_date}' and a.user = '{username}'""".format(today_date=datetime.date.today(),username=request.user)
+        raw_sql="""select * from user_mycashflow where fdate ='{today_date}' and "user" ='{username}'""".format(today_date=request.GET['D'],username=request.user)
     else:
-        raw_sql="""SELECT * FROM user_mycashflow where "user" = '{username}'""".format(today_date=datetime.date.today(),username=request.user)
+        raw_sql="""SELECT * FROM user_mycashflow where "user" = '{username}' and parent = 'P'""".format(today_date=datetime.date.today(),username=request.user)
 
     row_list = MYCASHFLOW.items.raw(raw_sql)
 #   append them into row
@@ -98,9 +99,7 @@ def cashlist(request):
             row_dict['direction'] = 'Inflow'
         elif row_dict['direction'] == 'O':
             row_dict['direction'] = 'Outflow'
-             
         row_dict['amount'] = row_dict['amount'].__str__()
-
         total=total+1
         rows.append(row_dict)   
     pages=1
@@ -150,7 +149,7 @@ def cashactuals(request):
     errors={} 
     formdate={}
     default_values={}
-    
+    no_render=''
     if request.method=='POST':
         if 'id' in request.GET:
             
@@ -165,7 +164,7 @@ def cashactuals(request):
             default_items['acurrency']      = request.user.get_currency()
             default_items['notes2']         = request.POST['notes2']
             default_items['notes3']         = request.POST['notes3']
-                
+
             form = ActualForm(default_items,initial=({'user':request.user,'currency':default_items['currency']}))
         
         else:
@@ -179,7 +178,11 @@ def cashactuals(request):
             default_items['frequency']          = "W"
             default_items['fdate']              = datetime.date.today()
             default_items['cashflow_id']        = random.randint(90000, 99999)
-            form = ActualForm(default_items,initial=({'user':request.user,'currency':default_items['currency']}))    
+
+
+            form = ActualForm(default_items,initial=({'user':request.user,'currency':default_items['currency']}))
+
+
 
         if form.is_valid():
             saved_item = form.save()
@@ -212,12 +215,15 @@ def cashactuals(request):
             form = ActualForm(initial_values,initial=({'user':request.user,'corpid':request.user.get_corpid(),'currency':initial_values['currency']}))
             return form
 
-        elif 'delete' in request.GET:
-            form=cashflow_actuals.items.get(id=request.GET['delete'])
+        elif 'D' in request.GET:
+            form=cashflow_actuals.items.get(id=request.GET['D'])
+            cashflow_item=MYCASHFLOW.items.get(id=form.cashflow_id)
+            cashflow_item.converted = ''
             form.delete()
-            return HttpResponseRedirect("/categ/")
-        elif 'modify' in request.GET:
-            instance=cashflow_actuals.items.get(id=request.GET['modify'])
+            cashflow_item.save()
+            return HttpResponse('Deleted')
+        elif 'M' in request.GET:
+            instance=cashflow_actuals.items.get(id=request.GET['M'])
             intial_values   =   model_to_dict(instance)
             form=ActualForm(initial=intial_values)
             return render_to_response('actual.html',({'form': form,'msg':msg}),context_instance=RequestContext(request))
@@ -239,6 +245,7 @@ def cash(request):
         default_values['parent']      ='P'
         default_values['currency']    = request.user.get_currency()
        
+
         form = NewCashForm(default_values)
         
         if form.is_valid():
@@ -262,18 +269,17 @@ def cash(request):
             form=NewCashForm(dict)
             return render_to_response('cash.html', {'form': form},context_instance=RequestContext(request))
         
-        elif 'delete' in request.GET:
+        elif 'D' in request.GET:
         
-            form        =   MYCASHFLOW.items.get(id=request.GET['delete'])
+            form        =   MYCASHFLOW.items.get(id=request.GET['D'])
             form.delete()
-            forms       =   MYCASHFLOW.items.filter(parent=request.GET['delete'])
+            forms       =   MYCASHFLOW.items.filter(parent=request.GET['D'],converted__isnull=True)
             for item in forms:
                 item.delete()
-            return HttpResponseRedirect("/categ/")
-        
-        elif 'modify' in request.GET:
+            return HttpResponse('Deleted')
+        elif 'M' in request.GET:
             
-            instance        =   MYCASHFLOW.items.get(id=request.GET['modify'])
+            instance        =   MYCASHFLOW.items.get(id=request.GET['M'])
             intial_values   =   model_to_dict(instance)
             form            =   NewCashForm(intial_values)
             return render_to_response('cash.html', {'form': form},context_instance=RequestContext(request))
@@ -284,23 +290,97 @@ def cash(request):
 #**********************************************************************************************#
 @login_required(login_url='/home/')
 def events(request):
+ # ************************************************************************************************
+# ************************************************************************************************
     from django.db import connection
     calendar_final=[]
     event_list=[]
-    raw_stmt ="""select fdate  ,  direction , sum(amount) as value  from user_mycashflow where "user" = '{user_name}'  group by fdate ,direction order by fdate , direction""".format(user_name=request.user)
+    found=''
+# ************************************************************************************************
+    raw_stmt ="""select fdate  ,  amount  , direction from user_mycashflow where "user" = '{user_name}' order by fdate """.format(user_name=request.user)
     cursor = connection.cursor()
     cursor.execute(raw_stmt)
-    calendar_items = cursor.fetchall()
-    for item in calendar_items:
-        url='/report'+'?'+'today'+'='+item[0].isoformat()
-        if item[1] == 'I':
-            
-            dict = { 'title' : 'Rcvd         ' + str(item[2]) + request.user.get_currency() , 'start':item[0].isoformat(), 'color':'#228B22' , 'url':url}
-            event_list.append(dict)
+    calendar_cash_items = cursor.fetchall()
+# ************************************************************************************************
+    raw_stmt ="""select fdate  ,  actualamount  , direction from user_cashflow_actuals where "user" = '{user_name}' order by fdate""".format(user_name=request.user)
+    cursor = connection.cursor()
+    cursor.execute(raw_stmt)
+    calendar_actual_items = cursor.fetchall()
+#************************************************************************************************
+#************************************************************************************************
+    cnt = 0
+    planned_dict={}
+    actual_dict={}
+    final_record = 0
+    planned_amount=0
+    actual_amount=0
+    first_item = calendar_cash_items[0]
+    tmpdate= first_item[0]
+    final_record = calendar_cash_items.__len__()
+    for item in calendar_cash_items:
+        cnt = cnt + 1
+        if tmpdate!=item[0]:
+            planned_dict[tmpdate.isoformat()] = planned_amount
+            planned_amount=0
+            tmpdate = item[0]
+
+        if item[2] == 'I':
+            planned_amount   = planned_amount + item[1]
         else:
-            dict = { 'title' : 'Not Rcvd   ' + str(item[2]) + request.user.get_currency() , 'start':item[0].isoformat(), 'color':'#CD5C5C' , 'url':url}
-            event_list.append(dict)
-    
+            planned_amount   = planned_amount - item[1]
+
+        if cnt == final_record:
+            planned_dict[tmpdate.isoformat()] = planned_amount
+            cnt = 0
+
+# ************************************************************************************************
+# ************************************************************************************************
+    if calendar_actual_items.__len__() > 0 :
+        first_item = calendar_actual_items[0]
+        tmpdate= first_item[0]
+        final_record = calendar_actual_items.__len__()
+        cnt = 0
+        for item in calendar_actual_items:
+            cnt = cnt + 1
+            if tmpdate!=item[0]:
+                actual_dict[tmpdate.isoformat()] = actual_amount
+                actual_amount=0
+                tmpdate = item[0]
+
+            if item[2] == 'I':
+                actual_amount   = actual_amount + item[1]
+            else:
+                actual_amount   = actual_amount - item[1]
+
+            if cnt == final_record:
+                actual_dict[tmpdate.isoformat()] = actual_amount
+                actual_amount = 0
+                cnt = 0
+
+# ************************************************************************************************
+# ************************************************************************************************
+    rcvd_value=0
+    tobercvd_value=0
+    for k , v in planned_dict.items():
+          if k in actual_dict:
+            rcvd_value= actual_dict[k]
+
+          tobercvd_value = v
+
+          dict={'title':str(tobercvd_value),'start':k,'color':'#009080'}
+          event_list.append(dict)
+
+          dict={'title':str(rcvd_value),'start':k,'color':'#008080'}
+          event_list.append(dict)
+
+          pending = tobercvd_value - rcvd_value
+          title = '$ <->' + str(pending)
+          dict={'title':title,'start':k,'color':'#C00000'}
+          event_list.append(dict)
+
+          tobercvd_value = 0
+          rcvd_value = 0
+
     json_data=jsonpickle.encode(event_list, unpicklable=False, make_refs=False)
     return HttpResponse(json_data, content_type='application/json')
 #**********************************************************************************************#
@@ -317,9 +397,21 @@ def convertactual(request):
     if cashflow_item is None:
         result['error'] = 'cashflow does not exist'
     else:
-        form = ModalActualForm(request.POST)
+        default_fields = model_to_dict(cashflow_item)
+        default_fields['actualamount']   = request.POST['actualamount']
+        default_fields['acurrency']      = request.user.get_currency()
+        default_fields['cashflow_id']    = request.POST['cashflow_id']
+        default_fields['corpid']         = request.user.get_corpid()
+        default_fields['user']           = request.user
+        form = ModalActualForm(default_fields)
         if form.is_valid():
             form.save()
+            cashflow = MYCASHFLOW.items.get(id=request.POST['cashflow_id'])
+            if cashflow is not None:
+                cashflow.converted = 'X'
+                cashflow.save()
+            else:
+                result['error'] = 'cashflow not updated'
             result['success'] = 'X'
         else:
             result['error'] = form.errors
@@ -332,7 +424,7 @@ def convertactual(request):
 def calenoption(request):
     if 'calop' in request.GET:
          myuser = request.user
-         myuser.search1_tag=request.GET['calop']
+         myuser.fiscal_year=request.GET['calop']
          myuser.save()
          return HttpResponse('saved')
     else:
@@ -343,7 +435,8 @@ def calenoption(request):
 #**********************************************************************************************#
 @login_required(login_url='/home/')
 def calendar(request):
-    return render_to_response('calendar.html',{'user_option':'W'},context_instance=RequestContext(request))
+
+    return render_to_response('calendar.html',{'user_option':request.user.get_calop()},context_instance=RequestContext(request))
 #**********************************************************************************************#
 #                               Create your views here.                                        #
 #**********************************************************************************************#
@@ -396,7 +489,7 @@ def addcateg(request):
 @login_required(login_url='/home/')
 def launcher(request):
     form = ModalActualForm()
-    return render_to_response("launcher.html", {'date':datetime.date.today(),'form':form},context_instance=RequestContext(request))
+    return render_to_response("launcher.html", {'date':datetime.date.today(),'form':form , 'clkdate':request.GET['D']},context_instance=RequestContext(request))
 
 #**********************************************************************************************#
 #                               Create your views here.                                        #

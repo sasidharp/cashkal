@@ -39,11 +39,56 @@
                         border-bottom-color: inherit;
                         border-bottom-style: solid;
                      }
+            .css_actual {
+                font-size:13px;
+                font-family:Arial;
+                font-weight:bold;
+                -moz-border-radius:19px;
+                -webkit-border-radius:19px;
+                border-radius:19px;
+                border:0px solid #268a16;
+                padding:7px 30px;
+                text-decoration:none;
+                background:-moz-linear-gradient( center top, #77d42a 15%, #5cb811 90% );
+                background:-ms-linear-gradient( top, #77d42a 15%, #5cb811 90% );
+                background-color:#77d42a;
+                color:#306108;
+                display:inline-block;
+                text-shadow:1px 1px 0px #aade7c;
+                -webkit-box-shadow:inset 0px -1px 0px 0px #caefab;
+                -moz-box-shadow:inset 0px -1px 0px 0px #caefab;
+                box-shadow:inset 0px -1px 0px 0px #caefab;
+            }
+    .css_toactual {
+        font-size:13px;
+        font-family:Arial;
+        font-weight:normal;
+        -moz-border-radius:19px;
+        -webkit-border-radius:19px;
+        border-radius:19px;
+        border:0px solid #d02718;
+        padding:7px 30px;
+        text-decoration:none;
+        background:-moz-linear-gradient( center top, #f24537 15%, #c62d1f 90% );
+        background:-ms-linear-gradient( top, #f24537 15%, #c62d1f 90% );
+        filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f24537', endColorstr='#c62d1f');
+        background:-webkit-gradient( linear, left top, left bottom, color-stop(15%, #f24537), color-stop(90%, #c62d1f) );
+        background-color:#f24537;
+        color:#ffffff;
+        display:inline-block;
+        text-shadow:1px 1px 0px #810e05;
+        -webkit-box-shadow:inset 0px -1px 0px 0px #f5978e;
+        -moz-box-shadow:inset 0px -1px 0px 0px #f5978e;
+        box-shadow:inset 0px -1px 0px 0px #f5978e;
+    }
+</style>
 
                     </style>
+                    </style>
                     <script>
+                        var clicked_row;
                         $(document).ready(function () {
-
+                            var datastring = "/list/?L=X&D="+"{{clkdate}}";
                             $('#savebtn').click(function( ) {
 
                             $.ajaxSetup({
@@ -56,22 +101,23 @@
 
                             $.ajax({url:"/convert/",
                                        type: "POST",
-                                       data: { id : '4' },
+                                       data: { id : clicked_row ,
+                                               actualamount : $('#id_actualamount').val( ) ,
+                                               cashflow_id : clicked_row },
                                        success:function(result){
-                                       $("#m").html(result);
+                                       jQuery("#list4").trigger("reloadGrid");
                                     }});
                                 $('#myModal').modal('toggle');
-                                $('#myModal1').modal('show');
+                                //$('#myModal1').modal('show');
                             });
-
 
 
                             var DataGrid = jQuery("#list4");
                             //Table Object
                             jQuery("#list4").jqGrid({
-                                url: '/list/?L=X',
+                                url: datastring ,
                                 datatype: "json",
-                                colNames: ['Identifier', 'Forecasted Date', 'Type', 'amount', 'Currency', 'Recipient/Payer', 'Telephone','Action'],
+                                colNames: ['Identifier', 'Forecasted Date', 'Type', 'amount', 'Currency', 'Recipient/Payer', 'converted','Action'],
                                 colModel: [
                                     { name: 'id', index: 'id', width: 20, align: "center" },
                                     { name: 'fdate', index: 'fdate', width: 30, align: "center" },
@@ -79,18 +125,19 @@
                                     { name: 'amount', width: 30 ,align: "right" },
                                     { name: 'currency', index: 'currency', width: 15, align: "center" },
                                     { name: 'recipient', index: 'recipient', width: 75, align: "right" },
-                                    { name: 'telephone', index: 'telephone', width: 30, align: "right" },
-                                    { name: 'act', index: 'act',width: 30, align: "left" }
+                                    { name: 'converted', index: 'col', width: 5   , align: "center" },
+                                    { name: 'act', index: 'act',width: 30, align: "center" }
                                  ],
                                 rowNum: 10,
                                 rowList: [10, 20, 30],
                                 pager: '#pager',
+                                autowidth:true,
                                 sortname: 'fdate',
                                 viewrecords: true,
                                 sortorder: "direction",
-                                caption: "Convert to Actual ? click on required row",
+                                caption: "Use convert option to actual the planned cashflow",
                                 onSelectRow: function (rowId) {
-//                                      var rowData = DataGrid.jqGrid('getRowData', rowId);
+//                                      clicked_row = DataGrid.jqGrid('getRowData', rowId);
 //                                      var redirect_link = "/actuals/"
 //                                      redirect_link = redirect_link + "?id=" + rowData.id +"&" +"Callback=L";
 //                                      window.location.href = redirect_link;
@@ -99,9 +146,14 @@
                                     var ids = jQuery("#list4").jqGrid('getDataIDs');
                                     for(var i=0;i < ids.length;i++){
                                         var cl = ids[i];
-                                        se = "<input  type='button' value='CONVERT TO ACTUAL' onclick=\"test( );\" />";
+                                        var rowData = jQuery("#list4").jqGrid('getRowData',ids[i]);
+                                        if ( rowData.converted == 'X' ){
+                                        se = "<input  type='button' class='css_actual' value='Recieved'/>";
+                                        }else
+                                        {
+                                        se = "<input  type='button' value='convert' class='css_toactual' onclick=\"setmodal_data('"+cl+"');\" />";
+                                        }
                                         jQuery("#list4").jqGrid('setRowData',ids[i],{act:se});
-
                                     }
                                 }
 
@@ -138,13 +190,12 @@
                         }
 //Only one of the checked boxes need to be clicked. If more than one is clicked
 //issue an error.
-        function test(){
-                       $('#id_actualamount').val('100.00');
-                       $('#id_recipient').val('Vendor');
-                       $('#myModal').modal('show');
-                       }
-
-
+        function setmodal_data(id){
+                        $('#id_actualamount').val('100.00');
+                        $('#id_recipient').val('Vendor');
+                         clicked_row = id;
+                        $('#myModal').modal('show');
+                        }
 // using jQuery
 function getCookie(name) {
     var cookieValue = null;
@@ -191,16 +242,25 @@ function csrfSafeMethod(method) {
                                 </div><!--/.nav-collapse -->
                             </div>3
                         </div>
-                        <div class="container-fluid" id="result">
-                            <br />
-                            <br />
-                            <br />
-                            <br />
-                            <h31>Welcome {{request.user.first_name}} {{request.user.last_name}}  . Please review your Outstanding items as of {{date}}</h31>
-                            <br />
-                            <br />
-                            <br />
-                        </div>
+                        <div class="container-fluid" >
+                                <div class="row">
+
+                                    <div class="col-lg-2"></div>
+                                    <div class="col-lg-8">
+                                            <br />
+                                            <br />
+                                            <br />
+                                            <br />
+                                            <h31>Please review your Outstanding items as of {{date}}. </h31>
+                                            <br />
+                                            <br />
+                                            <br />
+                                            </div>
+                                    <div class="col-lg-2"></div>
+                                </div>
+
+
+                           </div>
                         <div class="container-fluid">
                                 <div class="row">
                                     <div class="col-lg-2">
