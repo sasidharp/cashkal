@@ -59,9 +59,9 @@ class UserCreationForm(forms.ModelForm):
         self.helper.layout = Layout(
                                         # TabHolder(
                                         #             Tab('',
-                                                     Field('email',autofocus=True),
-                                                     Field('password1',placeholder='password',required=True),
-                                                     Field('password2',placeholder='Retype password',required=True),
+                                                     Field('email',autofocus=True,label='EMAIL',placeholder='SOMEONE@STARTUP.COM'),
+                                                     Field('password1',required=True,placeholder='PASSWORD'),
+                                                     Field('password2',required=True,placeholder='RETYPE PASSWORD'),
                                                      FieldWithButtons('TypeofOrg'),
                                                      # Field('name1',placeholder='name1',required=True,css_class='form-horizontal'),
                                                      # Field('name2',placeholder='name2',required=True),
@@ -69,8 +69,8 @@ class UserCreationForm(forms.ModelForm):
                                                      # Field('first_name',placeholder='first name',required=True),
                                                      # Field('last_name',placeholder='last_name',required=True),
                                                      # # Field('middle_name',placeholder='middle_name',required=True),
-                                                     Field('currency',placeholder='USD',required=True,title='This is defaulted for all transactions, unless changed otherwise during entry'),
-                                                     Field('corpid',placeholder='six character code',required=True,title=corp_text),
+                                                     Field('currency',required=True,placeholder='CURRENCY',title='This is defaulted for all transactions, unless changed otherwise during entry'),
+                                                     Field('corpid',placeholder='Your firms unique id',title=corp_text),
                                                      # Field('title',placeholder='Mr',required=True),
                                                      # Field('fiscal_year',placeholder='year',required=True),
                                                      # Field('city',placeholder='city',required=True),
@@ -81,11 +81,7 @@ class UserCreationForm(forms.ModelForm):
                                                      # Field('fax',placeholder='fax',required=True),
                                                      Submit( name='REGISTER', value='REGISTER',type='Submit',css_class='btn btn-success'),
                                                      Reset( name='RESET', value='RESET',type='Submit',css_class='btn btn-danger')
-
-                                                # )
-
-
-
+                                         # )
                                  # )
 )
 

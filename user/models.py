@@ -42,13 +42,13 @@ class MyUserManager(BaseUserManager):
 # *************************************************************************************
 class MyUser(AbstractBaseUser):
     email = models.EmailField(
-        verbose_name='Email',
+        verbose_name='EMAIL',
         max_length=255,
         unique=True,
     )
     orghelps = (('1','Individual'),('2','Organization'))
 
-    TypeofOrg=models.CharField(max_length=1,blank=False,choices=orghelps,verbose_name='Type of Org')
+    TypeofOrg=models.CharField(max_length=1,blank=False,choices=orghelps,verbose_name='USER')
 
     name1=models.CharField(max_length=120,null=True,blank=True,verbose_name='NAME')
     name2=models.CharField(max_length=120,null=True,blank=True,verbose_name='NAME2')
@@ -59,8 +59,8 @@ class MyUser(AbstractBaseUser):
     middle_name=models.CharField(max_length=120,null=True,blank=True,verbose_name='MIDDLE NAME')
 
    
-    currency=models.CharField(max_length=4,verbose_name='Currency')
-    corpid=models.CharField(max_length=20,verbose_name='Corp.Id')
+    currency=models.CharField(max_length=4,verbose_name='CURRENCY')
+    corpid=models.CharField(max_length=20,verbose_name='CORP ID')
 #   calpro=models.CharField(max_length=1,null=True,blank=True,verbose_name='Calendar Profile')
 #   calpro1=models.CharField(max_length=1,null=True,blank=True,verbose_name='Calendar Profile')
 
@@ -141,13 +141,12 @@ class MYCASHFLOW(models.Model):
     parent=models.CharField(max_length=20)
 
     user=models.CharField(max_length=75,null=False,blank=False)
-    corpid=models.CharField(max_length=20,null=False,blank=False)
+    corpid=models.CharField(max_length=20,null=False,blank=False,default='INDI')
 
-    accepted_direction =(('I','Incoming'),
-                         ('O','Expense'))
-
+    accepted_direction =(('I','Incoming'),('O','Expense'))
     direction=models.CharField(max_length=75,null=False,blank=False,verbose_name='DIRECTION',choices=accepted_direction,default='O')
-    category=models.ForeignKey('user.expense_categories',null=False,blank=False,verbose_name='EXPENSE TYPE')
+
+    categ=models.CharField(max_length=75,null=False,blank=False,verbose_name='EXPENSE TYPE')
 
     accepted_frequency =(('M','Monthly'),
                          ('W','Weekly'),
@@ -198,7 +197,7 @@ class expense_categories(models.Model):
 
     id=models.AutoField(max_length=20,null=False,blank=False,primary_key=True,auto_created=True )
     user=models.CharField(max_length=75,null=False,blank=False)
-    corpid=models.CharField(max_length=5,null=False,blank=False)
+    corpid=models.CharField(max_length=20,null=False,blank=False,default='INDI')
     description=models.CharField(max_length=75,null=False,blank=False,verbose_name='DESCRIPTION')
 
     def __unicode__(self):
@@ -231,7 +230,7 @@ class cashflow_actuals(models.Model):
     id=models.AutoField(max_length=20,null=False,blank=False,primary_key=True,auto_created=True )
 
     user=models.CharField(max_length=75,null=False,blank=False)
-    corpid=models.CharField(max_length=20,null=False,blank=False)
+    corpid=models.CharField(max_length=20,null=False,blank=False,default='INDI')
 
 
     cashflow_id=models.IntegerField(max_length=20,null=False,blank=False,default=0)
@@ -240,7 +239,7 @@ class cashflow_actuals(models.Model):
                          ('O','Expense'))
     direction=models.CharField(max_length=75,null=False,blank=False,verbose_name='DIRECTION',choices=accepted_direction,default='O')
 
-    category=models.ForeignKey('user.expense_categories',null=False,blank=False,verbose_name='EXPENSE TYPE')
+    categ=models.CharField(max_length=75,null=False,blank=False,verbose_name='EXPENSE TYPE')
 
     accepted_frequency =(('M','Monthly'),
                          ('W','Weekly'),
@@ -290,7 +289,7 @@ class contact(models.Model):
 
     id=models.AutoField(max_length=20,null=False,blank=False,primary_key=True,auto_created=True )
     user=models.CharField(max_length=75,null=False,blank=False)
-    corpid=models.CharField(max_length=5,null=False,blank=False)
+    corpid=models.CharField(max_length=20,null=False,blank=False,default='INDI')
 
     email=models.EmailField(verbose_name='Email',max_length=255,unique=False )
 
@@ -303,9 +302,9 @@ class contact(models.Model):
                          ( 'Y','Feedback'),
                          ( 'S','Interested'))
 
-    complaint_categ=models.CharField(max_length=75,null=False,blank=False,verbose_name='Category',choices=accepted_comp,default='S')
-    telephone=models.CharField(max_length=12,null=True,blank=True,verbose_name='TEL:')
+    categ=models.CharField(max_length=75,null=False,blank=False,verbose_name='SERVICE REQUEST FOR',choices=accepted_comp,default='S')
+    telephone=models.CharField(max_length=12,null=True,blank=True,verbose_name='CONTACT NO:')
 
-    complaint_text=models.CharField(max_length=75,null=False,blank=False,verbose_name='DESCRIPTION')
+    complaint_text=models.TextField(verbose_name='DESCRIPTION')
 
     items=models.Manager()

@@ -45,6 +45,10 @@ def home(request):
         default_values['last_login']   = datetime.datetime.today()
         default_values['search1_tag']  = 'Initial'
         default_values['search2_tag']  = 'Initial'
+        if default_values['corpid']  != "":
+           default_values['corpid'] = str(default_values['corpid']).upper()
+        else:
+           default_values['corpid'] = 'INDIVIDUAL'
 
         form=UserCreationForm(default_values)
         if form.is_valid():
@@ -138,6 +142,25 @@ def actuallist(request):
     json_data = jdata(total, pages, records, rows)
 
     data = jsonpickle.encode(json_data, unpicklable=False, make_refs=False, keys=False)
+    return HttpResponse(data, content_type='application/json')
+#**********************************************************************************************#
+#                               Create your views here.                                        #
+#**********************************************************************************************#
+@login_required(login_url='/home/')
+def categories(request):
+
+    rows=[]
+    rows.append({'description':'Rent'})
+    rows.append({'description':'Subscription'})
+    rows.append({'description':'Office'})
+    rows.append({'description':'Expenses'})
+    rows.append({'description':'Meals'})
+    rows.append({'description':'Snacks'})
+    row_list = expense_categories.items.filter(user=request.user)
+    for row_item in row_list:
+        row_dict = model_to_dict(row_item, (), ())
+        rows.append(row_dict)
+    data = jsonpickle.encode(rows, unpicklable=False, make_refs=False, keys=False)
     return HttpResponse(data, content_type='application/json')
 #**********************************************************************************************#
 #                               Create your views here.                                        #
@@ -240,11 +263,12 @@ def cash(request):
     form = NewCashForm(initial=({'user':request.user,'currency':request.user.get_currency()}))
     if request.method=='POST':
         default_values                = request.POST.copy()
-        default_values['user']        = request.user
+        default_values['user']        = request.user.get_short_name()
         default_values['corpid']      = request.user.get_corpid()
         default_values['parent']      ='P'
         default_values['currency']    = request.user.get_currency()
-       
+        default_values['categ']       = request.POST['category']
+
 
         form = NewCashForm(default_values)
         
@@ -366,17 +390,19 @@ def events(request):
             rcvd_value= actual_dict[k]
 
           tobercvd_value = v
-
-          dict={'title':str(tobercvd_value),'start':k,'color':'#009080'}
+          time = str(k)
+          dict={'title':str(tobercvd_value - rcvd_value),'start':time,'color':'#C00000'}
           event_list.append(dict)
 
-          dict={'title':str(rcvd_value),'start':k,'color':'#008080'}
+          time = str(k)
+          dict={'title':str(rcvd_value),'start':time,'color':'#008080'}
           event_list.append(dict)
 
-          pending = tobercvd_value - rcvd_value
-          title = '$ <->' + str(pending)
-          dict={'title':title,'start':k,'color':'#C00000'}
-          event_list.append(dict)
+          # time = str(k)
+          # pending = tobercvd_value - rcvd_value
+          # title = str(pending)
+          # dict={'title':title,'start':time,'color':'#C00000'}
+          # event_list.append(dict)
 
           tobercvd_value = 0
           rcvd_value = 0
@@ -477,9 +503,7 @@ def addcateg(request):
         if form.is_valid():
             newcateg = form.save()
             return HttpResponseRedirect("/cash/")
-        else:
-            msg='Invalid categ'
-        return render_to_response('addcateg.html',({'form': form,'msg':msg}),context_instance=RequestContext(request))
+        return render_to_response('addcateg.html',({'form': form}),context_instance=RequestContext(request))
     else:
         form=NewExpenseCategoryForm( )
         return render_to_response('addcateg.html', {'form':form},context_instance=RequestContext(request))
@@ -515,10 +539,17 @@ def pie(request):
 def contact(request):
     form = NewContactForm()
     if request.method == 'POST':
+        default_values = request.POST.copy()
+        default_values['user']=request.user
+        default_values['corpid']= request.user.get_corpid()
+        form = NewContactForm(default_values)
         if form.is_valid():
             form.save()
+            msg='Thank you. Request will be addressed in a weeks time'
+            return render_to_response("contact.html",{'form':form,'msg':msg},context_instance=RequestContext(request))
         else:
-            return render_to_response("contact.html",{'form':form},context_instance=RequestContext(request))
+            msg='Form could not submitted.please reach our call center @ dkdkdk'
+            return render_to_response("contact.html",{'form':form,'msg':msg},context_instance=RequestContext(request))
     else:
         return render_to_response("contact.html",{'form':form},context_instance=RequestContext(request))
 
@@ -568,10 +599,9 @@ def report(request):
     running_act=0
     actual_amount=0                    
     dailyitems=[]
-    item={}      
     if request.method == 'POST':
         if ( request.POST['category_id'] != ""):
-            row_data = MYCASHFLOW.items.filter(category_id=request.POST['category_id'],
+            row_data = MYCASHFLOW.items.filter(categ=request.POST['category_id'],
                                                fdate__gte=request.POST['start_date'],
                                                fdate__lte=request.POST['end_date'],
                                                user=request.user)
@@ -579,43 +609,35 @@ def report(request):
             row_data = MYCASHFLOW.items.filter(fdate__gte=request.POST['start_date'],
                                                fdate__lte=request.POST['end_date'],
                                                user=request.user)
-            
+
+
         for rows in row_data:
+            item={}
             if rows.direction == 'I':
-                rows.amount = 1 * rows.amount    
+                rows.amount = 1 * rows.amount
             else:
-                rows.amount = -1 * rows.amount    
-            try:
+                rows.amount = -1 * rows.amount
+
+            if rows.converted == 'X':
                 actual_entry=cashflow_actuals.items.get(cashflow_id=rows.id)
                 item['id']=rows.id
                 item['adate']=actual_entry.fdate
-                item['category_id']=expense_categories.items.get(id=rows.category_id)
-                
+                item['categ']=actual_entry.categ
                 item['amount']=rows.amount
+                if actual_entry.direction == 'I':
+                    actual_entry.actualamount = 1 * actual_entry.actualamount
+                else:
+                    actual_entry.actualamount = -1 * actual_entry.actualamount
                 item['actualamount']=actual_entry.actualamount
                 xitem = report_item(item['adate'],item.copy())
                 dailyitems.append(xitem)
-
-            except:
+            else:
                 item['id']=rows.id
                 item['adate']=rows.fdate
-                item['category_id']=expense_categories.items.get(id=rows.category_id)
                 item['amount']=rows.amount
+                item['categ']=rows.categ
                 xitem = report_item(item['adate'],item.copy())
                 dailyitems.append(xitem)
-
-        actuals_noref=cashflow_actuals.items.filter(cashflow_id__gte=90000)
-        for noref_row in actuals_noref:
-                    if noref_row.direction == 'I':
-                        noref_row.amount = 1 * noref_row.amount    
-                    else:
-                        noref_row.amount = -1 * noref_row.amount    
-                    item['id']=noref_row.cashflow_id
-                    item['adate']=noref_row.fdate
-                    item['category_id']=expense_categories.items.get(id=noref_row.category_id)
-                    item['actualamount']=noref_row.actualamount
-                    xitem = report_item(item['adate'],item.copy())
-                    dailyitems.append(xitem)
 
         dailyitems.sort(key=lambda x: x.adate, reverse=False)
         for item_lines in dailyitems:
@@ -638,7 +660,7 @@ def report(request):
             items=MYCASHFLOW.items.filter(fdate=request.GET['today'],
                                           user=request.user)
             for item in items:
-                row={'id':item.id,'date':item.fdate,'category_id':expense_categories.items.get(id=item.category_id),'amount':item.amount,'class':'line'}
+                row={'id':item.id,'date':item.fdate,'categ':item.categ,'amount':item.amount,'class':'line'}
                 dailyitems.append(row)
             return render_to_response("dailyreport.html",{'dailyitems':dailyitems},context_instance=RequestContext(request))
 #**********************************************************************************************#
@@ -647,8 +669,8 @@ def report(request):
 def overallchartdata(request):
     chart_data={}
     json_data= "none"
-    raw_stmt="""SELECT  DISTINCT ON (category_id) category_id  , id  , (select SUM(amount) from user_mycashflow where category_id = a.category_id and "user" = '{user}') as value from user_mycashflow
-                    as a where "user" = '{user}' group by  category_id , id order by category_id""".format(user=request.user)
+    raw_stmt="""SELECT  DISTINCT ON (categ) categ  , id  , (select SUM(amount) from user_mycashflow where categ = a.categ and "user" = '{user}') as value from user_mycashflow
+                    as a where "user" = '{user}' group by  categ , id order by categ""".format(user=request.user)
     row_data = MYCASHFLOW.items.raw(raw_stmt)
     final_chart_data=[]
     chart_rows_data=[]
@@ -658,7 +680,7 @@ def overallchartdata(request):
     
     for row in row_data:
         cell_data=[]
-        cell_data.append({'v':expense_categories.items.get(id=row.category_id).__unicode__()})
+        cell_data.append({'v':row.categ})
         cell_data.append({'v':int(row.value)})
         chart_rows_data.append({'c':cell_data})
         
@@ -673,8 +695,8 @@ def overallchartdata(request):
 def overallchartactual(request):
     chart_data={}
     json_data= "none"
-    raw_stmt="""SELECT  DISTINCT ON (category_id) category_id  , id  , (select SUM(actualamount) from user_cashflow_actuals where category_id = a.category_id and "user" = '{user}') as value from user_cashflow_actuals
-                    as a where "user" = '{user}' group by  category_id , id order by category_id""".format(user=request.user)
+    raw_stmt="""SELECT  DISTINCT ON (categ) categ  , id  , (select SUM(actualamount) from user_cashflow_actuals where categ = a.categ and "user" = '{user}') as value from user_cashflow_actuals
+                    as a where "user" = '{user}' group by  categ , id order by categ""".format(user=request.user)
     row_data = cashflow_actuals.items.raw(raw_stmt)
     final_chart_data=[]
     chart_rows_data=[]
@@ -684,7 +706,7 @@ def overallchartactual(request):
 
     for row in row_data:
         cell_data=[]
-        cell_data.append({'v':expense_categories.items.get(id=row.category_id).__unicode__()})
+        cell_data.append({'v':row.categ})
         cell_data.append({'v':int(row.value)})
         chart_rows_data.append({'c':cell_data})
 
@@ -734,20 +756,24 @@ def trend(request):
     chart_data={}
     json_data= "none"
     cursor = connection.cursor()
-    cursor.execute("""select extract(month from fdate) as month,extract(year from fdate) as yyyy,sum(amount) as monthval from user_mycashflow group by 1,2""")
+    raw_sql=("""select direction ,extract(month from fdate) as month,extract(year from fdate) as yyyy,sum(amount) as monthval from user_mycashflow where "user" = '{user}' group by 1,2,3""").format(user=request.user)
+    cursor.execute(raw_sql)
     row_data = cursor.fetchall()
     final_chart_data=[]
     chart_rows_data=[]
     chart_cols_data=[]
-    chart_cols_data.append(({'type':'string','label':'Month'}))
-    chart_cols_data.append(({'type':'number','label':'Actual'}))
-    chart_cols_data.append(({'type':'number','label':'Planned'}))
+    chart_cols_data.append(({'type':'string','label':'Direction'}))
+    chart_cols_data.append(({'type':'number','label':'Month'}))
+    chart_cols_data.append(({'type':'number','label':'Year'}))
+    chart_cols_data.append(({'type':'number','label':'Amount'}))
+
     for row in row_data:
-        month = row[0]
+        month = row[1]
         cell_data=[]
+        cell_data.append({'v':row[0]})
         cell_data.append({'v':calendar.month_name[int(month)]})
         cell_data.append({'v':int(row[2])})
-        cell_data.append({'v':'5000'})
+        cell_data.append({'v':row[3]})
         chart_rows_data.append({'c':cell_data})
     final_chart_data.append(chart_cols_data)
     final_chart_data.append(chart_rows_data)
@@ -778,7 +804,7 @@ def convertmodel_json(items):
 def create_forecasted_entries(l_form , l_id , l_request):
      forecasted_dates = get_occurances(l_form.cleaned_data['frequency'],l_form.cleaned_data['fdate'],120)
      for date in forecasted_dates:
-         forecasted_entry=MYCASHFLOW.items.create(category=l_form.cleaned_data['category'],
+         forecasted_entry=MYCASHFLOW.items.create(categ=l_form.cleaned_data['category'],
                                                       user=l_request.user  ,
                                                       parent=l_id.id,
                                                       direction=l_form.cleaned_data['direction'],

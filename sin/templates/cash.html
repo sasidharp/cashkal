@@ -17,7 +17,17 @@
                             <link rel="stylesheet" href="{% static "css/paycal.css" %}">
                             <script>
                                 $(function () {
-                                     $("#id_fdate").datepicker();
+                                 $.ajax({url:"/categories/",
+                                       type: "GET",
+                                       success:function(result){
+                                       $('#id_category').html('');
+                                       eval(result).forEach(function(t){
+                                           $('#id_category').append('<option>'+t.description+'</option>');
+                                       });
+
+                                    }});
+
+                                    $("#id_fdate").datepicker();
                                     $("#id_fdate").datepicker("option", "dateFormat", "yy-mm-dd");
 
                                     $(":input").change(function(){
@@ -50,7 +60,7 @@
                                         <li><a href="/report/"><h31N>Reports</h31N></a></li>
                                         <li><a href="/pie/"><h31N>Charts</h31N></a></li>
                                         <li><a href="/contact/"><h31N>Contact us</h31N></a></li>
-                                                            <li><a href="/logout/"><h31N>logout</h31N></a></li>
+                                        <li><a href="/logout/"><h31N>logout</h31N></a></li>
 
                                    </ul>
                                 </div><!--/.nav-collapse -->

@@ -54,9 +54,10 @@
         });
 
 
-
-        DataGrid.jqGrid('setGridWidth', '1124');
-        DataGrid.jqGrid('setGridHeight', '350');
+        DataGrid.jqGrid('setGridWidth', jQuery("#datatable").width( ));
+        //DataGrid.jqGrid('setGridWidth', '1124');
+        DataGrid.jqGrid('setGridHeight', jQuery("#datatable").height( ));
+        //DataGrid.jqGrid('setGridHeight', '350');
 
         $("#btncalen").click(
                      function () {
@@ -103,6 +104,7 @@
     border-right-width: 1px;
     border-right-color: inherit;
     border-right-style: solid;
+    font-family: 'Antic Slab', serif;
  }
 .ui-jqgrid tr.jqgrow td {
     font-weight: bold;
@@ -115,6 +117,7 @@
     border-bottom-width: 1px;
     border-bottom-color: inherit;
     border-bottom-style: solid;
+    font-family: 'Antic Slab', serif;
  }
 
 </style>
@@ -164,7 +167,7 @@
     <div class="container-fluid">
         <div class="row">
         <div class="col-lg-2"></div>
-        <div class="col-lg-8">
+        <div class="col-lg-8" id="datatable">
             <table id="list4"></table>
             <div id="pager"></div>
         </div>

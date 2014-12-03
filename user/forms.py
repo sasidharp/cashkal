@@ -78,22 +78,28 @@ class NewUserReg(forms.ModelForm):
                                                 )
                                  )
 )     
+class customchoicefield(forms.ChoiceField):
+    @classmethod
+    def validate(self, value):
+        None
 
 class NewCashForm(forms.ModelForm):
+    # category = forms.ChoiceField(label='EXPENSE TYPE')
+    category = customchoicefield(label='EXPENSE TYPE')
     class Meta:
         model = MYCASHFLOW
-   
+
     def __init__(self, *args, **kwargs):
         super(NewCashForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.form_id = 'cashentry'
         self.helper.form_method = 'post'
         self.helper.form_tag = True
-    
+
         user_curr='NONE'
         if 'initial' in kwargs:
             user_curr = self.initial['currency']
-
+        choices=[]
         self.helper.layout = Layout(
                 TabHolder(
                    Tab( 'DATA ENTRY',
@@ -103,7 +109,7 @@ class NewCashForm(forms.ModelForm):
 #                        InlineField('frequency','fdate'),
 # #                      'frequency',
 #                        'fdate',
-                         AppendedText('amount',user_curr,placeholder='Planned amount',required=True,min="0",max="10000", step="1"),
+                         AppendedText('amount',user_curr,placeholder='Planned amount',required=True,min="0",max="100000", step="1"),
 #                        Field('currency',placeholder='USD',required=True),
                          Field('recipient',placeholder='Payment Recipient / debtor',required=True),
                         'paymethod',
@@ -263,9 +269,9 @@ class NewExpenseCategoryForm(forms.ModelForm):
   
 class ReportSelection(forms.Form):
 
-    category_id=forms.ModelChoiceField(expense_categories.items.all())
-    start_date = forms.DateField()
-    end_date = forms.DateField()
+    category_id=forms.ModelChoiceField(expense_categories.items.all(),label='CATEGORY')
+    start_date = forms.DateField(label='START DATE')
+    end_date = forms.DateField(label='END DATA')
     
     def __init__(self, *args, **kwargs):
         
@@ -275,7 +281,7 @@ class ReportSelection(forms.Form):
         self.helper.form_method = 'post'
         self.helper.form_tag = True
     
-        self.helper.layout = Layout(Field('category_id',autofocus=True),
+        self.helper.layout = Layout(Field('category_id',autofocus=True,),
                                     Field('start_date', required=True),
                                     Field('end_date', required=True),
                                     Submit(name='SAVE', value='GET',type='Submit',css_class='btn btn-success'),
@@ -284,8 +290,8 @@ class ReportSelection(forms.Form):
     )    
     
 class PieSelection(forms.Form):
-    start_date = forms.DateField()
-    end_date = forms.DateField()
+    start_date = forms.DateField(label='START DATE')
+    end_date = forms.DateField(label='END DATE')
     
     def __init__(self, *args, **kwargs):
         
@@ -295,8 +301,8 @@ class PieSelection(forms.Form):
         self.helper.form_method = 'post'
         self.helper.form_tag = True
     
-        self.helper.layout = Layout(Field('start_date', value=datetime.date.today()),
-                                    Field('end_date', value=datetime.date.today()),
+        self.helper.layout = Layout(Field('start_date', default=datetime.date.today()),
+                                    Field('end_date', default=datetime.date.today()),
                                     Submit(name='SAVE', value='GET',type='Submit',css_class='btn btn-success'),
                                     Reset(name='RESET', value='RESET',type='Submit',css_class='btn btn-danger')
                                
@@ -315,8 +321,8 @@ class NewContactForm(forms.ModelForm):
         self.helper.form_method = 'post'
         self.helper.form_tag = True
         self.helper.layout = Layout(
-                                    Field('email',required=True),
-                                    Field('compliant_categ',required=True),
+                                    Field('email',required=True,default='sasidharp@gmail.com'),
+                                    Field('categ',required=True),
                                     Field('telephone',required=True),
                                     Field('complaint_text',required=True),
                                     Submit(name='SAVE', value='GET',type='Submit',css_class='btn btn-success'),
