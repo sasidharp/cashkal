@@ -26,11 +26,11 @@
             // page is now ready, initialize the calendar...
             $('#calendar').fullCalendar({
                 header: {
-                    left: 'prev,next today',
-                    center: 'Payment Calendar',
-                    right: 'month,agendaWeek,agendaDay'
-                },
-                // put your options and callbacks here
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'month,basicWeek,basicDay'
+                    },
+              // put your options and callbacks here
                     events: {
                         url: "/events/",
              },
@@ -59,16 +59,13 @@
                             }
                             else
                             {
-                                open_url = '/cash/';
+                                open_url = '/cash/?DATE='+ date.utc().format('YYYY-MM-DD');
 
                             }
               window.location.href = open_url;
     }
 
-
-
-
-        });
+    });
 
          set_calendar();
 
@@ -144,18 +141,18 @@
 <div class="container">
     <div class="row">
 
-     <div class ='col-lg-4 col-xs-8' >
-            <label for="calop"><h31>Default calendar : </h31></label>
-             <select name="calop" id="calop">
-                <option value="D"><h31>Daily</h31></option>
-                <option value="W"><h31>Weekly</h31></option>
-                <option value="M"><h31>Monthly</h31></option>
-             </select>
-     </div>
-      <div class ='col-lg-2 col-xs-4'>
-            <button type="button" class="btn btn-default" id="save">
-                    <span class="glyphicon glyphicon-question-sign"></span> save </button>
-     </div>
+     <!--<div class ='col-lg-4 col-xs-8' >-->
+            <!--<label for="calop"><h31>Default calendar : </h31></label>-->
+             <!--<select name="calop" id="calop">-->
+                <!--<option value="D"><h31>Daily</h31></option>-->
+                <!--<option value="W"><h31>Weekly</h31></option>-->
+                <!--<option value="M"><h31>Monthly</h31></option>-->
+             <!--</select>-->
+     <!--</div>-->
+      <!--<div class ='col-lg-2 col-xs-4'>-->
+            <!--<button type="button" class="btn btn-default" id="save">-->
+                    <!--<span class="glyphicon glyphicon-question-sign"></span> save </button>-->
+     <!--</div>-->
 
      <div class ='col-lg-3'>
          <br>

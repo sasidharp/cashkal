@@ -30,6 +30,9 @@
                                     $("#id_fdate").datepicker();
                                     $("#id_fdate").datepicker("option", "dateFormat", "yy-mm-dd");
 
+                                    var date = getdate_url();
+                                    $("#id_fdate").val(date);
+
                                     $(":input").change(function(){
                                                 $("#msg").text("");
                                                 });
@@ -37,6 +40,14 @@
                                         document.location.href = "/addcateg/";
                                     });
                                 });
+
+                                function getdate_url(){
+                                    var value;
+                                    var hashes = window.location.href.slice(window.location.href.indexOf('?')+1).split('?');
+                                    value = hashes[0].split('=')
+                                    return value[1];
+                                }
+
                             </script>
                     </head>
                     

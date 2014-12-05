@@ -88,7 +88,23 @@
                     <script>
                         var clicked_row;
                         $(document).ready(function () {
-                            var datastring = "/list/?L=X&D="+"{{clkdate}}";
+                            var datastring;
+
+                            if ("{{type}}" == "A" ){
+                                if ("{{expense}}" == "N" ){
+                                datastring = "/alist/?L=X&D="+"{{clkdate}}";
+                                }else
+                                {
+                                datastring = "/alist/?L=X&D="+"{{clkdate}}"+"&A="+"{{expense}}";
+                                }
+                            }else{
+                                if ("{{expense}}" == "N" ){
+                                datastring = "/list/?L=X&D="+"{{clkdate}}";
+                                }else
+                                {
+                                datastring = "/list/?L=X&D="+"{{clkdate}}"+"&A="+"{{expense}}";
+                                }
+                            }
                             $('#savebtn').click(function( ) {
 
                             $.ajaxSetup({
@@ -147,11 +163,17 @@
                                     for(var i=0;i < ids.length;i++){
                                         var cl = ids[i];
                                         var rowData = jQuery("#list4").jqGrid('getRowData',ids[i]);
-                                        if ( rowData.converted == 'X' ){
-                                        se = "<input  type='button' class='css_actual' value='Recieved'/>";
-                                        }else
+                                        if ( "{{type}}" == "A" ){
+                                            se = "<input  type='button' class='css_actual' value='Actual'/>";
+                                        }
+                                        else if ( rowData.converted == 'X' && "{{type}}" == "P" ){
+                                            se = "<input  type='button' class='css_actual' value='Recorded'/>";
+                                        }else if ( rowData.converted == 'X' && "{{type}}" == "" ){
+                                            se = "<input  type='button' class='css_actual' value='Recorded'/>";
+                                        }
+                                        else
                                         {
-                                        se = "<input  type='button' value='convert' class='css_toactual' onclick=\"setmodal_data('"+cl+"');\" />";
+                                            se = "<input  type='button' value='convert' class='css_toactual' onclick=\"setmodal_data('"+cl+"');\" />";
                                         }
                                         jQuery("#list4").jqGrid('setRowData',ids[i],{act:se});
                                     }
@@ -191,8 +213,9 @@
 //Only one of the checked boxes need to be clicked. If more than one is clicked
 //issue an error.
         function setmodal_data(id){
-                        $('#id_actualamount').val('100.00');
-                        $('#id_recipient').val('Vendor');
+                        var rowData = jQuery("#list4").jqGrid('getRowData',id);
+                        $('#id_actualamount').val(rowData.amount);
+                        $('#id_recipient').val(rowData.recipient);
                          clicked_row = id;
                         $('#myModal').modal('show');
                         }

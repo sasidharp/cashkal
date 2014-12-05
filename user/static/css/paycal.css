@@ -17,7 +17,7 @@
 
                              h2 {
                                  font-family: 'Antic Slab', serif;
-                                 color: white;
+                                 color: black;
                                  font-size: 20px;
                              }
 
@@ -103,7 +103,7 @@
                                  }
                             .fc-event-container{
                                  font-family: 'Antic Slab', serif;
-                                 color: white;
+                                 color: black;
                                  font-weight: bold;
                                  font-size:20px;
                             }

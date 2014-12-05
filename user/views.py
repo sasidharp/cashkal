@@ -87,8 +87,9 @@ def cashlist(request):
     rows=[]
 
 #   get the records from the MYCASHFLOW table
-    if 'L' in request.GET :
-        # raw_sql="""SELECT a.direction , a.fdate , a.recipient , a.amount , b.actualamount  FROM user_mycashflow a LEFT JOIN user_cashflow_actuals b ON  a.id = b.cashflow_id  where a.fdate <= '{today_date}' and a.user = '{username}'""".format(today_date=datetime.date.today(),username=request.user)
+    if( 'A' in request.GET and 'D' in request.GET ):
+        raw_sql="""select * from user_mycashflow where fdate ='{today_date}' and "user" ='{username}' and direction = '{direction}'""".format(today_date=request.GET['D'],username=request.user,direction=request.GET['A'])
+    elif( 'L' in request.GET ):
         raw_sql="""select * from user_mycashflow where fdate ='{today_date}' and "user" ='{username}'""".format(today_date=request.GET['D'],username=request.user)
     else:
         raw_sql="""SELECT * FROM user_mycashflow where "user" = '{username}' and parent = 'P'""".format(today_date=datetime.date.today(),username=request.user)
@@ -120,9 +121,15 @@ def actuallist(request):
 #   create an array to hold the table data
     rows=[]
 #   get the records from the MYCASHFLOW table
-    raw_sql="""SELECT * FROM user_cashflow_actuals where "user" = '{username}'""".format(username=request.user)
-    row_list = cashflow_actuals.items.raw(raw_sql)
+#   get the records from the MYCASHFLOW table
+    if( 'A' in request.GET and 'D' in request.GET ):
+        raw_sql="""select * from user_cashflow_actuals where fdate ='{today_date}' and "user" ='{username}' and direction = '{direction}'""".format(today_date=request.GET['D'],username=request.user,direction=request.GET['A'])
+    elif( 'L' in request.GET ):
+        raw_sql="""select * from user_cashflow_actuals where fdate ='{today_date}' and "user" ='{username}'""".format(today_date=request.GET['D'],username=request.user)
+    else:
+        raw_sql="""SELECT * FROM user_cashflow_actuals where "user" = '{username}'""".format(today_date=datetime.date.today(),username=request.user)
 #   append them into row
+    row_list = cashflow_actuals.items.raw(raw_sql)
     total=1
     for row_item in row_list:
         row_dict = model_to_dict(row_item, (), ())
@@ -336,25 +343,38 @@ def events(request):
     planned_dict={}
     actual_dict={}
     final_record = 0
-    planned_amount=0
-    actual_amount=0
+    planned_in=0
+    planned_out=0
+    actual_in=0
+    actual_out=0
     first_item = calendar_cash_items[0]
     tmpdate= first_item[0]
     final_record = calendar_cash_items.__len__()
     for item in calendar_cash_items:
         cnt = cnt + 1
         if tmpdate!=item[0]:
-            planned_dict[tmpdate.isoformat()] = planned_amount
-            planned_amount=0
+            if planned_in != 0:
+                dict={'title':'Income:' + str(planned_in),'start':tmpdate.isoformat(),'color':'#C00000','url':'/launcher/?D='+tmpdate.isoformat()+'&A'+'=I'+'&T'+'=P'}
+                event_list.append(dict.copy())
+            if planned_out != 0:
+                dict={'title':'Expense:' + str(planned_out),'start':tmpdate.isoformat(),'color':'#C00000','url':'/launcher/?D='+tmpdate.isoformat()+'&A'+'=O'+'&T'+'=P'}
+                event_list.append(dict.copy())
+            planned_in=0
+            planned_out=0
             tmpdate = item[0]
 
         if item[2] == 'I':
-            planned_amount   = planned_amount + item[1]
+            planned_in   = planned_in + item[1]
         else:
-            planned_amount   = planned_amount - item[1]
+            planned_out   = planned_out + item[1]
 
         if cnt == final_record:
-            planned_dict[tmpdate.isoformat()] = planned_amount
+            if planned_in != 0:
+                dict={'title':'Income:' + str(planned_in),'start':tmpdate.isoformat(),'color':'#C00000','url':'/launcher/?D='+tmpdate.isoformat()+'&A'+'=I'+'&T'+'=P'}
+                event_list.append(dict.copy())
+            if planned_out != 0:
+                dict={'title':'Expense:' + str(planned_out),'start':tmpdate.isoformat(),'color':'#C00000','url':'/launcher/?D='+tmpdate.isoformat()+'&A'+'=O'+'&T'+'=P'}
+                event_list.append(dict.copy())
             cnt = 0
 
 # ************************************************************************************************
@@ -367,46 +387,31 @@ def events(request):
         for item in calendar_actual_items:
             cnt = cnt + 1
             if tmpdate!=item[0]:
-                actual_dict[tmpdate.isoformat()] = actual_amount
-                actual_amount=0
+                if actual_in != 0:
+                    dict={'title':'Income:' + str(actual_in),'start':tmpdate.isoformat(),'color':'#008000','url':'/launcher/?D='+tmpdate.isoformat()+'&A'+'=I'+'&T'+'=A'}
+                    event_list.append(dict.copy())
+                if actual_out != 0:
+                    dict={'title':'Expense:' + str(actual_out),'start':tmpdate.isoformat(),'color':'#008000','url':'/launcher/?D='+tmpdate.isoformat()+'&A'+'=O'+'&T'+'=A'}
+                    event_list.append(dict.copy())
+                actual_in=0
+                actual_out=0
                 tmpdate = item[0]
 
             if item[2] == 'I':
-                actual_amount   = actual_amount + item[1]
+                actual_in   = actual_in + item[1]
             else:
-                actual_amount   = actual_amount - item[1]
+                actual_out   = actual_out + item[1]
 
             if cnt == final_record:
-                actual_dict[tmpdate.isoformat()] = actual_amount
-                actual_amount = 0
+                if actual_in != 0:
+                    dict={'title': 'Income:' + str(actual_in),'start':tmpdate.isoformat(),'color':'#008000','url':'/launcher/?D='+tmpdate.isoformat()+'&A'+'=I'+'&T'+'=A'}
+                    event_list.append(dict.copy())
+                if actual_out != 0:
+                    dict={'title': 'Expense:' + str(actual_out),'start':tmpdate.isoformat(),'color':'#008000','url':'/launcher/?D='+tmpdate.isoformat()+'&A'+'=O'+'&T'+'=A'}
+                    event_list.append(dict.copy())
+                actual_in=0
+                actual_out=0
                 cnt = 0
-
-# ************************************************************************************************
-# ************************************************************************************************
-    rcvd_value=0
-    tobercvd_value=0
-    for k , v in planned_dict.items():
-          if k in actual_dict:
-            rcvd_value= actual_dict[k]
-
-          tobercvd_value = v
-          time = str(k)
-          dict={'title':str(tobercvd_value - rcvd_value),'start':time,'color':'#C00000'}
-          event_list.append(dict)
-
-          time = str(k)
-          dict={'title':str(rcvd_value),'start':time,'color':'#008080'}
-          event_list.append(dict)
-
-          # time = str(k)
-          # pending = tobercvd_value - rcvd_value
-          # title = str(pending)
-          # dict={'title':title,'start':time,'color':'#C00000'}
-          # event_list.append(dict)
-
-          tobercvd_value = 0
-          rcvd_value = 0
-
     json_data=jsonpickle.encode(event_list, unpicklable=False, make_refs=False)
     return HttpResponse(json_data, content_type='application/json')
 #**********************************************************************************************#
@@ -513,7 +518,13 @@ def addcateg(request):
 @login_required(login_url='/home/')
 def launcher(request):
     form = ModalActualForm()
-    return render_to_response("launcher.html", {'date':datetime.date.today(),'form':form , 'clkdate':request.GET['D']},context_instance=RequestContext(request))
+    expense = "N"
+    type = ""
+    if 'A' in request.GET:
+        expense = request.GET['A']
+    if 'T' in request.GET:
+        type = request.GET['T']
+    return render_to_response("launcher.html", {'date':datetime.date.today(),'form':form , 'clkdate':request.GET['D'],'expense':expense,'type':type},context_instance=RequestContext(request))
 
 #**********************************************************************************************#
 #                               Create your views here.                                        #
@@ -669,7 +680,7 @@ def report(request):
 def overallchartdata(request):
     chart_data={}
     json_data= "none"
-    raw_stmt="""SELECT  DISTINCT ON (categ) categ  , id  , (select SUM(amount) from user_mycashflow where categ = a.categ and "user" = '{user}') as value from user_mycashflow
+    raw_stmt="""SELECT  DISTINCT ON (categ) categ  , id  , (select SUM(amount) from user_mycashflow where categ = a.categ and "user" = '{user}' and direction = 'I') as value from user_mycashflow
                     as a where "user" = '{user}' group by  categ , id order by categ""".format(user=request.user)
     row_data = MYCASHFLOW.items.raw(raw_stmt)
     final_chart_data=[]
@@ -681,9 +692,41 @@ def overallchartdata(request):
     for row in row_data:
         cell_data=[]
         cell_data.append({'v':row.categ})
-        cell_data.append({'v':int(row.value)})
+        if row.value is not None:
+            cell_data.append({'v':int(row.value)})
+        else:
+            cell_data.append({'v': 0})
         chart_rows_data.append({'c':cell_data})
         
+    final_chart_data.append(chart_cols_data)
+    final_chart_data.append(chart_rows_data)
+    data={'cols':chart_cols_data,'rows':chart_rows_data}
+    json_data=jsonpickle.encode(data, unpicklable=False, make_refs=False)
+    return HttpResponse(json_data, content_type='application/json')
+#**********************************************************************************************#
+#                               Create your views here.                                        #
+#**********************************************************************************************#
+def overallchartdata_out(request):
+    chart_data={}
+    json_data= "none"
+    raw_stmt="""SELECT  DISTINCT ON (categ) categ  , id  , (select SUM(amount) from user_mycashflow where categ = a.categ and "user" = '{user}' and direction = 'O') as value from user_mycashflow
+                    as a where "user" = '{user}' group by  categ , id order by categ""".format(user=request.user)
+    row_data = MYCASHFLOW.items.raw(raw_stmt)
+    final_chart_data=[]
+    chart_rows_data=[]
+    chart_cols_data=[]
+    chart_cols_data.append(({'type':'string','label':'category'}))
+    chart_cols_data.append(({'type':'number','label':'amount'}))
+
+    for row in row_data:
+        cell_data=[]
+        cell_data.append({'v':row.categ})
+        if row.value is not None:
+            cell_data.append({'v':int(row.value)})
+        else:
+            cell_data.append({'v': 0})
+        chart_rows_data.append({'c':cell_data})
+
     final_chart_data.append(chart_cols_data)
     final_chart_data.append(chart_rows_data)
     data={'cols':chart_cols_data,'rows':chart_rows_data}
@@ -695,7 +738,7 @@ def overallchartdata(request):
 def overallchartactual(request):
     chart_data={}
     json_data= "none"
-    raw_stmt="""SELECT  DISTINCT ON (categ) categ  , id  , (select SUM(actualamount) from user_cashflow_actuals where categ = a.categ and "user" = '{user}') as value from user_cashflow_actuals
+    raw_stmt="""SELECT  DISTINCT ON (categ) categ  , id  , (select SUM(actualamount) from user_cashflow_actuals where categ = a.categ and "user" = '{user}' and direction = 'I') as value from user_cashflow_actuals
                     as a where "user" = '{user}' group by  categ , id order by categ""".format(user=request.user)
     row_data = cashflow_actuals.items.raw(raw_stmt)
     final_chart_data=[]
@@ -707,7 +750,10 @@ def overallchartactual(request):
     for row in row_data:
         cell_data=[]
         cell_data.append({'v':row.categ})
-        cell_data.append({'v':int(row.value)})
+        if row.value is not None:
+            cell_data.append({'v':int(row.value)})
+        else:
+            cell_data.append({'v': 0})
         chart_rows_data.append({'c':cell_data})
 
     final_chart_data.append(chart_cols_data)
@@ -715,7 +761,35 @@ def overallchartactual(request):
     data={'cols':chart_cols_data,'rows':chart_rows_data}
     json_data=jsonpickle.encode(data, unpicklable=False, make_refs=False)
     return HttpResponse(json_data, content_type='application/json')
+#**********************************************************************************************#
+#                               Create your views here.                                        #
+#**********************************************************************************************#
+def overallchartactual_out(request):
+    chart_data={}
+    json_data= "none"
+    raw_stmt="""SELECT  DISTINCT ON (categ) categ  , id  , (select SUM(actualamount) from user_cashflow_actuals where categ = a.categ and "user" = '{user}' and direction = 'O') as value from user_cashflow_actuals
+                    as a where "user" = '{user}' group by  categ , id order by categ""".format(user=request.user)
+    row_data = cashflow_actuals.items.raw(raw_stmt)
+    final_chart_data=[]
+    chart_rows_data=[]
+    chart_cols_data=[]
+    chart_cols_data.append(({'type':'string','label':'category'}))
+    chart_cols_data.append(({'type':'number','label':'amount'}))
 
+    for row in row_data:
+        cell_data=[]
+        cell_data.append({'v':row.categ})
+        if row.value is not None:
+            cell_data.append({'v':int(row.value)})
+        else:
+            cell_data.append({'v': 0})
+        chart_rows_data.append({'c':cell_data})
+
+    final_chart_data.append(chart_cols_data)
+    final_chart_data.append(chart_rows_data)
+    data={'cols':chart_cols_data,'rows':chart_rows_data}
+    json_data=jsonpickle.encode(data, unpicklable=False, make_refs=False)
+    return HttpResponse(json_data, content_type='application/json')
 #**********************************************************************************************#
 #                               Create your views here.                                        #
 #**********************************************************************************************#
@@ -755,28 +829,65 @@ def trend(request):
     import calendar
     chart_data={}
     json_data= "none"
+    item={}
+    summed_list=[]
     cursor = connection.cursor()
-    raw_sql=("""select direction ,extract(month from fdate) as month,extract(year from fdate) as yyyy,sum(amount) as monthval from user_mycashflow where "user" = '{user}' group by 1,2,3""").format(user=request.user)
+    raw_sql=("""select direction ,extract(month from fdate) as month,extract(year from fdate) as yyyy,sum(amount) as monthval from user_mycashflow where "user" = '{user}' and fdate <='{date}' group by 1,2,3 order by 3,2 """).format(user=request.user,date=datetime.date.today())
     cursor.execute(raw_sql)
     row_data = cursor.fetchall()
+
+    cursor = connection.cursor()
+    raw_sql=("""select direction ,extract(month from fdate) as month,extract(year from fdate) as yyyy,sum(amount) as monthval from user_cashflow_actuals where "user" = '{user}' and fdate <='{date}' group by 1,2,3 order by 3,2 """).format(user=request.user,date=datetime.date.today())
+    cursor.execute(raw_sql)
+    row_actual_data = cursor.fetchall()
+
+    cnt = 0
+    for row in row_data:
+        month = row[1]
+        if cnt == 0:
+            initial =   row[1]
+
+        if initial != month:
+            summed_list.append(item.copy())
+            initial = month
+
+        item['month'] = calendar.month_name[int(month)]
+        if row[0] == 'I':
+            item['planned_incoming'] = row[3]
+        else:
+            item['planned_outgoing'] = row[3]
+
+    for row in row_actual_data:
+        month = row[1]
+        item['month'] = calendar.month_name[int(month)]
+        if row[0] == 'I':
+            item['actual_incoming'] = row[3]
+        else:
+            item['actual_outgoing'] = row[3]
+        summed_list.append(item.copy())
+
+
+
     final_chart_data=[]
     chart_rows_data=[]
     chart_cols_data=[]
-    chart_cols_data.append(({'type':'string','label':'Direction'}))
-    chart_cols_data.append(({'type':'number','label':'Month'}))
-    chart_cols_data.append(({'type':'number','label':'Year'}))
-    chart_cols_data.append(({'type':'number','label':'Amount'}))
 
-    for row in row_data:
-        month = row[1]
+    chart_cols_data.append(({'type':'string','label':'Year'}))
+    chart_cols_data.append(({'type':'number','label':'Planeed'}))
+    chart_cols_data.append(({'type':'number','label':'Actual'}))
+
+    for row in summed_list:
         cell_data=[]
-        cell_data.append({'v':row[0]})
-        cell_data.append({'v':calendar.month_name[int(month)]})
-        cell_data.append({'v':int(row[2])})
-        cell_data.append({'v':row[3]})
+        cell_data.append({'v':row['month']})
+        if 'planned_incoming' in row:
+            cell_data.append({'v':int(row['planned_incoming'])})
+        if 'planned_outgoing' in row:
+            cell_data.append({'v':int(row['planned_outgoing'])})
+        # cell_data.append({'v':row[0]})
         chart_rows_data.append({'c':cell_data})
     final_chart_data.append(chart_cols_data)
     final_chart_data.append(chart_rows_data)
+    # data={'cols':chart_cols_data,'rows':chart_rows_data}
     data={'cols':chart_cols_data,'rows':chart_rows_data}
     json_data=jsonpickle.encode(data, unpicklable=False, make_refs=False)
     return HttpResponse(json_data, content_type='application/json')
