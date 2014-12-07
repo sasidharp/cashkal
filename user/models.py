@@ -248,7 +248,7 @@ class cashflow_actuals(models.Model):
                          ('Q','Quarterly'),
                          ('H','Half Yearly'),
                          ('Y','Yearly'),
-                         ('A','Ad Hoc'))
+                         ('S','Ad Hoc'))
 
     frequency=models.CharField(max_length=1,null=False,blank=False,verbose_name='FREQUENCY',choices=accepted_frequency,default='C')
     fdate=models.DateField(default=datetime.date.today(), verbose_name='DATE')

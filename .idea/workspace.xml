@@ -23,24 +23,24 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="views.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/user/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="6157" max-vertical-offset="15861">
-              <caret line="407" column="50" selection-start-line="407" selection-start-column="50" selection-end-line="407" selection-end-column="50" />
+            <state vertical-scroll-proportion="0.4809028" vertical-offset="5078" max-vertical-offset="15861">
+              <caret line="333" column="43" selection-start-line="333" selection-start-column="43" selection-end-line="333" selection-end-column="43" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="settings.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="settings.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/hello2/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.63297874" vertical-offset="459" max-vertical-offset="1904">
-              <caret line="62" column="11" selection-start-line="62" selection-start-column="11" selection-end-line="62" selection-end-column="11" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="612" max-vertical-offset="1904">
+              <caret line="66" column="46" selection-start-line="66" selection-start-column="46" selection-end-line="66" selection-end-column="46" />
               <folding>
-                <marker date="1417810334776" expanded="true" signature="1866:1976" placeholder="..." />
-                <marker date="1417810334776" expanded="true" signature="1979:2216" placeholder="..." />
+                <marker date="1417810863606" expanded="true" signature="1868:1984" placeholder="..." />
+                <marker date="1417810863606" expanded="true" signature="1985:2204" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -49,7 +49,7 @@
       <file leaf-file-name="pie.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sin/templates/pie.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-13.0" vertical-offset="1702" max-vertical-offset="2720">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1702" max-vertical-offset="2720">
               <caret line="120" column="39" selection-start-line="120" selection-start-column="39" selection-end-line="120" selection-end-column="39" />
               <folding />
             </state>
@@ -59,7 +59,7 @@
       <file leaf-file-name="signup.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sin/templates/signup.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-21.461538" vertical-offset="3148" max-vertical-offset="4301">
+            <state vertical-scroll-proportion="0.0" vertical-offset="3148" max-vertical-offset="4301">
               <caret line="218" column="45" selection-start-line="218" selection-start-column="45" selection-end-line="218" selection-end-column="45" />
               <folding />
             </state>
@@ -79,7 +79,7 @@
       <file leaf-file-name="calendar.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sin/templates/calendar.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-29.423077" vertical-offset="204" max-vertical-offset="3111">
+            <state vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="3111">
               <caret line="57" column="86" selection-start-line="57" selection-start-column="86" selection-end-line="57" selection-end-column="86" />
               <folding />
             </state>
@@ -99,8 +99,8 @@
       <file leaf-file-name="models.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/user/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5287">
-              <caret line="159" column="37" selection-start-line="159" selection-start-column="37" selection-end-line="159" selection-end-column="37" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="1778" max-vertical-offset="5287">
+              <caret line="245" column="39" selection-start-line="245" selection-start-column="39" selection-end-line="245" selection-end-column="39" />
               <folding />
             </state>
           </provider>
@@ -109,7 +109,7 @@
       <file leaf-file-name="launcher.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sin/templates/launcher.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.372549" vertical-offset="4537" max-vertical-offset="6018">
+            <state vertical-scroll-proportion="0.0" vertical-offset="4537" max-vertical-offset="6018">
               <caret line="280" column="50" selection-start-line="280" selection-start-column="50" selection-end-line="280" selection-end-column="50" />
               <folding />
             </state>
@@ -165,13 +165,13 @@
         <option value="$PROJECT_DIR$/sin/templates/signup.html" />
         <option value="$PROJECT_DIR$/sin/templates/cash.html" />
         <option value="$PROJECT_DIR$/user/static/css/paycal.css" />
-        <option value="$PROJECT_DIR$/user/models.py" />
         <option value="$PROJECT_DIR$/hello2/urls.py" />
         <option value="$PROJECT_DIR$/sin/templates/pie.html" />
         <option value="$PROJECT_DIR$/sin/templates/calendar.html" />
-        <option value="$PROJECT_DIR$/user/views.py" />
         <option value="$PROJECT_DIR$/sin/templates/launcher.html" />
         <option value="$PROJECT_DIR$/hello2/settings.py" />
+        <option value="$PROJECT_DIR$/user/models.py" />
+        <option value="$PROJECT_DIR$/user/views.py" />
       </list>
     </option>
   </component>
@@ -207,6 +207,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -341,7 +342,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -707,29 +707,29 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1864" height="1096" extended-state="6" />
+    <frame x="-8" y="-8" width="1864" height="1096" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" weight="0.6677385" sideWeight="0.49972782" order="1" side_tool="false" content_ui="tabs" x="129" y="101" width="672" height="623" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32747933" sideWeight="0.49972633" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.120415986" sideWeight="0.49689442" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24904214" sideWeight="0.49689442" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.120415986" sideWeight="0.49593496" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24904214" sideWeight="0.49593496" order="2" side_tool="false" content_ui="combo" />
       <window_info id="DB Browser" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.38612837" sideWeight="0.49972633" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24904214" sideWeight="0.50207037" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.120415986" sideWeight="0.50406504" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36438924" sideWeight="0.500821" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="DB Execution Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36335403" sideWeight="0.49917898" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.36335403" sideWeight="0.49917898" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32952183" sideWeight="0.49972782" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Documentation" active="true" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" x="100" y="100" width="1080" height="520" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
     </layout>
     <layout-to-restore>
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -748,10 +748,10 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24904214" sideWeight="0.4983108" order="2" side_tool="false" content_ui="combo" />
       <window_info id="DB Browser" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
-      <window_info id="DB Execution Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3626033" sideWeight="0.49917898" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="DB Execution Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -1042,7 +1042,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="662" max-vertical-offset="1428">
           <caret line="65" column="30" selection-start-line="65" selection-start-column="30" selection-end-line="65" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1058,7 +1057,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="12647" max-vertical-offset="20145">
           <caret line="784" column="16" selection-start-line="784" selection-start-column="4" selection-end-line="784" selection-end-column="16" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1083,17 +1081,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/user/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5287">
-          <caret line="159" column="37" selection-start-line="159" selection-start-column="37" selection-end-line="159" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sin/templates/pie.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.0" vertical-offset="1702" max-vertical-offset="2720">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1702" max-vertical-offset="2720">
           <caret line="120" column="39" selection-start-line="120" selection-start-column="39" selection-end-line="120" selection-end-column="39" />
           <folding />
         </state>
@@ -1103,13 +1093,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.7707231" vertical-offset="5" max-vertical-offset="833">
           <caret line="29" column="54" selection-start-line="29" selection-start-column="54" selection-end-line="29" selection-end-column="54" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sin/templates/calendar.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-29.423077" vertical-offset="204" max-vertical-offset="3111">
+        <state vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="3111">
           <caret line="57" column="86" selection-start-line="57" selection-start-column="86" selection-end-line="57" selection-end-column="86" />
           <folding />
         </state>
@@ -1117,23 +1106,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sin/templates/signup.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-21.461538" vertical-offset="3148" max-vertical-offset="4301">
+        <state vertical-scroll-proportion="0.0" vertical-offset="3148" max-vertical-offset="4301">
           <caret line="218" column="45" selection-start-line="218" selection-start-column="45" selection-end-line="218" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/user/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="6157" max-vertical-offset="15861">
-          <caret line="407" column="50" selection-start-line="407" selection-start-column="50" selection-end-line="407" selection-end-column="50" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sin/templates/launcher.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.372549" vertical-offset="4537" max-vertical-offset="6018">
+        <state vertical-scroll-proportion="0.0" vertical-offset="4537" max-vertical-offset="6018">
           <caret line="280" column="50" selection-start-line="280" selection-start-column="50" selection-end-line="280" selection-end-column="50" />
           <folding />
         </state>
@@ -1141,12 +1122,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/hello2/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.63297874" vertical-offset="459" max-vertical-offset="1904">
-          <caret line="62" column="11" selection-start-line="62" selection-start-column="11" selection-end-line="62" selection-end-column="11" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="612" max-vertical-offset="1904">
+          <caret line="66" column="46" selection-start-line="66" selection-start-column="46" selection-end-line="66" selection-end-column="46" />
           <folding>
-            <marker date="1417810334776" expanded="true" signature="1866:1976" placeholder="..." />
-            <marker date="1417810334776" expanded="true" signature="1979:2216" placeholder="..." />
+            <marker date="1417810863606" expanded="true" signature="1868:1984" placeholder="..." />
+            <marker date="1417810863606" expanded="true" signature="1985:2204" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/user/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1778" max-vertical-offset="5287">
+          <caret line="245" column="39" selection-start-line="245" selection-start-column="39" selection-end-line="245" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/user/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4809028" vertical-offset="5078" max-vertical-offset="15861">
+          <caret line="333" column="43" selection-start-line="333" selection-start-column="43" selection-end-line="333" selection-end-column="43" />
+          <folding />
         </state>
       </provider>
     </entry>

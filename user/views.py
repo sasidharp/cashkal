@@ -328,7 +328,7 @@ def events(request):
     event_list=[]
     found=''
 # ************************************************************************************************
-    raw_stmt ="""select fdate  ,  amount  , direction from user_mycashflow where "user" = '{user_name}' order by fdate """.format(user_name=request.user)
+    raw_stmt ="""select fdate  ,  amount  , direction from user_mycashflow where "user" = '{user_name}' and converted != 'X' order by fdate """.format(user_name=request.user)
     cursor = connection.cursor()
     cursor.execute(raw_stmt)
     calendar_cash_items = cursor.fetchall()
