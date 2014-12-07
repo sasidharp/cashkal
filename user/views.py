@@ -347,36 +347,36 @@ def events(request):
     planned_out=0
     actual_in=0
     actual_out=0
-    first_item = calendar_cash_items[0]
-    tmpdate= first_item[0]
-    final_record = calendar_cash_items.__len__()
-    for item in calendar_cash_items:
-        cnt = cnt + 1
-        if tmpdate!=item[0]:
-            if planned_in != 0:
-                dict={'title':'Income:' + str(planned_in),'start':tmpdate.isoformat(),'color':'#C00000','url':'/launcher/?D='+tmpdate.isoformat()+'&A'+'=I'+'&T'+'=P'}
-                event_list.append(dict.copy())
-            if planned_out != 0:
-                dict={'title':'Expense:' + str(planned_out),'start':tmpdate.isoformat(),'color':'#C00000','url':'/launcher/?D='+tmpdate.isoformat()+'&A'+'=O'+'&T'+'=P'}
-                event_list.append(dict.copy())
-            planned_in=0
-            planned_out=0
-            tmpdate = item[0]
+    if calendar_cash_items.__len__() > 0 :
+        first_item = calendar_cash_items[0]
+        tmpdate= first_item[0]
+        final_record = calendar_cash_items.__len__()
+        for item in calendar_cash_items:
+            cnt = cnt + 1
+            if tmpdate!=item[0]:
+                if planned_in != 0:
+                    dict={'title':'Income:' + str(planned_in),'start':tmpdate.isoformat(),'color':'#C00000','url':'/launcher/?D='+tmpdate.isoformat()+'&A'+'=I'+'&T'+'=P'}
+                    event_list.append(dict.copy())
+                if planned_out != 0:
+                    dict={'title':'Expense:' + str(planned_out),'start':tmpdate.isoformat(),'color':'#C00000','url':'/launcher/?D='+tmpdate.isoformat()+'&A'+'=O'+'&T'+'=P'}
+                    event_list.append(dict.copy())
+                planned_in=0
+                planned_out=0
+                tmpdate = item[0]
 
-        if item[2] == 'I':
-            planned_in   = planned_in + item[1]
-        else:
-            planned_out   = planned_out + item[1]
+            if item[2] == 'I':
+                planned_in   = planned_in + item[1]
+            else:
+                planned_out   = planned_out + item[1]
 
-        if cnt == final_record:
-            if planned_in != 0:
-                dict={'title':'Income:' + str(planned_in),'start':tmpdate.isoformat(),'color':'#C00000','url':'/launcher/?D='+tmpdate.isoformat()+'&A'+'=I'+'&T'+'=P'}
-                event_list.append(dict.copy())
-            if planned_out != 0:
-                dict={'title':'Expense:' + str(planned_out),'start':tmpdate.isoformat(),'color':'#C00000','url':'/launcher/?D='+tmpdate.isoformat()+'&A'+'=O'+'&T'+'=P'}
-                event_list.append(dict.copy())
-            cnt = 0
-
+            if cnt == final_record:
+                if planned_in != 0:
+                    dict={'title':'Income:' + str(planned_in),'start':tmpdate.isoformat(),'color':'#C00000','url':'/launcher/?D='+tmpdate.isoformat()+'&A'+'=I'+'&T'+'=P'}
+                    event_list.append(dict.copy())
+                if planned_out != 0:
+                    dict={'title':'Expense:' + str(planned_out),'start':tmpdate.isoformat(),'color':'#C00000','url':'/launcher/?D='+tmpdate.isoformat()+'&A'+'=O'+'&T'+'=P'}
+                    event_list.append(dict.copy())
+                cnt = 0
 # ************************************************************************************************
 # ************************************************************************************************
     if calendar_actual_items.__len__() > 0 :
