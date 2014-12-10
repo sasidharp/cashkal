@@ -3,7 +3,7 @@
 
 			
 			html {
-				background: url(/static/css/bg.jpg) no-repeat center center fixed; 
+				background: url("/static/css/bg.0fd937fc46ae.jpg") no-repeat center center fixed; 
 				-webkit-background-size: cover;
 				-moz-background-size: cover;
 				-o-background-size: cover;
@@ -50,8 +50,8 @@
                                  font-weight: bold;
                              }
 
-                             .body {
-                                 background-color:#BBDEFB;
+                             #body {
+                                 background-color:#1A237E;
                              }
                             
 
@@ -65,10 +65,10 @@
                              }
 
                            .navbar-inverse {
-                                background-color:#0D47A1;
-                                box-shadow: 5px 5px 5px #888888;
+                                background-color:#009688;
+                                border-color: #080808;
                             }
-
+                            }
                              .ui-jqgrid .ui-jqgrid-titlebar {
                                  padding: 0.3em 0.2em 0.2em 0.3em;
                                  position: relative;

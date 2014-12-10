@@ -119,63 +119,51 @@
     border-bottom-style: solid;
     font-family: 'Antic Slab', serif;
  }
+.row{
+padding-top:5%;
+}
 
 </style>
+
 <body id="body">
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>
-            <div class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li><a href="/cash/"> <h31N>Add Cashflow</h31N></a></li>
-                    <li><a href="/calen/"><h31N>Calendar</h31N></a></li>
-                    <li class="active"><a href="/categ/"><h31N>Corrections</h31N></a></li>
-                    <li><a href="/report/"><h31N>Reports</h31N></a></li>
-                    <li><a href="/pie/"><h31N>Charts</h31N></a></li>
-                 <li><a href="/contact/"><h31N>Contact us</h31N></a></li>
-                    <li><a href="/logout/"><h31N>logout</h31N></a></li>
-
-
-                </ul>
-            </div><!--/.nav-collapse -->
-        </div>3
-    </div>
-    <div class="container-fluid">
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-    </div>
-    <div class="container-fluid">
-        <p class="text-center">
-            <button type="button" class="btn btn-default btn-lg" id="planned">   <h34>EDIT PLANNED CASHFLOW</h34></button>
-            <button type="button" class="btn btn-default btn-lg" id="actuals"> <h34>CORRECT ACTUALS      </h34></button>
-        </p>
-        
-    </div>
-    <div class="container-fluid">
+<!--- -------------------------------------start of form----------------------------------------------------------------->
+			<div class="container">
+			   <div class="masthead text-right">
+				<h3 class="text-muted "><h3>Logged in as {{user}}</h3></h3>
+				<div role="navigation">
+				  <ul class="nav nav-justified">
+							<!--<li><a href="/launcher/"><h31N>Home</h31N></a></li>-->
+							<li><a href="/cash/"> <h2>Add Cashflow</h2></a></li>
+							<li><a href="/calen/"><h2>Calendar</h2></a></li>
+							<li class="active"><a href="/categ/"><h2>Corrections</h2></a></li>
+							<li><a href="/report/"><h2>Reports</h2></a></li>
+							<li><a href="/pie/"><h2>Charts</h2></a></li>
+							<li><a href="/contact/"><h2>Contact us</h2></a></li>
+							<li><a href="/logout/"><h2>logout</h2></a></li>
+				  </ul>
+				</div>
+			  </div>
+			</div>
+<!--- -------------------------------------start of form----------------------------------------------------------------->
+    <div class="container">
         <div class="row">
-        <div class="col-lg-2"></div>
-        <div class="col-lg-8" id="datatable">
-            <table id="list4"></table>
-            <div id="pager"></div>
+            <div class="col-md-2"></div>
+            <div class="col-md-8 text-center">
+                <button type="button" class="btn btn-default btn-lg" id="planned"><h34>EDIT PLANNED CASHFLOW</h34></button>
+                <button type="button" class="btn btn-default btn-lg" id="actuals"><h34>CORRECT ACTUALS      </h34></button>
+            </div>
+            <div class="col-md-2"></div>
         </div>
-        <div class="col-lg-2"></div>
-
+     </div>
+<!--- -------------------------------------start of form----------------------------------------------------------------->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12" id="datatable">
+                <table id="list4"></table>
+                <div id="pager"></div>
+            </div>
         </div>
     </div>
-    <br />
-    <br />
+<!--- -------------------------------------start of form----------------------------------------------------------------->
  </body>
 </html>

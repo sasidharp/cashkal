@@ -284,7 +284,7 @@ def cash(request):
                 msg='Entry Saved'
                 if form.cleaned_data['frequency'] != 'S':
                     create_forecasted_entries(form,id,request)
-                form = NewCashForm()
+                return HttpResponseRedirect("/calen/")
         else:
             msg=form.errors
             errors = form.errors

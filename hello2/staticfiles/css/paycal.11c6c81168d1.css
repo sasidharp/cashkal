@@ -3,7 +3,7 @@
 
 			
 			html {
-				background: url(/static/css/bg.jpg) no-repeat center center fixed; 
+				background: url("/static/css/bg.0fd937fc46ae.jpg") no-repeat center center fixed; 
 				-webkit-background-size: cover;
 				-moz-background-size: cover;
 				-o-background-size: cover;
@@ -12,7 +12,7 @@
    
 			h1 {
                                  font-family: 'Antic Slab', serif;
-                                 color:#009688;
+                                 color:black;
                              }
 
                              h2 {
@@ -23,7 +23,7 @@
 
                              h3 {
                                  font-family: 'Antic Slab', serif;
-                                 color: white;
+                                 color: black;
                                  font-size: 20px;
                              }
 
