@@ -95,6 +95,7 @@ TEMPLATE_DIRS = (
 )
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+MEDIA_ROOT  = os.path.join(BASE_DIR, 'MEDIA')
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 STATICFILES_DIRS = ( os.path.join(BASE_DIR, 'staticfiles', 'css'), )
 # if DEBUG:

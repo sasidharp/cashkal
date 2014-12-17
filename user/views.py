@@ -14,7 +14,7 @@ from .admin import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.contrib.auth import login
-from .BusinessLogic import jdata ,get_occurances
+from .BusinessLogic import jdata ,get_occurances , fileupload
 from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import render
 #**********************************************************************************************#
@@ -938,8 +938,128 @@ def create_forecasted_entries(l_form , l_id , l_request):
                                                       notes3=l_form.cleaned_data['notes3'])
          
      
+#**********************************************************************************************#
+#                               Create your views here.                                        #
+#**********************************************************************************************#
+@login_required(login_url='/home/')
+def upload(request):
+    cnt=0
+    scnt=0
+    ecnt=0
+    fileobj=None
+    fileobj = fileupload()
+    if request.method == 'POST':
+        if 'file' in request.FILES:
+            fileobj.read_file(request.FILES['file'])
+            if fileobj.errors.__len__() == 0:
+                budget_table=fileobj.get_budget_table()
+                categ_table=fileobj.get_categ_table()
+                if ( categ_table.__len__() == 0 or budget_table.__len__() == 0 ):
+                    message = 'Error uploading file.Please log issue with service desk'
+                else:
+                    category_instance = None
+                    category = None
+                    result = None
+                    for eachcateg in categ_table:
+                        #First record is header , not required
+                        cnt = cnt + 1
+                        if cnt == 1:
+                            continue
+                        category = eachcateg[0]
+                        category_instance = expense_categories(user=request.user.get_short_name(),corpid=request.user.get_corpid(),description=category)
+                        try:
+                            category_instance.save()
+                            result=category_instance.id
+                        except(Exception):
+                            result = None
+                        if result == '' :
+                            ecnt = ecnt + 1
+                        else:
+                            scnt = scnt + 1
+                    status={}
+                    message = 'Total' + str(cnt-1) + '  ' + 'Success' + str(scnt) + ' ' + 'Error' + ' ' + str(ecnt)
+                    if ecnt == 0:
+                            #Directon,category,frequency,fdate,amount,currency,recipient name street city zipcode region paymethod telephone email fax notes1  notes2 notes3
+                            cnt = 0
+                            for eachcashflow in budget_table:
+                            #First record is header , not required
+                                cnt = cnt + 1
+                                if cnt == 1:
+                                    continue
+                                direction=eachcashflow[0]
+                                category=eachcashflow[1]
+                                frequency=eachcashflow[2]
+                                fdate=eachcashflow[3]
+                                amount=eachcashflow[4]
+                                currency=eachcashflow[5]
+                                recipient=eachcashflow[6]
+                                name=eachcashflow[7]
+                                street=eachcashflow[8]
+                                city=eachcashflow[9]
+                                zipcode=eachcashflow[10]
+                                region=eachcashflow[11]
+                                paymethod=eachcashflow[12]
+                                telephone=eachcashflow[13]
+                                email=eachcashflow[14]
+                                fax=eachcashflow[15]
+                                notes1=eachcashflow[16]
+                                notes2=eachcashflow[17]
+                                notes3=eachcashflow[18]
+
+                                dict={}
+                                dict['user']          = request.user.get_short_name()
+                                dict['parent']        = 'P'
+                                dict['corpid']        = request.user.get_corpid()
+                                dict['direction']     = direction[0].upper()
+                                dict['categ']      = category.strip().upper()
+                                dict['frequency']     = frequency[0].strip().upper()
+                                dict['fdate']         = fdate
+                                dict['amount']        = int(amount)
+                                dict['currency']      = request.user.get_currency()
+                                dict['recipient']     = recipient.strip().upper()
+                                dict['name']          = name.strip().upper()
+                                dict['street']        = street.strip().upper()
+                                dict['city']          = city.strip().upper()
+                                dict['zipcode']       = zipcode.strip().upper()
+                                dict['region']        = region.strip().upper()
+                                dict['paymethod']     = paymethod[0].strip().upper()
+                                dict['telephone']     = telephone.strip().upper()
+                                dict['email']         = email.strip().upper()
+                                dict['fax']           = fax.strip().upper()
+                                dict['notes1']        = notes1.strip().upper()
+                                dict['notes2']        = notes2.strip().upper()
+                                dict['notes3']        = notes3.strip().upper()
+                                dict['converted']     = ''
+
+                                cash_instance = MYCASHFLOW(**dict.copy())
+                                try:
+                                    result = None
+                                    cash_instance.save()
+                                    result=cash_instance.id
+                                except(Exception):
+                                    result = None
+                                if result == None :
+                                    ecnt = ecnt + 1
+                                    status[cnt]= 'F'
+                                else:
+                                    status[cnt]= 'S'
+                                    scnt = scnt + 1
+
+                            if ecnt == 0:
+                                message = 'catgeroy and cashflows loaded succesfully'
+                            else:
+                                message = 'Rectify errors in cashflow'
+                            return render_to_response("upload.html",{'message':message ,'status':status},context_instance=RequestContext(request))
+    else:
+        form = FileUpload( )
+        return render_to_response("upload.html",{'form':form},context_instance=RequestContext(request))
      
      
-     
-     
-     
+@login_required(login_url='/home/')
+def delete(request):
+    MYCASHFLOW.items.filter(user=request.user.get_short_name()).delete()
+    return HttpResponse('Y', content_type='application/json')
+@login_required(login_url='/home/')
+def adelete(request):
+    cashflow_actuals.items.filter(user=request.user.get_short_name()).delete()
+    return HttpResponse('Y', content_type='application/json')

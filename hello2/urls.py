@@ -34,8 +34,11 @@ urlpatterns = patterns('',
     url(r'^pie/', 'user.views.pie', name='pie'),
     url(r'^report/', 'user.views.report', name='report'),
     url(r'^register/', 'user.views.register', name='register'),
- 
+
     url(r'^contact/', 'user.views.contact', name='contact'),
+    url(r'^upload/', 'user.views.upload', name='upload'),
+    url(r'^delete/', 'user.views.delete', name='delete'),
+    url(r'^adelete/', 'user.views.adelete', name='adelete'),
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),

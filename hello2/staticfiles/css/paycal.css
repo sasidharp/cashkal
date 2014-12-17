@@ -17,7 +17,7 @@
 
                              h2 {
                                  font-family: 'Antic Slab', serif;
-                                 color: black;
+                                 color: white;
                                  font-size: 20px;
                              }
 
@@ -45,7 +45,7 @@
                                  }
                              .btn-success {
                                  color: #dfe3ee;
-                                 background-color:SaddleBrown;
+                                 background-color:#0D47A1;
                                  border-color: #080808;
                                  font-weight: bold;
                              }
@@ -56,11 +56,11 @@
                             
 
                             #banner {
-                                 background-color:SaddleBrown;
+                                 background-color:#0D47A1;
                              }
 
                              .subtotal {
-                                background-color:SaddleBrown;
+                                background-color:#0D47A1;
                                 border-color: #080808;
                              }
 
@@ -87,8 +87,8 @@
 
                              .ui-widget-header {
                                  border: 1px solid #080808;
-                                 background-color: :SaddleBrown;
-                                 background:SaddleBrown;
+                                 background-color: :#0D47A1;
+                                 background:#0D47A1;
                                  color: white;
                                  font-size: 15px;
                                  font-weight: normal;
@@ -97,7 +97,7 @@
 
                                  ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
                                      border: 1px solid #D3D3D3;
-                                     background:SaddleBrown;
+                                     background:#0D47A1;
                                      color: white;
                                       font-size: 15px;
                                  }
@@ -122,5 +122,10 @@
                              #calendar{
                              background-color:#f7f7f7;
                              }
-
+/* Customize the nav-justified links to be fill the entire space of the .navbar */
+                            .nav-justified {
+                              background-color: #0D47A1;
+                              border: 1px solid #90CAF9;
+                              border-radius: 5px;
+                            }
                         </style>

@@ -53,23 +53,23 @@ class NewUserReg(forms.ModelForm):
                                         TabHolder(
                                                 Tab('BASIC',
                                                      Field('email',autofocus=True),
-                                                     Field('password1',placeholder='password1',required=True),
-                                                     Field('password2',placeholder='password2',required=True),
+                                                     Field('password1',placeholder='Password1',required=True),
+                                                     Field('password2',placeholder='Password2',required=True),
                                                      FieldWithButtons('TypeofOrg'),
-                                                     Field('name1',placeholder='name1',required=True,css_class='form-horizontal'),
-                                                     Field('name2',placeholder='name2',required=True),
+                                                     Field('name1',placeholder='Name1',required=True,css_class='form-horizontal'),
+                                                     Field('name2',placeholder='Name2',required=True),
                                                      # Field('name3',placeholder='name3',required=True),
-                                                     Field('first_name',placeholder='first name',required=True),
-                                                     Field('last_name',placeholder='last_name',required=True),
+                                                     Field('first_name',placeholder='First Name',required=True),
+                                                     Field('last_name',placeholder='Last Name',required=True),
                                                      # Field('middle_name',placeholder='middle_name',required=True),
                                                      Field('currency',placeholder='USD',required=True), 
-                                                     Field('corpid',placeholder='corp id',required=True), 
+                                                     Field('corpid',placeholder='Corp Id',required=True),
                                                      # Field('title',placeholder='Mr',required=True),
                                                      # Field('fiscal_year',placeholder='year',required=True),
                                                      # Field('city',placeholder='city',required=True),
                                                      # Field('pincode',placeholder='pincode',required=True),
                                                      # Field('country',placeholder='country',required=True),
-                                                     Field('mobile',placeholder='mobile',required=True),
+                                                     Field('mobile',placeholder='Mobile',required=True),
                                                      # Field('landline',placeholder='landline',required=True),
                                                      # Field('fax',placeholder='fax',required=True),
                                                      Submit( name='SAVE', value='SAVE',type='Submit',css_class='btn btn-success'),
@@ -85,7 +85,7 @@ class customchoicefield(forms.ChoiceField):
 
 class NewCashForm(forms.ModelForm):
     # category = forms.ChoiceField(label='EXPENSE TYPE')
-    category = customchoicefield(label='EXPENSE TYPE')
+    category = customchoicefield(label='Expense Type')
     class Meta:
         model = MYCASHFLOW
 
@@ -269,9 +269,9 @@ class NewExpenseCategoryForm(forms.ModelForm):
   
 class ReportSelection(forms.Form):
 
-    category_id=forms.ModelChoiceField(expense_categories.items.all(),label='CATEGORY')
-    start_date = forms.DateField(label='START DATE')
-    end_date = forms.DateField(label='END DATA')
+    category_id=forms.ModelChoiceField(expense_categories.items.all(),label='Category')
+    start_date = forms.DateField(label='Start Date')
+    end_date = forms.DateField(label='End Date')
     
     def __init__(self, *args, **kwargs):
         
@@ -290,8 +290,8 @@ class ReportSelection(forms.Form):
     )    
     
 class PieSelection(forms.Form):
-    start_date = forms.DateField(label='START DATE')
-    end_date = forms.DateField(label='END DATE')
+    start_date = forms.DateField(label='Start Date')
+    end_date = forms.DateField(label='End Date')
     
     def __init__(self, *args, **kwargs):
         
@@ -328,3 +328,19 @@ class NewContactForm(forms.ModelForm):
                                     Submit(name='SAVE', value='GET',type='Submit',css_class='btn btn-success'),
                                     Reset(name='RESET', value='RESET',type='Submit',css_class='btn btn-danger'))
 
+class FileUpload(forms.Form):
+    file = forms.FileField()
+
+    def __init__(self, *args, **kwargs):
+
+        super(FileUpload, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.form_id = 'report'
+        self.helper.form_method = 'post'
+        self.helper.form_tag = True
+
+        self.helper.layout = Layout(Field('file', default=datetime.date.today()),
+                                    Submit(name='SAVE', value='UPLOAD',type='Submit',css_class='btn btn-success'),
+                                    Reset(name='RESET', value='RESET',type='Submit',css_class='btn btn-danger')
+
+    )

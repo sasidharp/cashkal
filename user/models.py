@@ -48,34 +48,34 @@ class MyUser(AbstractBaseUser):
     )
     orghelps = (('1','Individual'),('2','Organization'))
 
-    TypeofOrg=models.CharField(max_length=1,blank=False,choices=orghelps,verbose_name='USER')
+    TypeofOrg=models.CharField(max_length=1,blank=False,choices=orghelps,verbose_name='User')
 
-    name1=models.CharField(max_length=120,null=True,blank=True,verbose_name='NAME')
-    name2=models.CharField(max_length=120,null=True,blank=True,verbose_name='NAME2')
-    name3=models.CharField(max_length=120,null=True,blank=True,verbose_name='NAME3')
+    name1=models.CharField(max_length=120,null=True,blank=True,verbose_name='Name')
+    name2=models.CharField(max_length=120,null=True,blank=True,verbose_name='Name2')
+    name3=models.CharField(max_length=120,null=True,blank=True,verbose_name='Name3')
 
-    first_name=models.CharField(max_length=120,null=True,blank=True,verbose_name='FIRST NAME')
-    last_name=models.CharField(max_length=120,null=True,blank=True,verbose_name='LAST NAME')
-    middle_name=models.CharField(max_length=120,null=True,blank=True,verbose_name='MIDDLE NAME')
+    first_name=models.CharField(max_length=120,null=True,blank=True,verbose_name='First Name')
+    last_name=models.CharField(max_length=120,null=True,blank=True,verbose_name='Last Name')
+    middle_name=models.CharField(max_length=120,null=True,blank=True,verbose_name='Middle Name')
 
    
-    currency=models.CharField(max_length=4,verbose_name='CURRENCY')
+    currency=models.CharField(max_length=4,verbose_name='Currency')
     corpid=models.CharField(max_length=20,verbose_name='CORP ID')
 #   calpro=models.CharField(max_length=1,null=True,blank=True,verbose_name='Calendar Profile')
 #   calpro1=models.CharField(max_length=1,null=True,blank=True,verbose_name='Calendar Profile')
 
 	
-    title=models.CharField(max_length=2,null=True,blank=True,verbose_name='TITLE')
-    addr1=models.CharField(max_length=60,null=True,blank=True,verbose_name='ADDRESS LINE1')
-    addr2=models.CharField(max_length=60,null=True,blank=True,verbose_name='ADDRESS LINE2')
+    title=models.CharField(max_length=2,null=True,blank=True,verbose_name='Title')
+    addr1=models.CharField(max_length=60,null=True,blank=True,verbose_name='Address Line1')
+    addr2=models.CharField(max_length=60,null=True,blank=True,verbose_name='Address Line2')
 
-    fiscal_year=models.CharField(max_length=1,null=True,blank=True,verbose_name='FISCAL')
+    fiscal_year=models.CharField(max_length=1,null=True,blank=True,verbose_name='Fiscal')
 
-    city=models.CharField(max_length=30,null=True,blank=True,verbose_name='CITY')
-    pincode=models.CharField(max_length=10,null=True,blank=True,verbose_name='PINCODE')
-    country=models.CharField(max_length=2,null=True,blank=True,verbose_name='COUNTRY')
-    mobile=models.CharField(max_length=20,null=True,blank=True,verbose_name='MOBILE')
-    landline=models.CharField(max_length=20,null=True,blank=True,verbose_name='LAND PHONE')
+    city=models.CharField(max_length=30,null=True,blank=True,verbose_name='City')
+    pincode=models.CharField(max_length=10,null=True,blank=True,verbose_name='Pincode')
+    country=models.CharField(max_length=2,null=True,blank=True,verbose_name='Country')
+    mobile=models.CharField(max_length=20,null=True,blank=True,verbose_name='Mobile')
+    landline=models.CharField(max_length=20,null=True,blank=True,verbose_name='Land Phone')
 #   fax1=models.CharField(max_length=20,null=True,blank=True,verbose_name='FAX')
 
     timestamp=models.DateTimeField(auto_now_add=True,auto_now=False)
@@ -144,9 +144,9 @@ class MYCASHFLOW(models.Model):
     corpid=models.CharField(max_length=20,null=False,blank=False,default='INDI')
 
     accepted_direction =(('I','Incoming'),('O','Expense'))
-    direction=models.CharField(max_length=75,null=False,blank=False,verbose_name='DIRECTION',choices=accepted_direction,default='O')
+    direction=models.CharField(max_length=75,null=False,blank=False,verbose_name='Direction',choices=accepted_direction,default='O')
 
-    categ=models.CharField(max_length=75,null=False,blank=False,verbose_name='EXPENSE TYPE')
+    categ=models.CharField(max_length=75,null=False,blank=False,verbose_name='Expense Type')
 
     accepted_frequency =(('M','Monthly'),
                          ('W','Weekly'),
@@ -157,32 +157,32 @@ class MYCASHFLOW(models.Model):
                          ('Y','Yearly'),
                          ('S','Ad Hoc'))
 
-    frequency=models.CharField(max_length=1,null=False,blank=False,verbose_name='FREQUENCY',choices=accepted_frequency,default='C')
-    fdate=models.DateField(default=datetime.date.today(), verbose_name='DATE')
+    frequency=models.CharField(max_length=1,null=False,blank=False,verbose_name='Frequency',choices=accepted_frequency,default='C')
+    fdate=models.DateField(default=datetime.date.today(), verbose_name='Date')
 
-    amount=models.DecimalField(max_digits=8,decimal_places=2,verbose_name='AMOUNT')
+    amount=models.DecimalField(max_digits=8,decimal_places=2,verbose_name='Amount')
     accepted_currencies =(('USD','USD'),('INR','INR'))
-    currency=models.CharField(null=False,blank=False,verbose_name='CURRENCY',choices=accepted_currencies,default='USD',max_length=3)
+    currency=models.CharField(null=False,blank=False,verbose_name='Currecny',choices=accepted_currencies,default='USD',max_length=3)
 
-    recipient=models.CharField(max_length=75,null=True,blank=True,verbose_name='PAYER/RECIPIENT')
-    name=models.CharField(max_length=75,null=True,blank=True,verbose_name='NAME')
+    recipient=models.CharField(max_length=75,null=True,blank=True,verbose_name='Payer/Recipient')
+    name=models.CharField(max_length=75,null=True,blank=True,verbose_name='Name')
 
-    street=models.CharField(max_length=75,null=True,blank=True,verbose_name='STREET')
-    city=models.CharField(max_length=75,null=True,blank=True,verbose_name='CITY')
-    zipcode=models.CharField(max_length=10,null=True,blank=True,verbose_name='ZIPCODE')
-    region=models.CharField(max_length=2,null=True,blank=True,verbose_name='REGION')
+    street=models.CharField(max_length=75,null=True,blank=True,verbose_name='Street')
+    city=models.CharField(max_length=75,null=True,blank=True,verbose_name='City')
+    zipcode=models.CharField(max_length=10,null=True,blank=True,verbose_name='Zipcode')
+    region=models.CharField(max_length=2,null=True,blank=True,verbose_name='Region')
 
 
     accepted_payments =(('C','CARD'),('W','WIRE'),('B','CASH'))
-    paymethod=models.CharField(null=False,blank=False,verbose_name='TYPE OF PAYMENT',choices=accepted_payments,default='C',max_length=1)
+    paymethod=models.CharField(null=False,blank=False,verbose_name='Type of Payment',choices=accepted_payments,default='C',max_length=1)
 
     telephone=models.CharField(max_length=12,null=True,blank=True,verbose_name='TEL:')
     email=models.EmailField(null=True,blank=True)
-    fax=models.CharField(max_length=12,null=True,blank=True,verbose_name='FAX')
+    fax=models.CharField(max_length=12,null=True,blank=True,verbose_name='Fax')
 
-    notes1=models.CharField(max_length=75,null=True,blank=True,verbose_name='NOTES1')
-    notes2=models.CharField(max_length=75,null=True,blank=True,verbose_name='NOTES2')
-    notes3=models.CharField(max_length=75,null=True,blank=True,verbose_name='NOTES3')
+    notes1=models.CharField(max_length=75,null=True,blank=True,verbose_name='Notes1')
+    notes2=models.CharField(max_length=75,null=True,blank=True,verbose_name='Notes2')
+    notes3=models.CharField(max_length=75,null=True,blank=True,verbose_name='Notes3')
 
     converted=models.CharField(max_length=1,null=True,blank=True,verbose_name='CONVERTED')
 
@@ -198,7 +198,7 @@ class expense_categories(models.Model):
     id=models.AutoField(max_length=20,null=False,blank=False,primary_key=True,auto_created=True )
     user=models.CharField(max_length=75,null=False,blank=False)
     corpid=models.CharField(max_length=20,null=False,blank=False,default='INDI')
-    description=models.CharField(max_length=75,null=False,blank=False,verbose_name='DESCRIPTION')
+    description=models.CharField(max_length=75,null=False,blank=False,verbose_name='Description')
 
     def __unicode__(self):
         return self.description
@@ -237,9 +237,9 @@ class cashflow_actuals(models.Model):
 
     accepted_direction =(('I','Incoming'),
                          ('O','Expense'))
-    direction=models.CharField(max_length=75,null=False,blank=False,verbose_name='DIRECTION',choices=accepted_direction,default='O')
+    direction=models.CharField(max_length=75,null=False,blank=False,verbose_name='Direction',choices=accepted_direction,default='O')
 
-    categ=models.CharField(max_length=75,null=False,blank=False,verbose_name='EXPENSE TYPE')
+    categ=models.CharField(max_length=75,null=False,blank=False,verbose_name='Expense Type')
 
     accepted_frequency =(('M','Monthly'),
                          ('W','Weekly'),
@@ -302,9 +302,9 @@ class contact(models.Model):
                          ( 'Y','Feedback'),
                          ( 'S','Interested'))
 
-    categ=models.CharField(max_length=75,null=False,blank=False,verbose_name='SERVICE REQUEST FOR',choices=accepted_comp,default='S')
-    telephone=models.CharField(max_length=12,null=True,blank=True,verbose_name='CONTACT NO:')
+    categ=models.CharField(max_length=75,null=False,blank=False,verbose_name='Service Request For',choices=accepted_comp,default='S')
+    telephone=models.CharField(max_length=12,null=True,blank=True,verbose_name='Contact No:')
 
-    complaint_text=models.TextField(verbose_name='DESCRIPTION')
+    complaint_text=models.TextField(verbose_name='Description')
 
     items=models.Manager()
