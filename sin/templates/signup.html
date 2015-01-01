@@ -58,8 +58,8 @@ h1 {
   font-family: 'Antic Slab', serif;
   font-size:80px;
   font-style:bold;
-  color:black;
-  text-shadow: 0px 5px 5px rgba(150, 150, 150, 0.59);
+  color:white;
+
 }
 
 h5 {
@@ -71,10 +71,15 @@ h5 {
 }
 h6 {
   font-family: 'Antic Slab', serif;
-  font-size:25px;
+  font-size:35px;
   font-style:bold;
-  color:black;
-  text-shadow: 0px 0px 0px rgba(150, 150, 150, 0.59);
+  color:white;
+}
+h8 {
+  font-family: 'Antic Slab', serif;
+  font-size:20px;
+  font-style:bold;
+  color:white;
 }
 h7 {
   font-family: 'Antic Slab', serif;
@@ -113,19 +118,22 @@ h7 {
     padding-left:15%;
     padding-right:15%;
     padding-bottom:5%;
-    background-color:white;
+    background-color:transparent;
     }
 .form-register{
     padding-top:5%;
     padding-left:25%;
     padding-right:5%;
     padding-bottom:5%;
-    background-color:white;
+    background-color:transparent;
     }
 .btn-block {
-    background-color:#593C1F;
+    background-color:silver;
 }
-
+.feature {
+    color:black;
+    font-size:20px;
+    }
 .image {
     <!--//background-image:url("static/css/beans.jpg");-->
     <!--//background-image:url("static/css/classy.jpg");-->
@@ -186,7 +194,8 @@ ul.b {
 }
 
 </style>
-<div class="container">
+
+<div class="container_fluid">
     <div class="row">
         <div class="col-lg-12 text-center">
             <h1>PAYCAL</h1>
@@ -199,80 +208,88 @@ ul.b {
     <div class="row">
     <div class="hidden-xs hidden-sm col-md-2 col-lg-2"></div>
     <div class="hidden-xs hidden-sm col-md-4 col-lg-4">
-           <div class="jumbotron">
-           <p>
-           <h6>Recording your planned and actual cash flows (both incoming & outgoing)</h6>
-           <h6>View your cash flows by day, week, month</h6>
-           <h6>View comparative reports for planned vs. actuals</h6>
-           <h6>Have multiple users key in your cash flows</h6>
+         
+	<div id = "firstpage">
+	   <p>
+            <ul>
+            <h8>Recording your planned and actual cash flows (both incoming & outgoing)</h8><br>
+            <h8>View your cash flows by day, week, month</h8><br>
+            <h8>View comparative reports for planned vs. actuals</h8><br>
+            <h8>Have multiple users key in your cash flows</h8><br>
+            <br>
+            <h8>FREE TO USE...NO TIME LIMITS OR HIDDEN CHARGES  </h8><br>
+            <br>
+            <br>
+            <p><a class="btn btn-primary btn-lg" href="#" role="button" id="signup">GET STARTED</a></p>
+            </ul>
            </p>
-                <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
-           </div>
+	</div>
+   	
+	<div id = "secondpage">
+	   <p>
+            <ul>
+            <h8><strong>STEP1</strong>-Register with a valid email [Password will be sent to this email if you ever forget]</h8><br><br>
+	    <h8><strong>STEP2</strong>-Create/ Upload reoccuring cashflows [Eg.Employee Salary , Internet Expense , Rent , Rental Income ] </h8><br><br>
+            <h8><strong>STEP3</strong>-Track the items [ Track the actual paid amount against planned cashflow ]</h8><br><br>
+            </ul>
+           </p>
+	</div>
+
     </div>
     <div class="col-xs-3 col-sm-3 hidden-md hidden-lg"></div>
-    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-5 "> <!--Sign in / Register block-->
-            <div class="image1">
-                <div role="tabpanel">
-                  <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab"><h31>Login</h31></a></li>
-                    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab"><h31>Sign up</h31></a></li>
-                  </ul>
-                  <!-- Tab panes -->
-                  <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="home">
-                                <form class="form-signin" method="get" >
-                                <input type="text" class="form-control" id="pass" name="username" placeholder="Email Address" required="" autofocus="" />
-                                <br>
-                                <input type="password" class="form-control" name="password" placeholder="Password" required="" />
-                                <br>
-                                <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
-                                <div class="container">
-                                <a href="/help/">Need help ?</a>
-                                </div>
-                            </form>
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="profile">
-                        <div class="form-register">{% crispy form %}</div>
-                    </div>
-                  </div>
-                </div>
-           </div>
+    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3 "> <!--Sign in / Register block-->
+        <div id="signin">
+		<form class="form-signin" method="get" >
+		    <input type="text" class="form-control" id="pass" name="username" placeholder="Email Address" required="" autofocus="" />
+		    <br>
+		    <input type="password" class="form-control" name="password" placeholder="Password" required="" />
+		    <br>
+		    <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+		    <div class="container">
+		    <a href="/help/"> <h8>Need help ? </h8></a>
+		    </div>
+		</form>
+	</div>
+        <div id="registerform" > <!-- Register block-->
+         	<div class="form-register">{% crispy form %}</div>
+	</div>
 
-       </div> <!--Sign in / Register block-->
+</div> <!--Sign in / Register block-->
     <div class="col-xs-3 col-sm-3 col-md-4 col-lg-4">
     </div>
   </div> <!-- /row -->
 </div>   <!-- /container-full -->
 
+<div class="container-fluid">
+  <div class=" feature text-center">SIMPLE YET EFFECTIVE WAY OF KEEPING TRACK OF YOUR FINANCES </div>
+</div>
+
+
 <div class="container">
   <div class="row">
     <div class="hidden-xs hidden-sm col-md-4 col-lg-4">
-          <div class="well well-sm">
-              <h3>Entrepreneur.com</h3>
+              <h3>PLAN YOUR EXPENSE/FUNDS </h3>
               <div class="review1">
-              <h5><p><h6>Underestimating operating costs</h6>
+              <h5><p><h6> </h6><br>
                          "About a third of new business owners said they underestimated their monthly expenses,
                           according to a recent survey by insurer Hiscox USA. While founders remember the obvious expenses,
                           they often forget related items that can quickly add up. For example, if you make a product, you also have to package it.
                           If you need a car or truck for business, you also need auto insurance "</p></h5>
               </div>
-           </div>
       </div>
       <div class="hidden-xs hidden-sm col-md-4 col-lg-4">
-          <div class="well well-sm">
+
               <div class="review2">
-              <h3>John Denver</h3>
+              <h3>TRACK YOUR CASHFLOWS BY MONTH/WEEK/DAY</h3>
                         <h5><p><h6>Underestimating operating costs</h6>
                          "About a third of new business owners said they underestimated their monthly expenses,
                           according to a recent survey by insurer Hiscox USA. While founders remember the obvious expenses,
                           they often forget related items that can quickly add up. For example, if you make a product, you also have to package it.
                           If you need a car or truck for business, you also need auto insurance "</p></h5>
               </div>
-           </div>
       </div>
       <div class="hidden-xs hidden-sm col-md-4 col-lg-4">
-          <div class="well well-sm">
-              <h3>Bruce Sprinsteen</h3>
+                 <h3>VISUALIZE USING CHARTS</h3>
               <div class="review3">
            <h5><p><h6>Underestimating operating costs</h6>
                          "About a third of new business owners said they underestimated their monthly expenses,
@@ -281,8 +298,7 @@ ul.b {
                           If you need a car or truck for business, you also need auto insurance "</p></h5>
               </div>
               </div>
-           </div>
-      </div>
+     </div>
   </div>
 </div>
 <!--------------------------------------------------------------------------------------------------------------------->
@@ -293,6 +309,17 @@ ul.b {
    $( document ).ready(function() {
     $('label[for*="id_"]').hide();
     });
+   
+    $("#registerform").hide();		
+    $("#secondpage").hide();		
+   
+    $("#signup").click(function(){
+					$("#signin").hide();	
+					$("#registerform").show();	
+					$("#firstpage").hide();		
+   					$("#secondpage").show();		
+   
+				 });   	
 
     $("#register").click(function(){window.location.href="/register/";});
     $("#learnmore").click(function(){window.location.href="/contact/";});
