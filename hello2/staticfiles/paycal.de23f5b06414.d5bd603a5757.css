@@ -1,0 +1,129 @@
+<style>
+                             <style > 
+
+			
+			html {
+				background: url("/static/css/bg.0fd937fc46ae.0fd937fc46ae.jpg") no-repeat center center fixed; 
+				-webkit-background-size: cover;
+				-moz-background-size: cover;
+				-o-background-size: cover;
+				background-size: cover;
+				}
+   
+			h1 {
+                                 font-family: 'Roboto Condensed', sans-serif;
+                                 color: white;
+                             }
+
+                             h2 {
+                                 font-family: 'Roboto Condensed', sans-serif;
+                                 color: white;
+                                 font-size: 20px;
+                             }
+
+                             h3 {
+                                 font-family: 'Roboto Condensed', sans-serif;
+                                 color: white;
+                                 font-size: 20px;
+                             }
+
+                             h31 {
+                                 font-family: 'Roboto Condensed', sans-serif;
+                                 color: teal;
+                                 font-size: 20px;
+                             }
+
+                                 h31N {
+                                 font-family: 'Roboto Condensed', sans-serif;
+                                 color: white;
+                                 font-size: 20px;
+                                 }
+                                 h32N {
+                                 font-family: 'Roboto Condensed', sans-serif;
+                                 color: black;
+                                 font-size: 20px;
+                                 }
+                             .btn-success {
+                                 color: #dfe3ee;
+                                 background-color: #3b5998;
+                                 border-color: #080808;
+                                 font-weight: bold;
+                             }
+
+                             #body {
+                                 background-color: #dfe3ee;
+                             }
+                            
+			                #body1 {
+                                 background-color:#3b5998;
+                             }
+
+                            #banner {
+                                 background-color:#080808;
+                             }
+
+                             .subtotal {
+                                background-color:#3b5998;
+                                border-color: #080808;
+                             }
+
+                           .navbar-inverse {
+                                background-color:#3b5998;
+                                border-color: #080808;
+                            }
+                            }
+                             .ui-jqgrid .ui-jqgrid-titlebar {
+                                 padding: 0.3em 0.2em 0.2em 0.3em;
+                                 position: relative;
+                                 font-size: 25px;
+                                 border-left: 0px none;
+                                 border-right: 0px none;
+                                 border-top: 0px none;
+                             }
+
+                             .ui-jqgrid .ui-jqgrid-view {
+                                 font-family: 'Roboto Condensed', sans-serif;
+                                 color: black;
+                                 font-size: 16px;
+                                }
+
+
+                             .ui-widget-header {
+                                 border: 1px solid #080808;
+                                 background-color: #3b5998;
+                                 background: #3b5998;
+                                 color: white;
+                                 font-size: 15px;
+                                 font-weight: normal;
+
+                             }
+
+                                 ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+                                     border: 1px solid #D3D3D3;
+                                     background: #3b5998;
+                                     color: white;
+                                      font-size: 15px;
+                                 }
+                            .fc-event-container{
+                                 font-family: 'Roboto Condensed', sans-serif;
+                                 color: white;
+                                 font-weight: bold;
+                                 font-size:20px;
+                            }
+                            .fc-day-header{
+                                 font-family: 'Roboto Condensed', sans-serif;
+                                 color: black;
+                                 font-weight: bold;
+                                 font-size:20px;
+                            }
+                            .fc-day-number{
+                                 font-family: 'Roboto Condensed', sans-serif;
+                                 color: black;
+                                 font-weight: bold;
+                                 font-size:30px;
+                                 }
+                             #calendar{
+                             background-color:#f7f7f7;
+                             }
+
+                        </style>

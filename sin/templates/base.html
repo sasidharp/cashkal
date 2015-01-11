@@ -1,18 +1,67 @@
-﻿                    {% load crispy_forms_tags %}
-					<!DOCTYPE html>
-                    <html>
-                        <head>
-                            <title></title>
-                            <link rel="stylesheet" href="http://trirand.com/blog/jqgrid/themes/ui.jqgrid.css">
-                            <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/base/jquery-ui.css">
-                            <link rel="stylesheet" href="http://res.cloudinary.com/dplpgfwpy/raw/upload/v1413397740/paycal_zmrty0.css">
-                            <link rel="stylesheet" href="test.py">
-                            <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-                            <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-                            <script src="http://trirand.com/blog/jqgrid/js/jquery.jqGrid.min.js"></script>
-                            <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-                            <script src="http://www.trirand.com/blog/jqgrid/js/i18n/grid.locale-en.js"></script>
-                            <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:700,400' rel='stylesheet' type='text/css'>
-                            <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
-                    </head>
-              </html>
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="http://trirand.com/blog/jqgrid/themes/ui.jqgrid.css">
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/base/jquery-ui.css">
+<!--<link rel="stylesheet" href="http://res.cloudinary.com/dplpgfwpy/raw/upload/v1413397740/paycal_zmrty0.css">-->
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="http://trirand.com/blog/jqgrid/js/jquery.jqGrid.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="http://www.trirand.com/blog/jqgrid/js/i18n/grid.locale-en.js"></script>
+<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:700,400' rel='stylesheet' type='text/css'>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+<link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.1.1/fullcalendar.css' />
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.3/moment.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.1.1/fullcalendar.js"></script>
+{% load static from staticfiles %}
+<link rel="stylesheet" href="{% static "css/paycal.css" %}">
+<!--- -------------------------------------Navigation bar---------------------------------------------------------------->
+</head>
+<body>			
+<style>
+.row {
+    padding-top:5%;
+}
+.nav-justified {	
+	border:none 5px #030103;
+	-moz-border-radius-topleft: 16px;
+	-moz-border-radius-topright:16px;
+	-moz-border-radius-bottomleft:16px;
+	-moz-border-radius-bottomright:16px;
+	-webkit-border-top-left-radius:16px;
+	-webkit-border-top-right-radius:16px;
+	-webkit-border-bottom-left-radius:16px;
+	-webkit-border-bottom-right-radius:16px;
+	border-top-left-radius:16px;
+	border-top-right-radius:16px;
+	border-bottom-left-radius:16px;
+	border-bottom-right-radius:16px;
+	/* Background Gradient for Monochromatic Colors */
+	background-color: #F5D9D0 ;
+}
+</style>
+<!--- -------------------------------------Navigation bar---------------------------------------------------------------->
+<div class="container">
+   <div class="masthead text-right">
+	<h6 class="text-muted "><h6>Logged in as {{user}}</h6></h6>
+	<div role="navigation">
+	  <ul class="nav nav-justified">
+				<li><a href="/cash/"> <h4>Add Cashflow</h4></a></li>
+				<li><a href="/calen/"><h4>Calendar</h4></a></li>
+				<li><a href="/categ/"><h4>Corrections</h4></a></li>
+				<li><a href="/report/"><h4>Reports</h4></a></li>
+				<li><a href="/pie/"><h4>Charts</h4></a></li>
+				<li><a href="/upload/"><h4>Advanced</h4></a></li>
+				<li><a href="/contact/"><h4>Contact us</h4></a></li>
+				<li><a href="/logout/"><h4>logout</h4></a></li>
+	  </ul>
+	</div>
+  </div>
+</div>
+{% block content %}{% endblock %}
+<!--- -------------------------------------Navigation bar---------------------------------------------------------------->
+</body>	
+</html>
+

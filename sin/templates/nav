@@ -1,0 +1,38 @@
+                  <body id="body">
+                    <style>
+                     .row {
+                            padding-top:5%;
+                        }
+                    </style>
+						<div class="container">
+						   <div class="masthead text-right">
+							<h6 class="text-muted "><h6>Logged in as {{user}}</h6></h6>
+							<div role="navigation">
+							  <ul class="nav nav-justified">
+										<li><a href="/cash/"> <h4>Add Cashflow</h4></a></li>
+										<li><a href="/calen/"><h4>Calendar</h4></a></li>
+										<li><a href="/categ/"><h4>Corrections</h4></a></li>
+										<li><a href="/report/"><h4>Reports</h4></a></li>
+										<li><a href="/pie/"><h4>Charts</h4></a></li>
+										<li><a href="/upload/"><h4>Advanced</h4></a></li>
+										<li><a href="/contact/"><h4>Contact us</h4></a></li>
+										<li><a href="/logout/"><h4>logout</h4></a></li>
+							  </ul>
+							</div>
+						  </div>
+						</div>
+
+
+                            <title>New Cashflow</title>
+                            <link rel="stylesheet" href="http://trirand.com/blog/jqgrid/themes/ui.jqgrid.css">
+                            <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/base/jquery-ui.css">
+                            <!--<link rel="stylesheet" href="http://res.cloudinary.com/dplpgfwpy/raw/upload/v1413397740/paycal_zmrty0.css">-->
+                            <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+                            <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                            <script src="http://trirand.com/blog/jqgrid/js/jquery.jqGrid.min.js"></script>
+                            <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+                            <script src="http://www.trirand.com/blog/jqgrid/js/i18n/grid.locale-en.js"></script>
+                            <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:700,400' rel='stylesheet' type='text/css'>
+                            <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+                           {% load static from staticfiles %}
+                            <link rel="stylesheet" href="{% static "css/paycal.css" %}">

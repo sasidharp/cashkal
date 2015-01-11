@@ -1,161 +1,96 @@
+{% extends "base.html" %}
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title>Payment Calendar</title>
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <link rel="stylesheet" href="http://trirand.com/blog/jqgrid/themes/ui.jqgrid.css">
-    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="http://trirand.com/blog/jqgrid/js/jquery.jqGrid.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <script src="http://www.trirand.com/blog/jqgrid/js/i18n/grid.locale-en.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
-    <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:700,400' rel='stylesheet' type='text/css'>
-    <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.1.1/fullcalendar.css' />
-    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.3/moment.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.1.1/fullcalendar.js"></script>
-    {% load static from staticfiles %}
-    <link rel="stylesheet" href="{% static "css/paycal.css" %}">
+{% block content %} 
+<!--- -------------------------------------SCript   ---------------------------------------------------------------->
+<script>
+$(document).ready(function () {
+    // page is now ready, initialize the calendar...
+    $('#calendar').fullCalendar({
+        header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,basicWeek,basicDay'
+            },
+      // put your options and callbacks here
+            events: {
+                url: "/events/",
+     },
+    //put some notes on the calenader
+    eventClick: function(event) {
+        if (event.url) {
+            window.open(event.url);
+            return false;
+         }
+         },
+    //Get the day
+      dayClick: function(date, jsEvent, view) {
 
-</head>
-<body id="body">
-    <script>
-        $(document).ready(function () {
+    //if there are no events for that day , open the new cashflow
+      var today = moment();
+      var filter = moment().isSame(date.format(),'day');
+      var array = $('#calendar').fullCalendar('clientEvents' , function(event){
+                                                                         filter = moment(date).isSame(event.start,'day');
+                                                                         if (filter){
+                                                                            return true;
+                                                                         }
+                                                                    });
+      if ( array.length > 0 )
+                    {
+                        open_url = '/launcher/?D='+ date.utc().format('YYYY-MM-DD');
+                    }
+                    else
+                    {
+                        open_url = '/cash/?DATE='+ date.utc().format('YYYY-MM-DD');
 
-            // page is now ready, initialize the calendar...
-            $('#calendar').fullCalendar({
-                header: {
-                        left: 'prev,next today',
-                        center: 'title',
-                        right: 'month,basicWeek,basicDay'
-                    },
-              // put your options and callbacks here
-                    events: {
-                        url: "/events/",
-             },
-            //put some notes on the calenader
-            eventClick: function(event) {
-                if (event.url) {
-                    window.open(event.url);
-                    return false;
-                 }
-                 },
-            //Get the day
-              dayClick: function(date, jsEvent, view) {
+                    }
+      window.location.href = open_url;
+}
 
-            //if there are no events for that day , open the new cashflow
-              var today = moment();
-              var filter = moment().isSame(date.format(),'day');
-              var array = $('#calendar').fullCalendar('clientEvents' , function(event){
-                                                                                 filter = moment(date).isSame(event.start,'day');
-                                                                                 if (filter){
-                                                                                    return true;
-                                                                                 }
-                                                                            });
-              if ( array.length > 0 )
-                            {
-                                open_url = '/launcher/?D='+ date.utc().format('YYYY-MM-DD');
-                            }
-                            else
-                            {
-                                open_url = '/cash/?DATE='+ date.utc().format('YYYY-MM-DD');
+});
 
-                            }
-              window.location.href = open_url;
-    }
+ set_calendar();
 
-    });
-
-         set_calendar();
-
-        //Save the user option for the calendar.
-         $('#calop').change(function(){
-            value = 'calop='+ $('#calop').val();
-         });
-         $('#save').click(function(){$.ajax({   url:'/calop/',
-                                                data:value,
-                                                success:function(data){
-                                                                    $('#message').html('Your Preference has been updated');
-                                                                  }
-                                            });
+//Save the user option for the calendar.
+ $('#calop').change(function(){
+    value = 'calop='+ $('#calop').val();
+ });
+ $('#save').click(function(){$.ajax({   url:'/calop/',
+                                        data:value,
+                                        success:function(data){
+                                                            $('#message').html('Your Preference has been updated');
+                                                          }
                                     });
-
-
-
-         //Set the calenar based on the user option
-          function set_calendar(){
-                switch('{{user_option}}'){
-                case 'D':
-                    $('#calendar').fullCalendar('changeView' , 'basicDay');
-                    break;
-                case 'W':
-                    $('#calendar').fullCalendar('changeView' , 'basicWeek');
-                    $('#calendar').fullCalendar('option', 'aspectRatio', 2.5);
-                    break;
-                case 'M':
-                    $('#calendar').fullCalendar('changeView' , 'month');
-                    break;
-                }
-          }
-
-
-        });
-
-    </script>
-    <div class="container">
-       <div class="masthead text-right">
-        <h3 class="text-muted "><h3>Logged in as {{user}}</h3></h3>
-        <div role="navigation">
-          <ul class="nav nav-justified">
-                    <!--<li><a href="/launcher/"><h31N>Home</h31N></a></li>-->
-                    <li><a href="/cash/"> <h2>Add Cashflow</h2></a></li>
-                    <li class="active"><a href="/calen/"><h2>Calendar</h2></a></li>
-                    <li><a href="/categ/"><h2>Corrections</h2></a></li>
-                    <li><a href="/report/"><h2>Reports</h2></a></li>
-                    <li><a href="/pie/"><h2>Charts</h2></a></li>
-					<li><a href="/upload/"><h2>Advanced</h2></a></li>
-					<li><a href="/contact/"><h2>Contact us</h2></a></li>
-                    <li><a href="/logout/"><h2>logout</h2></a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
+                            });
+ //Set the calenar based on the user option
+  function set_calendar(){
+        switch('{{user_option}}'){
+        case 'D':
+            $('#calendar').fullCalendar('changeView' , 'basicDay');
+            break;
+        case 'W':
+            $('#calendar').fullCalendar('changeView' , 'basicWeek');
+            $('#calendar').fullCalendar('option', 'aspectRatio', 2.5);
+            break;
+        case 'M':
+            $('#calendar').fullCalendar('changeView' , 'month');
+            break;
+        }
+  }
+});
+</script>
+<!--- -------------------------------------SCript   ---------------------------------------------------------------->
 <div class="container">
-<div class="container">
-    <div class="row">
-
-     <!--<div class ='col-lg-4 col-xs-8' >-->
-            <!--<label for="calop"><h31>Default calendar : </h31></label>-->
-             <!--<select name="calop" id="calop">-->
-                <!--<option value="D"><h31>Daily</h31></option>-->
-                <!--<option value="W"><h31>Weekly</h31></option>-->
-                <!--<option value="M"><h31>Monthly</h31></option>-->
-             <!--</select>-->
-     <!--</div>-->
-      <!--<div class ='col-lg-2 col-xs-4'>-->
-            <!--<button type="button" class="btn btn-default" id="save">-->
-                    <!--<span class="glyphicon glyphicon-question-sign"></span> save </button>-->
-     <!--</div>-->
-
-     <div class ='col-lg-3'>
-         <br>
-         <text id="message" ></text>
-     </div>
-    </div>
     <div class="row">
         <div class="col-lg-12 text-right">
               <span class="label label-success">Actual</span>
               <span class="label label-danger">Planned</span>
          </div>
      </div>
-   </div>
         <br/>
-        <br/>
-        <div id='calendar'>
-    </div>
-    </div>
-    </body>
+   <div id='calendar'></div>
+</div>
+{% endblock %}
 </html>
 
 

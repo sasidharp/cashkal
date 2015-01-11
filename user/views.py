@@ -41,8 +41,8 @@ def home(request):
                 return render_to_response('signup.html',locals(),context_instance=RequestContext(request))
     else:
         default_values = request.POST.copy()
-
-        default_values['last_login']   = datetime.datetime.today()
+        
+	default_values['last_login']   = datetime.datetime.today()
         default_values['search1_tag']  = 'Initial'
         default_values['search2_tag']  = 'Initial'
         if default_values['corpid']  != "":

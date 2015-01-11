@@ -62,7 +62,7 @@ import dj_database_url
 DATABASES = {
      "default": dj_database_url.config(default='postgres://localhost'),
 }
-# DATABASES = {
+#DATABASES = {
 # 'default': {
 #       'ENGINE': 'django.db.backends.postgresql_psycopg2',
 #       'NAME': 'django',

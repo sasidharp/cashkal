@@ -1,0 +1,283 @@
+<style>
+                             <style > 
+
+/*!
+ * Start Bootstrap - Landing Page Bootstrap Theme (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+
+body,
+html {
+    width: 100%;
+    height: 100%;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 700;
+}
+
+.lead {
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.intro-header {
+    padding-top: 50px; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
+    padding-bottom: 50px;
+    text-align: center;
+    color: #f8f8f8;
+    background-color:#0099CC;
+//  background: url("https://farm3.staticflickr.com/2945/15232956760_da94917342_o.jpg") no-repeat center center;
+    background-size: cover;
+}
+
+.intro-message {
+    position: relative;
+    padding-top: 20%;
+    padding-bottom: 20%;
+}
+
+.intro-message > h1 {
+    margin: 0;
+    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+    font-size: 5em;
+}
+
+.intro-divider {
+    width: 400px;
+    border-top: 1px solid #f8f8f8;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+.intro-message > h3 {
+    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+}
+
+@media(max-width:767px) {
+    .intro-message {
+        padding-bottom: 15%;
+    }
+
+    .intro-message > h1 {
+        font-size: 3em;
+    }
+
+    ul.intro-social-buttons > li {
+        display: block;
+        margin-bottom: 20px;
+        padding: 0;
+    }
+
+    ul.intro-social-buttons > li:last-child {
+        margin-bottom: 0;
+    }
+
+    .intro-divider {
+        width: 100%;
+    }
+}
+
+.network-name {
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 2px;
+}
+
+.content-section-a {
+    padding: 50px 0;
+    background-color: #f8f8f8;
+}
+
+.content-section-b {
+    padding: 50px 0;
+    border-top: 1px solid #e7e7e7;
+    border-bottom: 1px solid #e7e7e7;
+}
+
+.section-heading {
+    margin-bottom: 30px;
+}
+
+.section-heading-spacer {
+    float: left;
+    width: 200px;
+    border-top: 3px solid #e7e7e7;
+}
+
+.banner {
+    padding: 100px 0;
+    color: #f8f8f8;
+    background-color:#0099CC;	
+//  background: url("../img/banner-bg.ef05e42f7cf5.ef05e42f7cf5.jpg") no-repeat center center;
+    background-size: cover;
+}
+
+.banner h2 {
+    margin: 0;
+    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+    font-size: 3em;
+}
+
+.banner ul {
+    margin-bottom: 0;
+}
+
+.banner-social-buttons {
+    float: right;
+    margin-top: 0;
+}
+
+@media(max-width:1199px) {
+    ul.banner-social-buttons {
+        float: left;
+        margin-top: 15px;
+    }
+}
+
+@media(max-width:767px) {
+    .banner h2 {
+        margin: 0;
+        text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+        font-size: 3em;
+    }
+
+    ul.banner-social-buttons > li {
+        display: block;
+        margin-bottom: 20px;
+        padding: 0;
+    }
+
+    ul.banner-social-buttons > li:last-child {
+        margin-bottom: 0;
+    }
+}
+
+footer {
+    padding: 50px 0;
+    background-color: #f8f8f8;
+}
+
+p.copyright {
+    margin: 15px 0 0;
+}
+
+
+
+
+
+                             h31 {
+                                 font-family: 'Roboto Condensed', sans-serif;
+                                 color: teal;
+                                 font-size: 20px;
+                             }
+
+                                 h31N {
+                                 font-family: 'Roboto Condensed', sans-serif;
+                                 color: white;
+                                 font-size: 20px;
+                                 }
+                                 h32N {
+                                 font-family: 'Roboto Condensed', sans-serif;
+                                 color: black;
+                                 font-size: 20px;
+                                 }
+                             .btn-success {
+                                 color: #dfe3ee;
+                                 background-color: #3b5998;
+                                 border-color: #080808;
+                                 font-weight: bold;
+                             }
+
+                             #body {
+                                 background-color: #dfe3ee;
+                             }
+                            
+			                #body1 {
+                                 background-color:#3b5998;
+                             }
+
+                            #banner {
+                                 background-color:#080808;
+                             }
+
+                             .subtotal {
+                                background-color:#3b5998;
+                                border-color: #080808;
+                             }
+
+                           .navbar-inverse {
+                                background-color:#3b5998;
+                                border-color: #080808;
+                            }
+                            }
+                             .ui-jqgrid .ui-jqgrid-titlebar {
+                                 padding: 0.3em 0.2em 0.2em 0.3em;
+                                 position: relative;
+                                 font-size: 25px;
+                                 border-left: 0px none;
+                                 border-right: 0px none;
+                                 border-top: 0px none;
+                             }
+
+                             .ui-jqgrid .ui-jqgrid-view {
+                                 font-family: 'Roboto Condensed', sans-serif;
+                                 color: black;
+                                 font-size: 16px;
+                                }
+
+
+                             .ui-widget-header {
+                                 border: 1px solid #080808;
+                                 background-color: #3b5998;
+                                 background: #3b5998;
+                                 color: white;
+                                 font-size: 15px;
+                                 font-weight: normal;
+
+                             }
+
+                                 ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+                                     border: 1px solid #D3D3D3;
+                                     background: #3b5998;
+                                     color: white;
+                                      font-size: 15px;
+                                 }
+                            .fc-event-container{
+                                 font-family: 'Roboto Condensed', sans-serif;
+                                 color: white;
+                                 font-weight: bold;
+                                 font-size:20px;
+                            }
+                            .fc-day-header{
+                                 font-family: 'Roboto Condensed', sans-serif;
+                                 color: black;
+                                 font-weight: bold;
+                                 font-size:20px;
+                            }
+                            .fc-day-number{
+                                 font-family: 'Roboto Condensed', sans-serif;
+                                 color: black;
+                                 font-weight: bold;
+                                 font-size:30px;
+                                 }
+                             #calendar{
+                             background-color:#f7f7f7;
+                             }
+
+			html {
+				background: url("/static/css/bg.0fd937fc46ae.0fd937fc46ae.jpg") no-repeat center center fixed; 
+				-webkit-background-size: cover;
+				-moz-background-size: cover;
+				-o-background-size: cover;
+				background-size: cover;
+				}
+                        </style>
