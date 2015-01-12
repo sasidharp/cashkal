@@ -284,7 +284,7 @@ class ReportSelection(forms.Form):
         self.helper.layout = Layout(Field('category_id',autofocus=True,),
                                     Field('start_date', required=True),
                                     Field('end_date', required=True),
-                                    Submit(name='SAVE', value='GET',type='Submit',css_class='btn btn-success'),
+                                    Submit(name='SAVE', value='SUBMIT',type='Submit',css_class='btn btn-success'),
                                     Reset(name='RESET', value='RESET',type='Submit',css_class='btn btn-danger')
                                
     )    
@@ -303,7 +303,7 @@ class PieSelection(forms.Form):
     
         self.helper.layout = Layout(Field('start_date', default=datetime.date.today()),
                                     Field('end_date', default=datetime.date.today()),
-                                    Submit(name='SAVE', value='GET',type='Submit',css_class='btn btn-success'),
+                                    Submit(name='SAVE', value='SUBMIT',type='Submit',css_class='btn btn-success'),
                                     Reset(name='RESET', value='RESET',type='Submit',css_class='btn btn-danger')
                                
     )    
@@ -325,7 +325,7 @@ class NewContactForm(forms.ModelForm):
                                     Field('categ',required=True),
                                     Field('telephone',required=True),
                                     Field('complaint_text',required=True),
-                                    Submit(name='SAVE', value='GET',type='Submit',css_class='btn btn-success'),
+                                    Submit(name='SAVE', value='SUBMIT',type='Submit',css_class='btn btn-success'),
                                     Reset(name='RESET', value='RESET',type='Submit',css_class='btn btn-danger'))
 
 class FileUpload(forms.Form):

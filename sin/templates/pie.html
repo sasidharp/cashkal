@@ -1,70 +1,35 @@
+﻿{% extends "base.html" %}
 {% load crispy_forms_tags %}
 <html>
-<head>
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <link rel="stylesheet" href="http://trirand.com/blog/jqgrid/themes/ui.jqgrid.css">
-    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="http://trirand.com/blog/jqgrid/js/jquery.jqGrid.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <script src="http://www.trirand.com/blog/jqgrid/js/i18n/grid.locale-en.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
-    <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:700,400' rel='stylesheet' type='text/css'>
-           {% load static from staticfiles %}
-           <link rel="stylesheet" href="{% static "css/paycal.css" %}">
-    <title>Trend</title>
-
-</head>
 <body id="body">
-    <style>
+{% block content %} 
+<!--- -------------------------------------start of form----------------------------------------------------------------->
+<style>
 .row{
 padding-top:5%;
 }
-    </style>
+</style>
 <!--- -------------------------------------start of form----------------------------------------------------------------->
-       <div class="container">
-       <div class="masthead text-right">
-        <h3 class="text-muted "><h3>Logged in as {{user}}</h3></h3>
-        <div role="navigation">
-          <ul class="nav nav-justified">
-                    <!--<li><a href="/launcher/"><h31N>Home</h31N></a></li>-->
-                    <li><a href="/cash/"> <h2>Add Cashflow</h2></a></li>
-                    <li class="active"><a href="/calen/"><h2>Calendar</h2></a></li>
-                    <li><a href="/categ/"><h2>Corrections</h2></a></li>
-                    <li><a href="/report/"><h2>Reports</h2></a></li>
-                    <li class="active"><a href="/pie/"><h2>Charts</h2></a></li>
-						<li><a href="/upload/"><h2>Advanced</h2></a></li>
-						
-                    <li><a href="/contact/"><h2>Contact us</h2></a></li>
-                    <li><a href="/logout/"><h2>logout</h2></a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-<!--- -------------------------------------start of form----------------------------------------------------------------->
-    <div class="container">
-        {% if forms %}
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-8">
-                <h31>
-                {% if forms %}
-                {%  crispy forms %}
-                {% endif %}
-               </h31>
-            </div>
-            <div class="col-md-2"></div>
-            </div>
-        {% else %}
-        <div class="row">
-            <div class="col-lg-6 col-xs-12" id="window1">
-                <div id="plan_piechart"></div>
-            </div>
-            <div class="col-lg-6 col-xs-12" id="window2">
-               <div id="plan_piechart1"></div>
-            </div>
-        </div>
+<div class="container">
+{% if forms %}
+	<div class="row">
+		<div class="col-md-2"></div>
+		<div class="col-md-8">
+		{% if forms %}
+			{%  crispy forms %}
+		{% endif %}
+		</div>
+		<div class="col-md-2"></div>
+	</div>
+{% else %}
+	<div class="row">
+		<div class="col-lg-6 col-xs-12" id="window1">
+			<div id="plan_piechart"></div>
+		</div>
+		<div class="col-lg-6 col-xs-12" id="window2">
+			<div id="plan_piechart1"></div>
+		</div>
+	</div>
       <div class="row">
             <div class="col-lg-6 col-xs-12" id="window1">
                 <div id="actual_piechart"></div>
@@ -73,86 +38,73 @@ padding-top:5%;
                <div id="actual_piechart1"></div>
             </div>
         </div>
-        <!--<div class="row">-->
-            <!--<div class="col-lg-6 col-xs-12">-->
-                <!--<div id="piechart2"></div>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="row">-->
-           <!--<div class="col-lg-12 col-xs-12" id="datatable">-->
-                <!--<div id="linechart1"></div>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--{% endif %}-->
-    </div>
+{% endif %}	
+</div>
+<!--- -------------------------------------start of form----------------------------------------------------------------->
+<script type="text/javascript">
 
-        <script type="text/javascript">
+$(function(){
 
-        $(function(){
+    $("#id_start_date").datepicker();
+    $("#id_end_date").datepicker();
+    $("#id_start_date" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
+    $("#id_end_date" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
 
-            $("#id_start_date").datepicker();
-            $("#id_end_date").datepicker();
-            $("#id_start_date" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
-            $("#id_end_date" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
-
-        });
+});
 
 
-        google.load('visualization', '1', { 'packages': ['corechart'] });
-        google.setOnLoadCallback(drawChart);
+google.load('visualization', '1', { 'packages': ['corechart'] });
+google.setOnLoadCallback(drawChart);
 
-        function drawChart() {
-            var jsonData = $.ajax({
-                //fetchjson.php is a php script that will fetch the JSON data e generated using above php code
-                url: "/chartdata/",
-                dataType: "json",
-                async: false
-            }).responseText;
+function drawChart() {
+    var jsonData = $.ajax({
+        //fetchjson.php is a php script that will fetch the JSON data e generated using above php code
+        url: "/chartdata/",
+        dataType: "json",
+        async: false
+    }).responseText;
 
-            var data = new google.visualization.DataTable(jsonData);
-            var chart = new google.visualization.PieChart(document.getElementById('plan_piechart'));
-            chart.draw(data, { width: jQuery("#window1").width( ), height: 400, lineWidth: 1, pointSize: 1.3, pointWidth: 3 ,title: 'Planned : Inflow'});
+    var data = new google.visualization.DataTable(jsonData);
+    var chart = new google.visualization.PieChart(document.getElementById('plan_piechart'));
+    chart.draw(data, { width: jQuery("#window1").width( ), height: 400, lineWidth: 1, pointSize: 1.3, pointWidth: 3 ,title: 'Planned : Inflow'});
 
-            var jsonData = $.ajax({
-                //fetchjson.php is a php script that will fetch the JSON data e generated using above php code
-                url: "/chartdataout/",
-                dataType: "json",
-                async: false
-            }).responseText;
+    var jsonData = $.ajax({
+        //fetchjson.php is a php script that will fetch the JSON data e generated using above php code
+        url: "/chartdataout/",
+        dataType: "json",
+        async: false
+    }).responseText;
 
-            var data = new google.visualization.DataTable(jsonData);
-            var chart = new google.visualization.PieChart(document.getElementById('plan_piechart1'));
-            chart.draw(data, { width: jQuery("#window2").width( ), height: 400, lineWidth: 1, pointSize: 1.3, pointWidth: 3 ,title: 'Planned : Outflow'});
+    var data = new google.visualization.DataTable(jsonData);
+    var chart = new google.visualization.PieChart(document.getElementById('plan_piechart1'));
+    chart.draw(data, { width: jQuery("#window2").width( ), height: 400, lineWidth: 1, pointSize: 1.3, pointWidth: 3 ,title: 'Planned : Outflow'});
 
 
-            var jsonData = $.ajax({
-                //fetchjson.php is a php script that will fetch the JSON data e generated using above php code
-                url: "/chartactual/",
-                dataType: "json",
-                async: false
-            }).responseText;
+    var jsonData = $.ajax({
+        //fetchjson.php is a php script that will fetch the JSON data e generated using above php code
+        url: "/chartactual/",
+        dataType: "json",
+        async: false
+    }).responseText;
 
-            var data = new google.visualization.DataTable(jsonData);
-            var chart = new google.visualization.PieChart(document.getElementById('actual_piechart'));
-            chart.draw(data, { width: jQuery("#datatable").width( ), height: 600, lineWidth: 1, pointSize: 1.3, pointWidth: 3,title: 'Actuals : Inflow'});
+    var data = new google.visualization.DataTable(jsonData);
+    var chart = new google.visualization.PieChart(document.getElementById('actual_piechart'));
+    chart.draw(data, { width: jQuery("#datatable").width( ), height: 600, lineWidth: 1, pointSize: 1.3, pointWidth: 3,title: 'Actuals : Inflow'});
 
 
 
-            var jsonData = $.ajax({
-                //fetchjson.php is a php script that will fetch the JSON data e generated using above php code
-                url: "/chartactualout/",
-                dataType: "json",
-                async: false
-            }).responseText;
+    var jsonData = $.ajax({
+        //fetchjson.php is a php script that will fetch the JSON data e generated using above php code
+        url: "/chartactualout/",
+        dataType: "json",
+        async: false
+    }).responseText;
 
-            var data = new google.visualization.DataTable(jsonData);
-            var chart = new google.visualization.PieChart(document.getElementById('actual_piechart1'));
-            chart.draw(data, { width: jQuery("#datatable").width( ), height: 600, lineWidth: 1, pointSize: 1.3, pointWidth: 3,title: 'Actuals : Outflow '});
-
-
-
-
-        }
-    </script>
+    var data = new google.visualization.DataTable(jsonData);
+    var chart = new google.visualization.PieChart(document.getElementById('actual_piechart1'));
+    chart.draw(data, { width: jQuery("#datatable").width( ), height: 600, lineWidth: 1, pointSize: 1.3, pointWidth: 3,title: 'Actuals : Outflow '});
+}
+</script>
+{% endblock %} 
 </body>
 </html>

@@ -1,76 +1,26 @@
+﻿{% extends "base.html" %}
 {% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
-<head lang="en">
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <link rel="stylesheet" href="http://trirand.com/blog/jqgrid/themes/ui.jqgrid.css">
-    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="http://trirand.com/blog/jqgrid/js/jquery.jqGrid.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <script src="http://www.trirand.com/blog/jqgrid/js/i18n/grid.locale-en.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
-    <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:700,400' rel='stylesheet' type='text/css'>
-          {% load static from staticfiles %}
-                            <link rel="stylesheet" href="{% static "css/paycal.css" %}">
-
-<title>Contact Us</title>
-<script>
-	 
-	 $(document).ready(function () {
-			$("#delcash").click(
-				function(){
-				$.ajax({url:"delete/",type: "GET"});				
-				}
-			
-			);
-	
-			$("#delact").click(
-						function(){
-						$.ajax({url:"adelete/",type: "GET"});				
-						}
-					);
-
-		});
-</script>
-</head>
+<!--- -------------------------------------start of form----------------------------------------------------------------->
+<!--- -------------------------------------start of form----------------------------------------------------------------->
 <body id="body">
+{% block content %} 
 <style>
 .row{
 padding-top:5%;
 }
 </style>
 <!--- -------------------------------------start of form----------------------------------------------------------------->
-    <div class="container">
-       <div class="masthead text-right">
-        <h3 class="text-muted "><h3>Logged in as {{user}}</h3></h3>
-        <div role="navigation">
-          <ul class="nav nav-justified">
-                    <!--<li><a href="/launcher/"><h31N>Home</h31N></a></li>-->
-                    <li><a href="/cash/"> <h2>Add Cashflow</h2></a></li>
-                    <li><a href="/calen/"><h2>Calendar</h2></a></li>
-                    <li><a href="/categ/"><h2>Corrections</h2></a></li>
-                    <li><a href="/report/"><h2>Reports</h2></a></li>
-                    <li><a href="/pie/"><h2>Charts</h2></a></li>
-                    <li><a href="/contact/"><h2>Contact us</h2></a></li>
-                    <li class="active"><h2>Advanced</h2></a></li>
-                    <li><a href="/logout/"><h2>logout</h2></a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-<!--- -------------------------------------start of form----------------------------------------------------------------->
 <div class="container">
-    <div class="row">
-        <div class="col-md-12"><div class="well">
-            <strong>{{message|default:"UPLOAD STEPS :: Use the provided template as per instructions.Do not change the template columns"}}</strong><br>
-			<a href="/static/Upload_Plan.xlsx"><h34><strong>Download the template</strong></h34></a>
+    <div class="row ">
+        <div class="col-md-8 col-md-offset-2"><div class="well">
+            <h5><strong>{{message|default:"UPLOAD STEPS :: Use the provided template as per instructions.Do not change the template columns"}}</strong><br>
+			<a href="/static/Upload_Plan.xlsx"><strong>Download the template</strong></h5></a>
         </div></div>
     </div>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-8 col-md-offset-2">
             <h31>
                 {% if form %}
                 {% crispy form %}
@@ -79,21 +29,39 @@ padding-top:5%;
     </div>
 
     <div class="row">
-        <div class="col-md-12"><div class="well center"><h3> <strong>FOLLOWING OPTIONS WILL WIPE OUT ENTIRE DATA. PLEASE EXCERCISE CAUTION</strong>.There is no option to retrieve deleted data from this screen. Please use corrections option in navigation for single deletes</h3></div></div>
+        <div class="col-md-8 col-md-offset-2"><div class="well center"><h5> <strong>FOLLOWING OPTIONS WILL WIPE OUT ENTIRE DATA. PLEASE EXCERCISE CAUTION</strong>.There is no option to retrieve deleted data from this screen. Please use corrections option in navigation for single deletes</h5></div></div>
     </div>
 
     <div class="row">
-        <div class="col-md-12"><div class="well"><button type="button" class="btn btn-default btn-lg" id="delcash"><h34>DELETE ALL PLANNED CASHFLOW</h34></button> 
-		<p><h3>This will delete all planned cashflow. Even if they have been actualized. Please user delete actual button below to delete the actual</h3></p>
+        <div class="col-md-8 col-md-offset-2"><div class="well"><button type="button" class="btn btn-default btn-lg" id="delcash"><h5>DELETE ALL PLANNED CASHFLOW</h5></button> 
+		<p><h5>This will delete all planned cashflow. Even if they have been actualized. Please user delete actual button below to delete the actual</h5></p>
 		</div></div>
      </div>
 
     <div class="row">
-        <div class="col-md-12"><div class="well"><button type="button" class="btn btn-default btn-lg" id="delact"><h34>DELETE ACTUAL</h34></button> 
-		<p><h3>Delete all the actual entries.</h3></p>
+        <div class="col-md-8 col-md-offset-2"><div class="well"><button type="button" class="btn btn-default btn-lg" id="delact"><h5>DELETE ACTUAL</h5></button> 
+		<p><h5>Delete all the actual entries.</h5></p>
 		</div></div>
      </div>
 </div>
 <!--- -------------------------------------start of form----------------------------------------------------------------->
+<script>
+$(document).ready(function () {
+	$("#delcash").click(
+		function(){
+		$.ajax({url:"delete/",type: "GET"});				
+		}
+	
+	);
+
+	$("#delact").click(
+		function(){
+		$.ajax({url:"adelete/",type: "GET"});				
+		}
+	);
+
+});
+</script>
+{% endblock %} 
 </body>
 </html>

@@ -1,103 +1,8 @@
-﻿<!DOCTYPE html>
+﻿{% extends "base.html" %}
+<!DOCTYPE html>
 <html>
-<head>
-    <title>correct data</title>
-    <link rel="stylesheet" href="http://trirand.com/blog/jqgrid/themes/ui.jqgrid.css">
-    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="http://trirand.com/blog/jqgrid/js/jquery.jqGrid.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <script src="http://www.trirand.com/blog/jqgrid/js/i18n/grid.locale-en.js"></script>
-    <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:700,400' rel='stylesheet' type='text/css'>
-    {% load static from staticfiles %}
-    <link rel="stylesheet" href="{% static "css/paycal.css" %}">
-    </head>
-<script>
-    var header_message;
-    var type;
-
-    $(document).ready(function () {
-        var DataGrid = jQuery("#list4");
-
-        //Table Object
-        jQuery("#list4").jqGrid({
-            url: '/list/',
-            datatype: "json",
-            colNames: ['Identifier', 'Forecasted Date', 'Type', 'Amount', 'Currency', 'Recipient/Payer','active'],
-            colModel: [
-                { name: 'id', index: 'id', width: 20 , align: "center" },
-                { name: 'fdate', index: 'fdate', width: 20 , align: "center" },
-                { name: 'direction', index: 'direction', width: 10 , align: "center" },
-                { name: 'amount', index: 'amount', width: 30 , align: "right" },
-                { name: 'currency', index: 'currency', width: 10 , align: "center" },
-                { name: 'recipient', index: 'recipient', width: 75, align: "right" },
-                { name: 'active', index: 'active', width:30, align: "center" },
-            ],
-            rowNum: 10,
-            rowList: [10, 20, 30],
-            pager: '#pager',
-            autowidth:true,
-            sortname: 'fdate',
-            viewrecords: true,
-            sortorder: "direction",
-            caption: "... ",
-            gridComplete: function(){
-            var ids = jQuery("#list4").jqGrid('getDataIDs');
-            for(var i=0;i < ids.length;i++){
-                var cl = ids[i];
-                del = "<input  type='button' value='delete'  onclick=\"delete_data('"+cl+"');\"/>";
-                jQuery("#list4").jqGrid('setRowData',ids[i],{active:del});
-
-                }
-            }
-        });
-
-
-        DataGrid.jqGrid('setGridWidth', jQuery("#datatable").width( ));
-        //DataGrid.jqGrid('setGridWidth', '1124');
-        DataGrid.jqGrid('setGridHeight', jQuery("#datatable").height( ));
-        //DataGrid.jqGrid('setGridHeight', '350');
-
-        $("#btncalen").click(
-                     function () {
-                         window.location.href = "/calen/";
-                     }
-                      );
-         $("#planned").click(function () {
-            jQuery("#list4").jqGrid('setGridParam', { 'url': "/list" });
-            jQuery("#list4").jqGrid('setCaption', 'Editing Planned entries..');
-            type = 'P';
-            DataGrid.trigger("reloadGrid");
-        });
-        $("#actuals").click(function () {
-            jQuery("#list4").jqGrid('setGridParam', { 'url': "/alist" });
-            jQuery("#list4").jqGrid('setCaption', 'Editing Actual entries..');
-            DataGrid.trigger("reloadGrid");
-            type = 'A';
-    });
-    });
-
-
-
-    function goto(location) {
-       
-    }
-    function delete_data(id){
-        if ( type == 'P'){
-              url = "/cash/?D=" + id;
-              }
-              else{
-              url = "/actuals/?D=" + id;
-              }
-        $.ajax({url:url,
-               type: "GET",
-               data: { },
-               success:function(result){
-               jQuery("#list4").trigger("reloadGrid");
-            }});
-    }
-</script>
+{% block content %}   
+<!--- -------------------------------------start of form----------------------------------------------------------------->
 <style>
     .ui-jqgrid tr.ui-row-ltr td {
     text-align: left;
@@ -124,27 +29,7 @@ padding-top:5%;
 }
 
 </style>
-
 <body id="body">
-<!--- -------------------------------------start of form----------------------------------------------------------------->
-			<div class="container">
-			   <div class="masthead text-right">
-				<h3 class="text-muted "><h3>Logged in as {{user}}</h3></h3>
-				<div role="navigation">
-				  <ul class="nav nav-justified">
-							<!--<li><a href="/launcher/"><h31N>Home</h31N></a></li>-->
-							<li><a href="/cash/"> <h2>Add Cashflow</h2></a></li>
-							<li><a href="/calen/"><h2>Calendar</h2></a></li>
-							<li class="active"><a href="/categ/"><h2>Corrections</h2></a></li>
-							<li><a href="/report/"><h2>Reports</h2></a></li>
-							<li><a href="/pie/"><h2>Charts</h2></a></li>
-							<li><a href="/upload/"><h2>Advanced</h2></a></li>
-							<li><a href="/contact/"><h2>Contact us</h2></a></li>
-							<li><a href="/logout/"><h2>logout</h2></a></li>
-				  </ul>
-				</div>
-			  </div>
-			</div>
 <!--- -------------------------------------start of form----------------------------------------------------------------->
     <div class="container">
         <div class="row">
@@ -166,5 +51,93 @@ padding-top:5%;
         </div>
     </div>
 <!--- -------------------------------------start of form----------------------------------------------------------------->
- </body>
+<script>
+var header_message;
+var type;
+
+$(document).ready(function () {
+var DataGrid = jQuery("#list4");
+
+//Table Object
+jQuery("#list4").jqGrid({
+    url: '/list/',
+    datatype: "json",
+    colNames: ['Identifier', 'Forecasted Date', 'Type', 'Amount', 'Currency', 'Recipient/Payer','active'],
+    colModel: [
+        { name: 'id', index: 'id', width: 20 , align: "center" },
+        { name: 'fdate', index: 'fdate', width: 20 , align: "center" },
+        { name: 'direction', index: 'direction', width: 10 , align: "center" },
+        { name: 'amount', index: 'amount', width: 30 , align: "right" },
+        { name: 'currency', index: 'currency', width: 10 , align: "center" },
+        { name: 'recipient', index: 'recipient', width: 75, align: "right" },
+        { name: 'active', index: 'active', width:30, align: "center" },
+    ],
+    rowNum: 10,
+    rowList: [10, 20, 30],
+    pager: '#pager',
+    autowidth:true,
+    sortname: 'fdate',
+    viewrecords: true,
+    sortorder: "direction",
+    caption: "... ",
+    gridComplete: function(){
+    var ids = jQuery("#list4").jqGrid('getDataIDs');
+    for(var i=0;i < ids.length;i++){
+        var cl = ids[i];
+        del = "<input  type='button' value='delete'  onclick=\"delete_data('"+cl+"');\"/>";
+        jQuery("#list4").jqGrid('setRowData',ids[i],{active:del});
+
+        }
+    }
+});
+
+
+DataGrid.jqGrid('setGridWidth', jQuery("#datatable").width( ));
+//DataGrid.jqGrid('setGridWidth', '1124');
+DataGrid.jqGrid('setGridHeight', jQuery("#datatable").height( ));
+//DataGrid.jqGrid('setGridHeight', '350');
+
+$("#btncalen").click(
+             function () {
+                 window.location.href = "/calen/";
+             }
+              );
+ $("#planned").click(function () {
+    jQuery("#list4").jqGrid('setGridParam', { 'url': "/list" });
+    jQuery("#list4").jqGrid('setCaption', 'Editing Planned entries..');
+    type = 'P';
+    DataGrid.trigger("reloadGrid");
+});
+$("#actuals").click(function () {
+    jQuery("#list4").jqGrid('setGridParam', { 'url': "/alist" });
+    jQuery("#list4").jqGrid('setCaption', 'Editing Actual entries..');
+    DataGrid.trigger("reloadGrid");
+    type = 'A';
+});
+});
+
+
+
+function goto(location) {
+
+}
+function delete_data(id){
+if ( type == 'P'){
+      url = "/cash/?D=" + id;
+      }
+      else{
+      url = "/actuals/?D=" + id;
+      }
+$.ajax({url:url,
+       type: "GET",
+       data: { },
+       success:function(result){
+       jQuery("#list4").trigger("reloadGrid");
+    }});
+}
+</script>
+
+
+{% endblock %} 
+</body>
 </html>
