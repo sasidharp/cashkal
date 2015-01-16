@@ -79,7 +79,8 @@ class CreateCorpUser(View):
                 user = form.save()
                 if user:
                     self.message = "User Added"
-                else:
+		    send_mail('Your Cashkal Id has been created', 'Please use PIN 2333 to login ', settings.DEFAULT_FROM_EMAIL,['sasidharp@gmail.com',])
+		else:
                     self.message = "Error saving user"
             else:
                 self.message = "Error adding additional user"
