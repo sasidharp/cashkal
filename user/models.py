@@ -309,16 +309,5 @@ class contact(models.Model):
 
     items=models.Manager()
 
-# *************************************************************************************
-# Muliple users                                                                       *
-# *************************************************************************************
-class orgusers(models.Model):
-
-    id=models.AutoField(max_length=20,null=False,blank=False,primary_key=True,auto_created=True )
-    corpid=models.CharField(max_length=20,null=False,blank=False,verbose_name='CORP ID')
-    user=models.CharField(max_length=75,null=False,blank=False,verbose_name='USER')
-    pin=models.CharField(max_length=4,null=False,blank=False,verbose_name='PIN')
-
-    items=models.Manager()
 
 
