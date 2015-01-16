@@ -2,7 +2,7 @@ from django.shortcuts import render,render_to_response , RequestContext
 from .forms import *
 from django.http import HttpResponse
 from .models import expense_categories
-from .models import MYCASHFLOW,cashflow_actuals,contact
+from .models import MYCASHFLOW,cashflow_actuals,contact,orgusers
 import jsonpickle
 from django.forms import model_to_dict
 import datetime
@@ -17,12 +17,79 @@ from django.contrib.auth import login
 from .BusinessLogic import jdata ,get_occurances , fileupload
 from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import render
+from django.views.generic import View
+from django.conf import settings
+from django.core.mail import send_mail
+
 #**********************************************************************************************#
 #                               Create your views here.                                        #
 #**********************************************************************************************#
 def logout1(request):
     logout(request)
     return render_to_response("thankyou.html",locals(),context_instance=RequestContext(request))
+
+#**********************************************************************************************#
+#                               Check if user and password is correct                          #
+#**********************************************************************************************#
+class AuthenticateUser(View):
+    result={}
+    def post(self,request):
+        user = authenticate(username=request.POST['username'],password=request.POST['password'])
+        if user :
+            login(request,user)
+            self.result['flag'] = ''
+            self.result['message'] = 'Welcome\t ' + request.user.get_short_name() + '\t!'
+        else:
+            self.result['flag'] = 'X'
+            self.result['message']='Either Username or Password is Incorrect'
+
+        data = jsonpickle.encode(self.result, unpicklable=False, make_refs=False, keys=False)
+        return HttpResponse(data, content_type='application/json')
+#**********************************************************************************************#
+#                             Create the sub user                                             #
+#**********************************************************************************************#
+class CreateCorpUser(View):
+    default_values={}
+    subuser_values={}
+    message = ''
+    def post(self,request):
+
+        self.default_values = request.POST.copy()
+        self.default_values['corpid'] = request.user.get_corpid()
+        self.default_values['TypeofOrg'] = '1'
+        self.default_values['email'] =  request.POST['email']
+        self.default_values['password1'] = request.POST['pin']
+        self.default_values['password2'] = request.POST['pin']
+        self.default_values['currency'] = request.user.get_currency()
+        self.default_values['last_login'] = datetime.datetime.today()
+        self.default_values['search1_tag'] = 'Initial'
+        self.default_values['search2_tag'] = 'Initial'
+
+
+        self.subuser_values['corpid'] = request.user.get_corpid()
+        self.subuser_values['user'] = request.POST['email']
+        self.subuser_values['pin']  = request.POST['pin']
+
+        Orgform=Adduser(self.subuser_values)
+        form = UserCreationForm(self.default_values)
+	send_mail('Your Cashkal Id has been created', 'Please use PIN 2333 to login ', settings.DEFAULT_FROM_EMAIL,['sasidharp@gmail.com',])
+  	
+	if form.is_valid() and Orgform.is_valid():
+            id= Orgform.save()
+            if id:
+                user = form.save()
+                if user:
+                    self.message = "User Added"
+                else:
+                    self.message = "Error saving user"
+            else:
+                self.message = "Error adding additional user"
+        else:
+            self.message = form.errors
+
+
+        data = jsonpickle.encode(self.message, unpicklable=False, make_refs=False, keys=False)
+        return HttpResponse(data, content_type='application/json')
 #**********************************************************************************************#
 #                               Create your views here.                                        #
 #**********************************************************************************************#
@@ -41,8 +108,7 @@ def home(request):
                 return render_to_response('signup.html',locals(),context_instance=RequestContext(request))
     else:
         default_values = request.POST.copy()
-        
-	default_values['last_login']   = datetime.datetime.today()
+        default_values['last_login']   = datetime.datetime.today()
         default_values['search1_tag']  = 'Initial'
         default_values['search2_tag']  = 'Initial'
         if default_values['corpid']  != "":
@@ -535,7 +601,7 @@ def contact(request):
 #**********************************************************************************************#
 #                               Create your views here.                                        #
 #**********************************************************************************************#
-@login_required(login_url='/admin/')
+@login_required(login_url='/home/')
 def pie(request):
     # select  sum(amount) as monthval , strftime('%m',fdate) as month from user_mycashflow group by strftime('%m',fdate)
     form = PieSelection( )
@@ -563,6 +629,59 @@ def contact(request):
             return render_to_response("contact.html",{'form':form,'msg':msg},context_instance=RequestContext(request))
     else:
         return render_to_response("contact.html",{'form':form},context_instance=RequestContext(request))
+
+#**********************************************************************************************#
+#                               Add user              .                                        #
+#**********************************************************************************************#
+class ViewAddUser(View):
+    form = Adduser()
+    def get(self,request):
+        return render_to_response("userlist.html",{'form':self.form},context_instance=RequestContext(request))
+#**********************************************************************************************#
+#                               Add user              .                                        #
+#**********************************************************************************************#
+class ViewUserList(View):
+    #Variable to return the errors
+    success = 'X'
+    #Default values for user to be created
+    default_values={}
+
+    #Get all the users assigned for the main user
+    def get(self, request):
+        # No of users
+        user={}
+        users=[]
+        for each_user in orgusers.items.filter(corpid=request.user.get_corpid()):
+            user = model_to_dict(each_user, (), ())
+            users.append(user)
+
+        data = jsonpickle.encode(users, unpicklable=False, make_refs=False, keys=False)
+        return HttpResponse(data, content_type='application/json')
+
+    #Create the user delegate for the main user.
+    def post(self, request):
+        # Set the defaults
+        self.__setdefaults__(request)
+        # Create the user
+        form = UserCreationForm(self.default_values)
+        # Create user in Myuser !
+        if form.is_valid():
+            form.save()
+            self.success = 'X'
+        else:
+            self.success = form.errors
+        # Return the data in json format
+        data = jsonpickle.encode(self.success, unpicklable=False, make_refs=False, keys=False)
+        return HttpResponse(data, content_type='application/json')
+
+    #Set the default values for the user
+    def __setdefaults__(self,request):
+
+        self.default_values = request.POST.copy()
+        self.default_values['corpid'] = request.user.get_corpid()
+        self.default_values['password2'] = request.user['password1']
+        self.default_values['TypeofOrg'] = 'O'
+        self.default_values['currency'] = request.user.get_currency()
 
 #**********************************************************************************************#
 #                               Create your views here.                                        #

@@ -3,6 +3,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 admin.autodiscover()
+from django.conf.urls import patterns
+from user.views import ViewAddUser,ViewUserList, AuthenticateUser,CreateCorpUser
 
 urlpatterns = patterns('',
     # Examples:
@@ -15,9 +17,6 @@ urlpatterns = patterns('',
     url(r'^calen/', 'user.views.calendar', name='calendar'),
     url(r'^calop/', 'user.views.calenoption', name='option'),
     url(r'^categories/', 'user.views.categories', name='categories'),
-#     url(r'^payment/', 'user.views.payment', name='cash'),
-#     url(r'^types/', 'user.views.types', name='cash'),
-#     url(r'^categ/', 'user.views.newcateg', name='newcateg'),
     url(r'^categ/', 'user.views.corrections', name='newcateg'),
     url(r'^actuals/', 'user.views.cashactuals', name='cashactuals'),
     url(r'^convert/', 'user.views.convertactual', name='convertactual'),
@@ -30,17 +29,17 @@ urlpatterns = patterns('',
     url(r'^chartactualout/', 'user.views.overallchartactual_out', name='overallchartactual'),
     url(r'^trend/', 'user.views.trend', name='trend'),
     url(r'^cashflow/', 'user.views.chartbydirection', name='chartbydirection'),
-    
     url(r'^pie/', 'user.views.pie', name='pie'),
     url(r'^report/', 'user.views.report', name='report'),
     url(r'^register/', 'user.views.register', name='register'),
-
     url(r'^contact/', 'user.views.contact', name='contact'),
     url(r'^upload/', 'user.views.upload', name='upload'),
     url(r'^delete/', 'user.views.delete', name='delete'),
     url(r'^adelete/', 'user.views.adelete', name='adelete'),
-    # url(r'^blog/', include('blog.urls')),
-
+    url(r'^adduser', ViewAddUser.as_view(), name='userlist'),
+    url(r'^userlist', ViewUserList.as_view(), name='adduser'),
+    url(r'^login', AuthenticateUser.as_view(), name='corpuser'),
+    url(r'^corpuser',CreateCorpUser.as_view(), name='login'),
     url(r'^admin/', include(admin.site.urls)),
 )
 

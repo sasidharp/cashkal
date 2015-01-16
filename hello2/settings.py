@@ -58,20 +58,20 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 # Parse database configuration from $DATABASE_URL
-import dj_database_url
-DATABASES = {
-     "default": dj_database_url.config(default='postgres://localhost'),
-}
+ import dj_database_url
+ DATABASES = {
+      "default": dj_database_url.config(default='postgres://localhost'),
+ }
 #DATABASES = {
-# 'default': {
-#       'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#       'NAME': 'django',
-#       'USER': 'postgres',
-#       'PASSWORD': 'sasidhar',
-#       'HOST': 'localhost',
-#       'PORT': '5432',
-#   }
-# }
+#'default': {
+#      'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#      'NAME': 'django',
+#      'USER': 'postgres',
+#      'PASSWORD': 'sasidhar',
+#      'HOST': 'localhost',
+#      'PORT': '5432',
+#  }
+#}
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
@@ -98,6 +98,17 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_ROOT  = os.path.join(BASE_DIR, 'MEDIA')
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 STATICFILES_DIRS = ( os.path.join(BASE_DIR, 'staticfiles', 'css'), )
+
+
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.mail.yahoo.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'cashkal.helpdesk@yahoo.com'
+EMAIL_HOST_PASSWORD = 'Django_123'
+DEFAULT_FROM_EMAIL = 'cashkal.helpdesk@yahoo.com'
+
+
 # if DEBUG:
 #     # STATIC_ROOT=os.path.join(os.path.dirname(BASE_DIR),"static","static-only")
 #     # STATICFILES_DIRS=(

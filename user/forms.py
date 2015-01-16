@@ -8,7 +8,7 @@ from crispy_forms.bootstrap import StrictButton, PrependedAppendedText , FormAct
 from crispy_forms.layout import Div 
 from crispy_forms.bootstrap import Tab , TabHolder
 from crispy_forms.bootstrap import AppendedText,AppendedPrependedText,InlineField
-from .models import MyUser, MYCASHFLOW, expense_categories,cashflow_actuals,MyUser,contact
+from .models import MyUser, MYCASHFLOW, expense_categories,cashflow_actuals,MyUser,contact,orgusers
 from django.forms.formsets import formset_factory
 import datetime
 from django.forms.widgets import Widget
@@ -339,8 +339,26 @@ class FileUpload(forms.Form):
         self.helper.form_method = 'post'
         self.helper.form_tag = True
 
+
         self.helper.layout = Layout(Field('file', default=datetime.date.today()),
                                     Submit(name='SAVE', value='UPLOAD',type='Submit',css_class='btn btn-success'),
-                                    Reset(name='RESET', value='RESET',type='Submit',css_class='btn btn-danger')
+                                    Reset(name='RESET', value='RESET',type='Submit',css_class='btn btn-danger'))
 
-    )
+class Adduser(forms.ModelForm):
+    class Meta:
+        model = orgusers
+   
+    def __init__(self, *args, **kwargs):
+
+        super(Adduser, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.form_id = 'report'
+        self.helper.form_method = 'post'
+        self.helper.form_tag = True
+        self.helper.form_class='form-horizontal'
+        self.helper.label_class = 'col-lg-2'
+        self.helper.field_class = 'col-lg-8'
+
+        self.helper.layout = Layout(Field('user',required=True),
+                                    Field('pin',required=True),
+                                    )

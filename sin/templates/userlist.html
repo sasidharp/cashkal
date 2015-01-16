@@ -1,0 +1,170 @@
+﻿{% extends "base.html" %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html>
+{% block content %}   
+<!--- -------------------------------------start of form----------------------------------------------------------------->
+<style>
+    .ui-jqgrid tr.ui-row-ltr td {
+    text-align: left;
+    border-right-width: 1px;
+    border-right-color: inherit;
+    border-right-style: solid;
+    font-family: 'Antic Slab', serif;
+ }
+.ui-jqgrid tr.jqgrow td {
+    font-weight: bold;
+    overflow: hidden;
+    white-space: pre;
+    height: 40px;
+    color:black;
+    background-color:white;
+    padding: 0 2px 0 2px;
+    border-bottom-width: 1px;
+    border-bottom-color: inherit;
+    border-bottom-style: solid;
+    font-family: 'Antic Slab', serif;
+ }
+.row{
+padding-top:5%;
+}
+
+
+</style>
+<!--- -------------------------------------start of form----------------------------------------------------------------->
+<!--- -------------------------------------start of form----------------------------------------------------------------->
+<script>
+		$(document).ready(function () {		
+//--- -------------------------------------start of form----------------------------------------------------------------->
+		$("#adduser").click(function(){
+			$.ajaxSetup({
+                                beforeSend: function(xhr, settings) {
+                                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                                }
+                             });
+//--- -------------------------------------start of form----------------------------------------------------------------->
+
+                    	$.ajax({url:"/corpuser/",
+                               type: "POST",
+                               data: { email : $('#id_user').val( ) ,
+				       pin :   $('#id_pin').val( ) }
+				,
+				success:function(result){
+                               	jQuery("#list4").trigger("reloadGrid");
+                            }});
+
+		});	
+	}); 
+</script>
+<!--- -------------------------------------start of form----------------------------------------------------------------->
+<body id="body">
+<!--- -------------------------------------start of form----------------------------------------------------------------->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12" id="datatable">
+                <table id="list4"></table>
+                <div id="pager"></div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+	   <div class ="col-md-2"></div>	
+	   <div class="col-md-8" id="datatable">
+                 {% crispy form %}
+	    </div>
+	   <div class ="col-md-2">
+	    <button class="btn btn-default " id="adduser" > ADD USER </button>
+
+	</div>	
+
+        </div>
+    </div>
+<!--- -------------------------------------start of form----------------------------------------------------------------->
+<script>
+var header_message;
+var type;
+
+$(document).ready(function () {
+var DataGrid = jQuery("#list4");
+
+//Table Object
+jQuery("#list4").jqGrid({
+    url: '/userlist/',
+    datatype: "json",
+    colNames: ['IDENTIFIER', 'CORP ID', 'USER', 'PIN'],
+    colModel: [
+        { name: 'id', index: 'id', width: 20 , align: "center" },
+        { name: 'corpid', index: 'fdate', width: 20 , align: "center" },
+        { name: 'user', index: 'direction', width: 10 , align: "center" },
+        { name: 'pin', index: 'amount', width: 30 , align: "right" },
+     ],
+    rowNum: 10,
+    rowList: [10, 20, 30],
+    pager: '#pager',
+    autowidth:true,
+    sortname: 'fdate',
+    viewrecords: true,
+    sortorder: "userid",
+    caption: "... ",
+    gridComplete: function(){
+    var ids = jQuery("#list4").jqGrid('getDataIDs');
+    for(var i=0;i < ids.length;i++){
+        var cl = ids[i];
+        del = "<input  type='button' value='delete'  onclick=\"delete_data('"+cl+"');\"/>";
+        jQuery("#list4").jqGrid('setRowData',ids[i],{active:del});
+
+        }
+    }
+});
+
+
+DataGrid.jqGrid('setGridWidth', jQuery("#datatable").width( ));
+//DataGrid.jqGrid('setGridWidth', '1124');
+DataGrid.jqGrid('setGridHeight', jQuery("#datatable").height( ));
+//DataGrid.jqGrid('setGridHeight', '350');
+
+$("#btncalen").click(
+             function () {
+                 window.location.href = "/calen/";
+             }
+              );
+ $("#planned").click(function () {
+    jQuery("#list4").jqGrid('setGridParam', { 'url': "/list" });
+    jQuery("#list4").jqGrid('setCaption', 'Editing Planned entries..');
+    type = 'P';
+    DataGrid.trigger("reloadGrid");
+});
+$("#actuals").click(function () {
+    jQuery("#list4").jqGrid('setGridParam', { 'url': "/alist" });
+    jQuery("#list4").jqGrid('setCaption', 'Editing Actual entries..');
+    DataGrid.trigger("reloadGrid");
+    type = 'A';
+});
+});
+
+
+
+function goto(location) {
+
+}
+function delete_data(id){
+if ( type == 'P'){
+      url = "/cash/?D=" + id;
+      }
+      else{
+      url = "/actuals/?D=" + id;
+      }
+$.ajax({url:url,
+       type: "GET",
+       data: { },
+       success:function(result){
+       jQuery("#list4").trigger("reloadGrid");
+    }});
+}
+</script>
+
+
+{% endblock %} 
+</body>
+</html>
