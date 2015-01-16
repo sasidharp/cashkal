@@ -72,7 +72,6 @@ class CreateCorpUser(View):
 
         Orgform=Adduser(self.subuser_values)
         form = UserCreationForm(self.default_values)
-	send_mail('Your Cashkal Id has been created', 'Please use PIN 2333 to login ', settings.DEFAULT_FROM_EMAIL,['sasidharp@gmail.com',])
   	
 	if form.is_valid() and Orgform.is_valid():
             id= Orgform.save()
