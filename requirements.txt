@@ -11,3 +11,4 @@ jsonpickle==0.8.0
 whitenoise==1.0.3
 django-extensions==1.4.6
 xlrd==0.9.3
+django-mailgun==0.2.2

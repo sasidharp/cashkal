@@ -79,7 +79,7 @@ class CreateCorpUser(View):
                 user = form.save()
                 if user:
                     self.message = "User Added"
-		    send_mail('Your Cashkal Id has been created', 'Please use PIN 2333 to login ', settings.DEFAULT_FROM_EMAIL,['sasidharp@gmail.com',])
+		    send_mail('Welcome to CASKCAL.COM', """'Please use your email id to login \n. Use PIN '{PIN}' to login'.format(request.POST['pin'])""", settings.DEFAULT_FROM_EMAIL,[request.POST['email'],])
 		else:
                     self.message = "Error saving user"
             else:
@@ -123,6 +123,7 @@ def home(request):
             user = authenticate(username=form.cleaned_data['email'],password=form.cleaned_data['password1'])
             if user:
                 login(request, user)
+                send_mail('Welcome to CASKCAL.COM', "Sample mail to welcome user..Need content here ", settings.DEFAULT_FROM_EMAIL,[form.cleaned_data['email'],])
                 return HttpResponseRedirect("/calen/")
             else:
                 HttpResponse('our fault..will fix')

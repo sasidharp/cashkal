@@ -61,17 +61,17 @@ USE_TZ = True
 import dj_database_url
 DATABASES = {
       "default": dj_database_url.config(default='postgres://localhost'),
- }
-#DATABASES = {
-#'default': {
+}
+# DATABASES = {
+# 'default': {
 #      'ENGINE': 'django.db.backends.postgresql_psycopg2',
 #      'NAME': 'django',
 #      'USER': 'postgres',
 #      'PASSWORD': 'sasidhar',
 #      'HOST': 'localhost',
 #      'PORT': '5432',
-#  }
-#}
+# }
+# }
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
@@ -101,12 +101,9 @@ STATICFILES_DIRS = ( os.path.join(BASE_DIR, 'staticfiles', 'css'), )
 
 
 
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.mail.yahoo.com'
-EMAIL_PORT = 465
-EMAIL_HOST_USER = 'cashkal.helpdesk@yahoo.com'
-EMAIL_HOST_PASSWORD = 'Django_123'
-DEFAULT_FROM_EMAIL = 'cashkal.helpdesk@yahoo.com'
+EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
+MAILGUN_ACCESS_KEY = 'key-e42e71a1022083ecda144f987efcb0b6'
+MAILGUN_SERVER_NAME = 'sandbox5ce557fe2b794cda939b42f82c4c485f.mailgun.org'
 
 
 # if DEBUG:

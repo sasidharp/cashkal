@@ -94,6 +94,9 @@ class MyUser(AbstractBaseUser):
     def __unicode__(self):
         return (self.email)
 
+    def get_TypeofOrg(self):
+        return self.TypeofOrg
+
     def get_full_name(self):
         # The user is identified by their email address
         return self.email
