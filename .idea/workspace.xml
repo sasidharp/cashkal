@@ -39,7 +39,7 @@
       <file leaf-file-name="BusinessLogic.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/user/BusinessLogic.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1890" max-vertical-offset="3315">
+            <state vertical-scroll-proportion="-0.6" vertical-offset="1890" max-vertical-offset="3315">
               <caret line="128" column="27" selection-start-line="128" selection-start-column="27" selection-end-line="128" selection-end-column="27" />
               <folding />
             </state>
@@ -68,11 +68,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="signup.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="signup.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sin/templates/signup.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.59322035" vertical-offset="0" max-vertical-offset="5085">
-              <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+            <state vertical-scroll-proportion="-15.0" vertical-offset="0" max-vertical-offset="5205">
+              <caret line="24" column="26" selection-start-line="24" selection-start-column="26" selection-end-line="24" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -81,8 +81,8 @@
       <file leaf-file-name="launcher.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sin/templates/launcher.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1245" max-vertical-offset="4605">
-              <caret line="140" column="42" selection-start-line="140" selection-start-column="42" selection-end-line="140" selection-end-column="42" />
+            <state vertical-scroll-proportion="-3.125" vertical-offset="0" max-vertical-offset="4605">
+              <caret line="5" column="7" selection-start-line="5" selection-start-column="7" selection-end-line="5" selection-end-column="7" />
               <folding />
             </state>
           </provider>
@@ -110,13 +110,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/hello2/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-34.76" vertical-offset="661" max-vertical-offset="1815">
-              <caret line="102" column="0" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.270362" vertical-offset="661" max-vertical-offset="1815">
+              <caret line="60" column="3" selection-start-line="60" selection-start-column="3" selection-end-line="60" selection-end-column="3" />
               <folding>
-                <marker date="1421580760775" expanded="true" signature="1866:1977" placeholder="..." />
+                <marker date="1421695441058" expanded="true" signature="1866:1977" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -125,8 +125,8 @@
       <file leaf-file-name="base.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sin/templates/base.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="1275">
-              <caret line="59" column="70" selection-start-line="59" selection-start-column="70" selection-end-line="59" selection-end-column="70" />
+            <state vertical-scroll-proportion="-36.25" vertical-offset="45" max-vertical-offset="1350">
+              <caret line="61" column="26" selection-start-line="61" selection-start-column="26" selection-end-line="61" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -149,8 +149,8 @@
         <option value="$PROJECT_DIR$/user/views.py" />
         <option value="$PROJECT_DIR$/user/models.py" />
         <option value="$PROJECT_DIR$/sin/templates/base.html" />
-        <option value="$PROJECT_DIR$/hello2/settings.py" />
         <option value="$PROJECT_DIR$/sin/templates/signup.html" />
+        <option value="$PROJECT_DIR$/hello2/settings.py" />
       </list>
     </option>
   </component>
@@ -709,7 +709,7 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="786" max-vertical-offset="1695">
           <caret line="68" column="25" selection-start-line="68" selection-start-column="25" selection-end-line="68" selection-end-column="25" />
           <folding>
-            <marker date="1421580760775" expanded="true" signature="1866:1977" placeholder="..." />
+            <marker date="1421695441058" expanded="true" signature="1866:1977" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -794,7 +794,7 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="786" max-vertical-offset="1695">
           <caret line="68" column="25" selection-start-line="68" selection-start-column="25" selection-end-line="68" selection-end-column="25" />
           <folding>
-            <marker date="1421580760775" expanded="true" signature="1866:1977" placeholder="..." />
+            <marker date="1421695441058" expanded="true" signature="1866:1977" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -864,7 +864,7 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="1305" max-vertical-offset="1695">
           <caret line="87" column="17" selection-start-line="87" selection-start-column="17" selection-end-line="87" selection-end-column="17" />
           <folding>
-            <marker date="1421580760775" expanded="true" signature="1866:1977" placeholder="..." />
+            <marker date="1421695441058" expanded="true" signature="1866:1977" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -898,11 +898,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/hello2/staticfiles/css/classy.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/user/static/css/bg.jpg">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
@@ -1012,14 +1007,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sin/templates/launcher.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1245" max-vertical-offset="4605">
-          <caret line="140" column="42" selection-start-line="140" selection-start-column="42" selection-end-line="140" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/hello2/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="600" max-vertical-offset="810">
@@ -1027,14 +1014,6 @@
           <folding>
             <element signature="e#0#51#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/user/BusinessLogic.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1890" max-vertical-offset="3315">
-          <caret line="128" column="27" selection-start-line="128" selection-start-column="27" selection-end-line="128" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1074,29 +1053,45 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/user/BusinessLogic.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.6" vertical-offset="1890" max-vertical-offset="3315">
+          <caret line="128" column="27" selection-start-line="128" selection-start-column="27" selection-end-line="128" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sin/templates/launcher.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.125" vertical-offset="0" max-vertical-offset="4605">
+          <caret line="5" column="7" selection-start-line="5" selection-start-column="7" selection-end-line="5" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sin/templates/signup.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-15.0" vertical-offset="0" max-vertical-offset="5205">
+          <caret line="24" column="26" selection-start-line="24" selection-start-column="26" selection-end-line="24" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/sin/templates/base.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="1275">
-          <caret line="59" column="70" selection-start-line="59" selection-start-column="70" selection-end-line="59" selection-end-column="70" />
+        <state vertical-scroll-proportion="-36.25" vertical-offset="45" max-vertical-offset="1350">
+          <caret line="61" column="26" selection-start-line="61" selection-start-column="26" selection-end-line="61" selection-end-column="26" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/hello2/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-34.76" vertical-offset="661" max-vertical-offset="1815">
-          <caret line="102" column="0" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.270362" vertical-offset="661" max-vertical-offset="1815">
+          <caret line="60" column="3" selection-start-line="60" selection-start-column="3" selection-end-line="60" selection-end-column="3" />
           <folding>
-            <marker date="1421580760775" expanded="true" signature="1866:1977" placeholder="..." />
+            <marker date="1421695441058" expanded="true" signature="1866:1977" placeholder="..." />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sin/templates/signup.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.59322035" vertical-offset="0" max-vertical-offset="5085">
-          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
