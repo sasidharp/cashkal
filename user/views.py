@@ -395,7 +395,7 @@ def events(request):
     event_list=[]
     found=''
 # ************************************************************************************************
-    raw_stmt ="""select fdate  ,  amount  , direction from user_mycashflow where "user" = '{user_name}' and converted != 'X' order by fdate """.format(user_name=request.user)
+    raw_stmt ="""select fdate  ,  amount  , direction from user_mycashflow where "user"='{user_name}' and converted is null order by fdate """.format(user_name=request.user)
     cursor = connection.cursor()
     cursor.execute(raw_stmt)
     calendar_cash_items = cursor.fetchall()
@@ -1036,7 +1036,7 @@ def create_forecasted_entries(l_form , l_id , l_request):
      forecasted_dates = get_occurances(l_form.cleaned_data['frequency'],l_form.cleaned_data['fdate'],120)
      for date in forecasted_dates:
          forecasted_entry=MYCASHFLOW.items.create(categ=l_form.cleaned_data['category'],
-                                                      user=l_request.user  ,
+                                                      user=l_request.user.get_short_name()  ,
                                                       parent=l_id.id,
                                                       direction=l_form.cleaned_data['direction'],
                                                       frequency=l_form.cleaned_data['frequency'],

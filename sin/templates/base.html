@@ -3,12 +3,12 @@
 <html>
 <head>
 <!--<link rel="stylesheet" href="http://res.cloudinary.com/dplpgfwpy/raw/upload/v1413397740/paycal_zmrty0.css">-->
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:700,400' rel='stylesheet' type='text/css'>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.3/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.1.1/fullcalendar.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:700,400' rel='stylesheet' type='text/css'>
 
 
 {% load static from staticfiles %}
@@ -20,8 +20,9 @@
 
 
 <script src="{% static "js/bootstrap.min.js" %}"></script>
-<script src="{% static "js/bootstrap.min.js" %}"></script>
+<!--<script src="{% static "js/bootstrap.js" %}"></script>-->
 <script src="{% static "js/grid.locale-en.js" %}"></script>
+<script src="{% static "js/jquery.jqGrid.min.js" %}"></script>
 
 <!--- -------------------------------------Navigation bar---------------------------------------------------------------->
 </head>
@@ -51,7 +52,7 @@
 <!--- -------------------------------------Navigation bar---------------------------------------------------------------->
 <div class="container">
    <div class="masthead text-right">
-	<h6 class="text-muted "><h6>Logged in as {{user}}</h6></h6>
+	<h6 class="text-muted "><h6>Logged in as {{user }}</h6></h6>
 	<div role="navigation">
 	  <ul class="nav nav-justified">
 				<li><a href="/calen/"><h5><b>Calendar</b></h5></a></li>
@@ -59,7 +60,7 @@
 				<li><a href="/report/"><h5><b>Reports</b></h5></a></li>
 				<li><a href="/pie/"><h5><b>Charts</b></h5></a></li>
 				<li class="dropdown">
-				    <a href="/categ/" class="dropdown-toggle" data-toggle="dropdown">Options<b class="caret"></b></a>
+				    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Options<b class="caret"></b></a>
 						<ul class="dropdown-menu">
 						{% if user.TypeofOrg == "2" %}
 							<li><a href="/adduser/">Add users</a></li>
