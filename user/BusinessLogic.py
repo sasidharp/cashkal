@@ -10,6 +10,7 @@ def get_occurances(frequency, start_date, timelimit=730):
     year = start_date.year
     month_date = start_date.day
     next_date = start_date
+    months = 0
     # Calculate dates based on the selection
     while ( diff.days < timelimit):
         if frequency == 'D':

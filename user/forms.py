@@ -270,7 +270,7 @@ class NewExpenseCategoryForm(forms.ModelForm):
 class ReportSelection(forms.Form):
 
     category_id=forms.ModelChoiceField(expense_categories.items.all(),label='Category')
-    start_date = forms.DateField(label='Start Date')
+    start_date = forms.DateField(label='Start Date' )
     end_date = forms.DateField(label='End Date')
     
     def __init__(self, *args, **kwargs):

@@ -74,9 +74,15 @@ $(function(){
     month=month + 1;
     var day = d.getDate();
     var year = d.getFullYear();
+    
     var start;
     start=month-1;
+    if ( start== 0){
+	 start = 12;
+	 year = year - 1;	
+	}	
     $("#id_start_date").val(year+"-"+start+"-"+day);
+	year = d.getFullYear();
     $("#id_end_date").val(year+"-"+month+"-"+day);
 });
 </script>
