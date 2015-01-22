@@ -30,18 +30,105 @@
 
 
     <script src="{% static "js/bootstrap.min.js" %}"></script>
-    <script src="{% static "js/bootstrap.min.js" %}"></script>
     <script src="{% static "js/grid.locale-en.js" %}"></script>
-
 </head>
-
 <body>
 
-<noscript>
-  <!-- anchor linking to external file -->
-  <a href="http://www.mozilla.com/">External Link</a>
-</noscript>
-    <!-- Navigation -->
+
+<!--------------------------------------------------------------------------------------------------------------------->
+ <script>
+    
+   $( document ).ready(function() {
+// Using the core $.ajax() setup method
+    $('label[for*="id_"]').hide();
+    });
+  
+// Using the core $.ajax() setup method
+    $("#registerform").hide();      
+    $("#register_heading").hide();      
+    $("#secondpage").hide();        
+// Using the core $.ajax() setup method
+   
+    $("#signup").click(function(){
+                    $("#signin").hide();    
+                    $("#welcome_heading").hide();
+                    $("#register_heading").show();
+                    $("#registerform").show();  
+                    $("#firstpage").hide();     
+                    $("#secondpage").show();        
+   
+                 });    
+// Using the core $.ajax() setup method
+    $("#checkauth").click(function(){
+            // Using the core $.ajax() setup method
+            $.ajaxSetup({
+                beforeSend: function(xhr, settings) {
+                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                    }
+                });
+
+            // Using the core $.ajax() method
+            $.ajax({
+            // The URL for the request
+            url: "/login/",
+            // The data to send (will be converted to a query string)
+            data: {
+            username: $("#username").val() , password:$("#password").val()
+            },
+            // Whether this is a POST or GET request
+            type: "POST",
+            // The type of data we expect back
+            dataType : "json",
+            // Code to run if the request succeeds;
+            // the response is passed to the function
+            success: function( json ) {
+                if (json.flag == 'X'){ 
+                $("#message").text(json.message) ;
+                }else{
+                window.location.href="/calen/";
+                }
+                
+            },
+            // Code to run if the request fails; the raw request and
+            // status codes are passed to the function
+            error: function( xhr, status, errorThrown ) {
+            alert( "Sorry, there was a problem!" );
+            console.log( "Error: " + errorThrown );
+            console.log( "Status: " + status );
+            console.dir( xhr );
+            },
+            // Code to run regardless of success or failure
+            complete: function( xhr, status ) {
+            }
+            });
+    });
+// Using the core $.ajax() setup method
+    $("#register").click(function(){window.location.href="/register/";});
+    $("#learnmore").click(function(){window.location.href="/contact/";});
+// Using the core $.ajax() setup method
+    $('#id_currency' ).tooltip();
+    $('#id_TypeofOrg' ).change(function(){
+       if ( $('#id_TypeofOrg' ).val() == '1' ){
+       $('#id_corpid' ).hide();
+       $('label[for="id_corpid"]').hide();
+       }else
+       {
+       $('#id_corpid' ).show();
+       $('label[for="id_corpid"]').hide();
+       $('#id_corpid' ).tooltip();
+       }
+  });
+</script>
+<script>
+$("#tabs").tabs({
+    activate: function (event, ui) {
+        var active = $('#tabs').tabs('option', 'active');
+    }
+}
+
+);
+</script>
+<!-- Navigation -->
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -75,15 +162,13 @@
 
     <!-- Header -->
     <div class="intro-header">
-
         <div class="container">
-
             <div class="row">
                 <div class="col-lg-12">
                     <div class="intro-message">
-			<h1>CASHKAL - COMING SOON !</h1>
+			<h1>CASHKAL</h1>
 			<div id="welcome_heading">
- 	                        <h3>Cash flow recording for startups!</h3>
+ 	                        <h3>Cash flow recording for startups! [BETA VERSION]</h3>
          		</div>
 			<div id="register_heading">
 	                        <h3>Thank you for your interest.. Few details and you are all ready !</h3>
@@ -119,8 +204,15 @@
 
         </div>
         <!-- /.container -->
+ </div>
 
-    </div>
+<script type="text/javascript">
+
+$("#registerform").hide(); 
+$("#register_heading").hide(); 
+   
+</script>
+
     <!-- /.intro-header -->
 
     <!-- Page Content -->
@@ -236,106 +328,5 @@
         </div>
     </footer>
 
-
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-
-<!--------------------------------------------------------------------------------------------------------------------->
- <script>
-
-
-   $( document ).ready(function() {
-// Using the core $.ajax() setup method
-    $('label[for*="id_"]').hide();
-    });
-  
-// Using the core $.ajax() setup method
-    $("#registerform").hide();		
-    $("#register_heading").hide();		
-    $("#secondpage").hide();		
-// Using the core $.ajax() setup method
-   
-    $("#signup").click(function(){
-					$("#signin").hide();	
-					$("#welcome_heading").hide();
-					$("#register_heading").show();
-					$("#registerform").show();	
-					$("#firstpage").hide();		
-   					$("#secondpage").show();		
-   
-				 });   	
-// Using the core $.ajax() setup method
-    $("#checkauth").click(function(){
-			// Using the core $.ajax() setup method
-			$.ajaxSetup({
-				beforeSend: function(xhr, settings) {
-		    		xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
-	   			    }
-				});
-
-			// Using the core $.ajax() method
-			$.ajax({
-			// The URL for the request
-			url: "/login/",
-			// The data to send (will be converted to a query string)
-			data: {
-			username: $("#username").val() , password:$("#password").val()
-			},
-			// Whether this is a POST or GET request
-			type: "POST",
-			// The type of data we expect back
-			dataType : "json",
-			// Code to run if the request succeeds;
-			// the response is passed to the function
-			success: function( json ) {
-				if (json.flag == 'X'){ 
-				$("#message").text(json.message) ;
-				}else{
-				window.location.href="/calen/";
-				}
-				
-			},
-			// Code to run if the request fails; the raw request and
-			// status codes are passed to the function
-			error: function( xhr, status, errorThrown ) {
-			alert( "Sorry, there was a problem!" );
-			console.log( "Error: " + errorThrown );
-			console.log( "Status: " + status );
-			console.dir( xhr );
-			},
-			// Code to run regardless of success or failure
-			complete: function( xhr, status ) {
-			}
-			});
-	});
-// Using the core $.ajax() setup method
-    $("#register").click(function(){window.location.href="/register/";});
-    $("#learnmore").click(function(){window.location.href="/contact/";});
-// Using the core $.ajax() setup method
-    $('#id_currency' ).tooltip();
-    $('#id_TypeofOrg' ).change(function(){
-       if ( $('#id_TypeofOrg' ).val() == '1' ){
-       $('#id_corpid' ).hide();
-       $('label[for="id_corpid"]').hide();
-       }else
-       {
-       $('#id_corpid' ).show();
-       $('label[for="id_corpid"]').hide();
-       $('#id_corpid' ).tooltip();
-       }
-  });
-</script>
-<script>
-$("#tabs").tabs({
-    activate: function (event, ui) {
-        var active = $('#tabs').tabs('option', 'active');
-    }
-}
-
-);
-</script>
 </body>
 </html>
