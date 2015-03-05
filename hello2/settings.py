@@ -8,7 +8,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.6/ref/settings/
 """
 import os
+import  djcelery
+import datetime
 
+djcelery.setup_loader()
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
@@ -35,6 +38,7 @@ INSTALLED_APPS = (
     'crispy_forms',
     'user',
     'django_extensions',
+    'djcelery'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -45,6 +49,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
+
+
 
 ROOT_URLCONF = 'hello2.urls'
 WSGI_APPLICATION = 'hello2.wsgi.application'
@@ -58,20 +64,20 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 # Parse database configuration from $DATABASE_URL
-import dj_database_url
-DATABASES = {
-      "default": dj_database_url.config(default='postgres://localhost'),
-}
+# import dj_database_url
 # DATABASES = {
-# 'default': {
-#      'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#      'NAME': 'django',
-#      'USER': 'postgres',
-#      'PASSWORD': 'sasidhar',
-#      'HOST': 'localhost',
-#      'PORT': '5432',
+#       "default": dj_database_url.config(default='postgres://localhost'),
 # }
-# }
+DATABASES = {
+'default': {
+     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+     'NAME': 'django',
+     'USER': 'postgres',
+     'PASSWORD': 'sasidhar',
+     'HOST': 'localhost',
+     'PORT': '5432',
+}
+}
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
@@ -105,7 +111,9 @@ EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
 MAILGUN_ACCESS_KEY = 'key-e42e71a1022083ecda144f987efcb0b6'
 MAILGUN_SERVER_NAME = 'sandbox5ce557fe2b794cda939b42f82c4c485f.mailgun.org'
 
-
+# Celery settings
+BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 # if DEBUG:
 #     # STATIC_ROOT=os.path.join(os.path.dirname(BASE_DIR),"static","static-only")
 #     # STATICFILES_DIRS=(
@@ -113,3 +121,10 @@ MAILGUN_SERVER_NAME = 'sandbox5ce557fe2b794cda939b42f82c4c485f.mailgun.org'
 #     #                   )
 #     STATIC_ROOT='C:\\Users\\sapurana.FAREAST\\work\\arcanecove1279\\arcane-cove-1279\\sin'
 #     STATICFILES_DIRS= ( 'C:\\Users\\sapurana.FAREAST\\work\\arcanecove1279\\arcane-cove-1279\\sin\\css',)
+CELERYBEAT_SCHEDULE = {
+    'do_some_task': {
+        'task': 'user.tasks.send_complaint_async',
+        'schedule': datetime.timedelta(seconds=60 ),
+        'args': ''
+    },
+}

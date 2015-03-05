@@ -90,18 +90,46 @@ class UserChangeForm(forms.ModelForm):
     the user, but replaces the password field with admin's
     password hash display field.
     """
-    password = ReadOnlyPasswordHashField()
+    password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
+    password2 = forms.CharField(label='ReEnter',  widget=forms.PasswordInput)
 
     class Meta:
         model = MyUser
         fields = ('email', 'password', 'TypeofOrg', 'is_active', 'is_admin')
 
-    def clean_password(self):
-        # Regardless of what the user provides, return the initial value.
-        # This is done here, rather than on the field, because the
-        # field does not have access to the initial value
-        return self.initial["password"]
+    def clean_password2(self):
+        # Check that the two password entries match
+        password1 = self.cleaned_data.get("password1")
+        password2 = self.cleaned_data.get("password2")
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError("Passwords do not match, please check")
+        return password2
 
+    def save(self, commit=True):
+        # Save the provided password in hashed format
+        user = super(UserChangeForm, self).save(commit=False)
+        user.set_password(self.cleaned_data["password1"])
+        if commit:
+            user.save()
+        return user
+
+
+    def __init__(self, *args, **kwargs):
+        super(UserChangeForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.form_id = 'USER'
+        self.helper.form_method = 'POST'
+        self.helper.form_tag = True
+        self.helper.form_class='form-horizontal'
+        self.helper.label_class = 'col-lg-2'
+        self.helper.field_class = 'col-lg-8'
+
+        self.helper.layout = Layout(
+                         Field('password1',required=True,placeholder='PASSWORD'),
+                         Field('password2',required=True,placeholder='RETYPE PASSWORD'),
+                         Submit( name='REGISTER', value='REGISTER',type='Submit',css_class='btn btn-success'),
+                         Reset( name='RESET', value='RESET',type='Submit',css_class='btn btn-danger')
+)
 
 class MyUserAdmin(UserAdmin):
     # The forms to add and change user instances

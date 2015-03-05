@@ -20,6 +20,7 @@ from django.shortcuts import render
 from django.views.generic import View
 from django.conf import settings
 from django.core.mail import send_mail
+from tasks import send_complaint_async , send_weekly_async
 
 #**********************************************************************************************#
 #                               Create your views here.                                        #
@@ -592,13 +593,6 @@ def launcher(request):
     if 'T' in request.GET:
         type = request.GET['T']
     return render_to_response("launcher.html", {'date':datetime.date.today(),'form':form , 'clkdate':request.GET['D'],'expense':expense,'type':type},context_instance=RequestContext(request))
-
-#**********************************************************************************************#
-#                               Create your views here.                                        #
-#**********************************************************************************************#
-@login_required(login_url='/home/')
-def contact(request):
-    return render_to_response("contact.html",locals(),context_instance=RequestContext(request))
 #**********************************************************************************************#
 #                               Create your views here.                                        #
 #**********************************************************************************************#
@@ -614,6 +608,7 @@ def pie(request):
 #**********************************************************************************************#
 #                               Create your views here.                                        #
 #**********************************************************************************************#
+@login_required(login_url='/home/')
 def contact(request):
     form = NewContactForm()
     if request.method == 'POST':
@@ -624,9 +619,13 @@ def contact(request):
         if form.is_valid():
             form.save()
             msg='Thank you. Request will be addressed in a weeks time'
-            return render_to_response("contact.html",{'form':form,'msg':msg},context_instance=RequestContext(request))
+            # send_complaint_async.delay(email = request.POST['email'])
+            # send_complaint_async.delay(email = request.POST['email'])
+            send_weekly_async( )
+            return render_to_response("contact.html",{'msg':msg},context_instance=RequestContext(request))
+
         else:
-            msg='Form could not submitted.please reach our call center @ dkdkdk'
+            msg='Form could not submitted.please reach our call center helpdesk@cashkal.com'
             return render_to_response("contact.html",{'form':form,'msg':msg},context_instance=RequestContext(request))
     else:
         return render_to_response("contact.html",{'form':form},context_instance=RequestContext(request))

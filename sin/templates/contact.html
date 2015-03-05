@@ -19,7 +19,9 @@ padding-top:5%;
     <div class="col-md-8">
         	<div class="table">
                 <h31>{{msg}}</h31>
+                {% if form %}
                 <h31> {% crispy form %} </h31>
+                {% endif %}
             </div>
     </div>
     <div class="col-md-2"></div>
